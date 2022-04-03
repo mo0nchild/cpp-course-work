@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="src\main.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="manager\service_manager_builder\service_manager_builder.cpp">
@@ -27,15 +27,18 @@
     <ClCompile Include="manager\service_collection\service_collection.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="manager\service_attribute\service_attribute.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="manager\service_items\service_item.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="models\taxis.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="accounts\account.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="manager\service_test.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="manager\manager.h">
@@ -48,6 +51,12 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="manager\service_collection\service_collection.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="manager\service_attribute\service_attribute.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="manager\service_items\service_items.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

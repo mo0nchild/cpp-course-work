@@ -1,8 +1,7 @@
-#include "manager/manager.h"
+#include "../manager/manager.h"
 
 using namespace System;
-// https://metanit.com/sharp/aspnet6/4.3.php
-
+// https://metanit.com/sharp/aspnet6/4.3.ph
 
 public ref class MyController: Manager::ServiceBase
 {
@@ -60,7 +59,8 @@ int main(array<String^>^ args)
 	MyManagerProvider^ myservice1 = (MyManagerProvider^) manager->get_service<MyManager^>();
 	MyControllerProvider^ myservice2 = (MyControllerProvider^)manager->get_service<MyController^>();
 
-
+	Manager::IServiceBase^ service = myservice1->Service;
+	Console::WriteLine(service->ToString());
 
 	Console::ReadKey();
 	return 0;

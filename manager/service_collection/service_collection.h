@@ -1,8 +1,11 @@
 #pragma once
-#include "../manager.h"
+#include "../service_items/service_items.h"
 
 namespace Manager 
 {
+	using namespace System;
+	using namespace System::Reflection;
+	using namespace System::Collections::Generic;
 
 	ref class ServiceCollection
 	{

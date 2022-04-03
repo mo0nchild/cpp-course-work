@@ -1,5 +1,6 @@
 #pragma once
 #include "service_manager_builder.h"
+
 using namespace Manager;
 
 generic <class TService> where TService: IServiceBase TService ServiceManagerBuilder::dependency_injection(void)

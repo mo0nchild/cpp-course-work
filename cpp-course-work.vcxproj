@@ -116,7 +116,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="manager\service_items\service_item.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="manager\service_attribute\service_attribute.cpp" />
     <ClCompile Include="manager\service_collection\service_collection.cpp" />
     <ClCompile Include="manager\service_manager\service_manager.cpp" />
     <ClCompile Include="manager\service_manager_builder\service_manager_builder.cpp" />
@@ -124,10 +126,11 @@
   <ItemGroup>
     <ClInclude Include="accounts\account.h" />
     <ClInclude Include="manager\manager.h" />
+    <ClInclude Include="manager\service_attribute\service_attribute.h" />
     <ClInclude Include="manager\service_collection\service_collection.h" />
+    <ClInclude Include="manager\service_items\service_items.h" />
     <ClInclude Include="manager\service_manager\service_manager.h" />
     <ClInclude Include="manager\service_manager_builder\service_manager_builder.h" />
-    <ClInclude Include="manager\service_test.h" />
     <ClInclude Include="models\taxis.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

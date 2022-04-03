@@ -1,6 +1,8 @@
 #pragma once
-#include "../manager.h"
+#include "../service_items/service_items.h"
+#include "../service_collection/service_collection.h"
 #include "../service_manager/service_manager.h"
+#include "../service_attribute/service_attribute.h"
 
 namespace Manager 
 {
