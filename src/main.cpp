@@ -61,7 +61,7 @@ int main(array<String^>^ args)
 
 	Manager::IServiceBase^ service = myservice1->Service;
 	Console::WriteLine(service->ToString());
-
+	
 	Console::ReadKey();
 	return 0;
 }

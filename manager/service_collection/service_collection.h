@@ -3,38 +3,51 @@
 
 namespace Manager 
 {
-	using namespace System;
-	using namespace System::Reflection;
-	using namespace System::Collections::Generic;
+	private ref struct ServiceRecord sealed
+	{
+		property System::Type^ Provider;
+		property ServiceBase^ Service;
 
-	ref class ServiceCollection
+		ServiceRecord(System::Type^ provider, ServiceBase^ service)
+		{
+			this->Provider = provider;
+			this->Service = service;
+		}
+		~ServiceRecord() { delete Provider, Service; }
+	};
+
+	public interface class IServiceCollection
+	{
+		property System::Collections::Generic::List<ServiceRecord^>^ ServiceList
+		{
+			System::Collections::Generic::List<ServiceRecord^>^ get(System::Void) abstract;
+		}
+		property System::Type^ ServiceType[System::String^]
+		{
+			System::Type ^ get(System::String^ index) abstract;
+		}
+	};
+
+	private ref class ServiceCollection: IServiceCollection
 	{
 	public:
-		ref struct ServiceRecord
-		{
-			Type^ provider;
-			ServiceBase^ service;
+		using ServiceListType = System::Collections::Generic::List<ServiceRecord^>;
 
-			ServiceRecord(Type^ provider, ServiceBase^ service)
-			{
-				this->provider = provider;
-				this->service = service;
-			}
-		};
-		using ServiceListType = List<ServiceRecord^>;
+		ServiceCollection(System::Void) { services_collection = gcnew ServiceListType(); }
+		~ServiceCollection(System::Void) { delete services_collection; }
 
-		ServiceCollection(void)
+		virtual property ServiceListType^ ServiceList
 		{
-			list = gcnew ServiceListType();
+		public: ServiceListType^ get(System::Void) override { return services_collection; }
 		}
 
-		property ServiceListType^ ServiceList
+		virtual property System::Type^ ServiceType[System::String^]
 		{
-			ServiceListType^ get(void) { return list; }
+		public: System::Type ^ get(System::String ^ index) override;
 		}
 
-		generic<class TService> bool add_service(ServiceRecord^ record);
-	private:
-		ServiceListType^ list;
+		generic<class TService> System::Boolean add_service(ServiceRecord^ record);
+
+	private: ServiceListType^ services_collection;
 	};
 }

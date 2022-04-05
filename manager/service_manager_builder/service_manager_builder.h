@@ -25,7 +25,7 @@ namespace Manager
 
 	ref class ServiceManagerBuilder sealed : IServiceManagerBuilder
 	{
-		bool manager_is_created;
+		System::Boolean manager_is_created;
 		System::UInt16 registration_count;
 		ServiceCollection^ collection;
 

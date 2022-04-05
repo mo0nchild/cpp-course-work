@@ -3,18 +3,24 @@
 
 using namespace Manager;
 
-generic<class TService> bool ServiceCollection::add_service(ServiceRecord^ record)
+generic<class TService> bool ServiceCollection::add_service(ServiceRecord^ service_record)
 {
 	// проверка на наличие добавляемого сервиса в коллекции
-	for each (ServiceRecord ^ item in list)
+	for each (ServiceRecord^ item in this->services_collection)
 	{
-		try
-		{
-			TService check = safe_cast<TService>(item->service);
-			return false;
-		}
-		catch (InvalidCastException^ error) {}
+		try { TService check = safe_cast<TService>(item->Service); return false; }
+		catch (System::InvalidCastException^ error) { }
 	}
-	list->Add(record);
+	this->services_collection->Add(service_record);
 	return true;
+}
+
+System::Type^ ServiceCollection::ServiceType::get(System::String^ index)
+{
+	System::Type^ service_result = nullptr;
+	for each (ServiceRecord ^ item in this->services_collection) 
+	{
+		if (item->Service->GetType()->Name == index) service_result = item->Service->GetType();
+	}
+	return service_result;
 }

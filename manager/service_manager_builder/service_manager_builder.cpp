@@ -18,8 +18,8 @@ generic <class TService> where TService: IServiceBase TService ServiceManagerBui
 	{
 		for each (auto service_in_collection in this->collection->ServiceList)
 		{
-			if (service_requirement[i]->Requirement == service_in_collection->service->GetType())
-				service_includes[i] = service_in_collection->service;
+			if (service_requirement[i]->Requirement == service_in_collection->Service->GetType())
+				service_includes[i] = service_in_collection->Service;
 		}
 	}
 
@@ -41,7 +41,7 @@ bool ServiceManagerBuilder::service_registration(void)
 		if (service != nullptr)
 		{
 			return collection->add_service<TService>(
-				gcnew ServiceCollection::ServiceRecord(TProvider::typeid, (ServiceBase^)service)
+				gcnew ServiceRecord(TProvider::typeid, (ServiceBase^)service)
 			);
 		}
 	}
