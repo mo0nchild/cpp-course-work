@@ -11,8 +11,7 @@ namespace Manager
 
 	public ref class ServiceManagerBuilderException : System::Exception 
 	{
-	public:
-		ServiceManagerBuilderException(String^ message): System::Exception(message) { }
+	public: ServiceManagerBuilderException(String^ message): System::Exception(message) { }
 	};
 
 	public interface class IServiceManagerBuilder
@@ -34,17 +33,21 @@ namespace Manager
 
 		generic <class TService> where TService: IServiceBase TService dependency_injection(void);
 	public:
-		ServiceManagerBuilder(void): manager_is_created(false) { this->collection = gcnew ServiceCollection(); }
+		ServiceManagerBuilder(System::Void): manager_is_created(false), registration_count(0)
+		{ 
+			this->collection = gcnew ServiceCollection(); 
+		}
+		~ServiceManagerBuilder(System::Void) { }
 
-		property System::UInt16 ServiceCount
+		virtual property System::UInt16 ServiceCount
 		{
-		public: System::UInt16 get(void) { return registration_count; }
-		private: void set(System::UInt16 value) { registration_count = value; }
+		public: System::UInt16 get(void) override { return registration_count; }
+		private: void set(System::UInt16 value) override { registration_count = value; }
 		}
 
-		generic<class TProvider, class TService> where TService: IServiceBase
-		virtual bool service_registration(void) override;
+		virtual ServiceManager^ create_manager(Dictionary<String^, Object^>^ manager_parameter);
 
-		virtual ServiceManager^ create_manager(Dictionary<String^, Object^>^ manager_parameter) override;
+		generic<class TProvider, class TService> where TService: IServiceBase
+			virtual bool service_registration(void) override;
 	};
 }

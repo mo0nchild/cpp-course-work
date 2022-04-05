@@ -19,16 +19,25 @@ namespace Manager
 
 	public interface class IServiceProvider
 	{
-		property ServiceBase^ Service { ServiceBase^ get() abstract; }
-
+		System::Collections::Generic::List<System::Type^> get_dependencies(System::Void);
+		property ServiceBase^ Service { ServiceBase^ get(System::Void) abstract; }
 	};
 
 	public ref class ServiceProvider abstract : IServiceProvider
 	{
 		ServiceBase^ service;
 	public:
-		virtual property ServiceBase^ Service { ServiceBase^ get() { return this->service; } }
-
 		ServiceProvider(ServiceBase^ service) { this->service = service; }
+		~ServiceProvider(System::Void) { }
+
+		virtual property ServiceBase^ Service 
+		{ 
+		public: ServiceBase^ get(System::Void) override { return this->service; } 
+		}
+	
+		virtual List<System::Type^> get_dependencies(System::Void) override
+		{
+
+		}
 	};
 }

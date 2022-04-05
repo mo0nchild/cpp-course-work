@@ -20,11 +20,12 @@ generic <class TService> where TService : IServiceBase ServiceProvider^ ServiceM
 	return provider;
 }
 
-System::Collections::Generic::List<System::String^>^ ServiceManager::ServiceAll::get(System::Void)
+System::Collections::Generic::List<System::Type^>^ ServiceManager::get_all_services(System::Void)
 {
-	List<System::String^>^ result_collection = gcnew List<System::String^>();
-	for each (auto item in this->service_collection->ServiceList)
-		result_collection->Add(item->ToString());
-
+	auto result_collection = gcnew System::Collections::Generic::List<System::Type^>();
+	for each (ServiceRecord ^ item in this->service_collection->ServiceList)
+	{
+		result_collection->Add(item->GetType());
+	}
 	return result_collection;
 }
