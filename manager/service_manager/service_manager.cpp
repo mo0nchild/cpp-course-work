@@ -17,7 +17,11 @@ generic <class TService> where TService : IServiceBase ServiceProvider^ ServiceM
 			};
 
 			try { provider = safe_cast<ServiceProvider^>(Activator::CreateInstance(srv->ServiceProvider, param)); }
-			catch (System::MissingMethodException^ error) { return provider; }
+			catch (System::MissingMethodException^ error) 
+			{
+				Console::WriteLine(error->Message);
+				return provider; 
+			}
 		}
 	}
 	return provider;

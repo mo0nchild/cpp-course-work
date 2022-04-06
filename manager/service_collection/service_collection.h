@@ -38,7 +38,7 @@ namespace Manager
 		using ServiceListType = System::Collections::Generic::List<ServiceRecord^>;
 
 		ServiceCollection(System::Void) { services_collection = gcnew ServiceListType(); }
-		~ServiceCollection(System::Void) { delete services_collection; }
+		virtual ~ServiceCollection(System::Void) { delete services_collection; }
 
 		virtual property ServiceListType^ ServiceList
 		{

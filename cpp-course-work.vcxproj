@@ -130,7 +130,8 @@
     <ClInclude Include="manager\service_items\service_items.h" />
     <ClInclude Include="manager\service_manager\service_manager.h" />
     <ClInclude Include="manager\service_manager_builder\service_manager_builder.h" />
-    <ClInclude Include="models\taxis.h" />
+    <ClInclude Include="models\account_model\account_model.h" />
+    <ClInclude Include="models\cars_model\cars_model.h" />
     <ClInclude Include="services\controllers\controller_base.h" />
     <ClInclude Include="services\managers\manager_base.h" />
     <ClInclude Include="services\messenger\messenger.h" />

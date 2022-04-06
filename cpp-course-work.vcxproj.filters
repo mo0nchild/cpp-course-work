@@ -35,9 +35,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="models\taxis.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="manager\manager.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
@@ -63,6 +60,12 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="services\messenger\messenger.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="models\cars_model\cars_model.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="models\account_model\account_model.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

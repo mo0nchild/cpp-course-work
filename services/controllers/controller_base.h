@@ -1,5 +1,6 @@
 #pragma once
 #include "../../manager/manager.h"
+#include "../managers/manager_base.h"
 
 namespace Services 
 {
@@ -9,21 +10,21 @@ namespace Services
 	public ref class ControllerBase : Manager::ServiceBase
 	{
 	public:
-		ControllerBase(System::Void) { }
-		~ControllerBase(System::Void) { }
+		ControllerBase(System::Void): Manager::ServiceBase() { }
+		virtual ~ControllerBase(System::Void) { }
 
-		virtual System::Void update_data(System::Void) {}
+		virtual System::Void update_data(System::Void) { }
 	};
 
 	public ref class ControllerBaseProvider : Manager::ServiceProvider
 	{
 	public:
-		ControllerBaseProvider(ManagerBase^ serv, List<Type^>^ dep, System::Guid id)
+		ControllerBaseProvider(ControllerBase^ serv, List<Type^>^ dep, System::Guid id)
 			: Manager::ServiceProvider(serv, dep, id)
 		{
 
 		}
-		~ControllerBaseProvider(System::Void) { }
+		virtual ~ControllerBaseProvider(System::Void) { }
 	};
 
 	private ref struct OrderToken sealed
@@ -31,12 +32,20 @@ namespace Services
 		
 	};
 
-	public ref class OrderController : ControllerBase
+	[Manager::ServiceAttribute::ServiceRequireAttribute(GarageManager::typeid)]
+	public ref class OrderController sealed : ControllerBase
 	{
+		System::UInt32 orders_count;
+
 		List<OrderToken^>^ order_collection;
+		GarageManager^ service_garage_manager;
+
 	public:
-		OrderController(System::Void) { }
-		~OrderController(System::Void) { }
+		OrderController(GarageManager^ garage_manager) : ControllerBase(), orders_count(0)
+		{
+			this->service_garage_manager = garage_manager;
+		}
+		virtual ~OrderController(System::Void) { }
 
 
 	};

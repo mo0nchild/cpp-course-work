@@ -16,7 +16,7 @@ namespace Manager
 		System::Boolean service_state;
 	public:
 		ServiceBase(System::Void) : service_state(true) { }
-		~ServiceBase(System::Void) { }
+		virtual ~ServiceBase(System::Void) { }
 
 		virtual property System::Boolean ServiceState 
 		{
@@ -47,7 +47,7 @@ namespace Manager
 			this->service_dependencies = dependencies;
 			this->service_instance = service;
 		}
-		~ServiceProvider(System::Void) { delete service_dependencies; }
+		virtual ~ServiceProvider(System::Void) { delete service_dependencies; }
 
 		virtual property ServiceBase^ Service 
 		{ 
