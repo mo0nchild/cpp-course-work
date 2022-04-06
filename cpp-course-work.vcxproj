@@ -124,7 +124,6 @@
     <ClCompile Include="manager\service_manager_builder\service_manager_builder.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="accounts\account.h" />
     <ClInclude Include="manager\manager.h" />
     <ClInclude Include="manager\service_attribute\service_attribute.h" />
     <ClInclude Include="manager\service_collection\service_collection.h" />
@@ -132,6 +131,9 @@
     <ClInclude Include="manager\service_manager\service_manager.h" />
     <ClInclude Include="manager\service_manager_builder\service_manager_builder.h" />
     <ClInclude Include="models\taxis.h" />
+    <ClInclude Include="services\controllers\controller_base.h" />
+    <ClInclude Include="services\managers\manager_base.h" />
+    <ClInclude Include="services\messenger\messenger.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

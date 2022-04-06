@@ -31,7 +31,8 @@ namespace Manager
 		using ServiceRequire = ServiceAttribute::ServiceRequireAttribute;
 		using ServiceRequireTarget = ServiceAttribute::ServiceRequireTargetAttribute;
 
-		generic <class TService> where TService: IServiceBase TService dependency_injection(void);
+		generic <class TService> where TService: IServiceBase 
+			Tuple<TService, List<System::Type^>^>^ dependency_injection(System::Void);
 	public:
 		ServiceManagerBuilder(System::Void): manager_is_created(false), registration_count(0)
 		{ 

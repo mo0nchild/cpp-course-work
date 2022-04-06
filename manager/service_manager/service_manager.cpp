@@ -10,11 +10,14 @@ generic <class TService> where TService : IServiceBase ServiceProvider^ ServiceM
 
 	for each (ServiceRecord^ srv in this->service_collection->ServiceList)
 	{
-		if (srv->Service->GetType() == service_require)
+		if (srv->ServiceInstance->GetType() == service_require)
 		{
-			array<Object^>^ param = gcnew array<Object^>{ srv->Service };
-			try { provider = safe_cast<ServiceProvider^>(Activator::CreateInstance(srv->Provider, param)); }
-			catch (System::MissingMethodException^ error) { return nullptr; }
+			array<Object^>^ param = gcnew array<Object^> { 
+				srv->ServiceInstance, srv->ServiceDependencies, srv->ServiceGuid 
+			};
+
+			try { provider = safe_cast<ServiceProvider^>(Activator::CreateInstance(srv->ServiceProvider, param)); }
+			catch (System::MissingMethodException^ error) { return provider; }
 		}
 	}
 	return provider;

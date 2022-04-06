@@ -5,15 +5,19 @@ namespace Manager
 {
 	private ref struct ServiceRecord sealed
 	{
-		property System::Type^ Provider;
-		property ServiceBase^ Service;
+		property System::Type^ ServiceProvider;
+		property ServiceBase^ ServiceInstance;
+		property List<System::Type^>^ ServiceDependencies;
+		System::Guid ServiceGuid;
 
-		ServiceRecord(System::Type^ provider, ServiceBase^ service)
+		ServiceRecord(System::Type^ provider, ServiceBase^ service, List<System::Type^>^ dependencies)
+			: ServiceGuid(System::Guid::NewGuid())
 		{
-			this->Provider = provider;
-			this->Service = service;
+			this->ServiceDependencies = dependencies;
+			this->ServiceProvider = provider;
+			this->ServiceInstance = service;
 		}
-		~ServiceRecord() { delete Provider, Service; }
+		~ServiceRecord(System::Void) { delete ServiceProvider, ServiceInstance, ServiceDependencies; }
 	};
 
 	public interface class IServiceCollection

@@ -3,28 +3,43 @@
 
 using namespace Manager;
 
-generic <class TService> where TService: IServiceBase TService ServiceManagerBuilder::dependency_injection(void)
+generic <class TService> where TService: IServiceBase 
+Tuple<TService, List<System::Type^>^>^ ServiceManagerBuilder::dependency_injection(System::Void)
 {
-	TService service_instance;
-	array<Object^>^ service_includes = nullptr;
 	array<ServiceRequire^>^ service_requirement = safe_cast<array<ServiceRequire^>^>(
-		Attribute::GetCustomAttributes(TService::typeid, ServiceRequire::typeid)
-		);
+		Attribute::GetCustomAttributes(TService::typeid, ServiceRequire::typeid));
 
-	if (!service_requirement) return service_instance;
-	service_includes = gcnew array<Object^>(service_requirement->Length);
-
-	for (int i = 0; i < service_includes->Length; i++)
+	System::UInt16 dependencies_collected(0);
+	List<System::Type^>^ service_dependencies = gcnew List<System::Type^>();
+	array<Object^>^ service_includes = nullptr;
+	
+	if (service_requirement) 
 	{
-		for each (auto service_in_collection in this->collection->ServiceList)
+		service_includes = gcnew array<Object^>(service_requirement->Length);
+		for (int i = 0; i < service_includes->Length; i++)
 		{
-			if (service_requirement[i]->Requirement == service_in_collection->Service->GetType())
-				service_includes[i] = service_in_collection->Service;
+			for each (auto service_in_collection in this->collection->ServiceList)
+			{
+				if (service_requirement[i]->Requirement == service_in_collection->ServiceInstance->GetType()) 
+					service_includes[dependencies_collected++] = service_in_collection->ServiceInstance;
+			}
+			service_dependencies->Add(service_requirement[i]->Requirement);
 		}
 	}
 
-	try { service_instance = safe_cast<TService>(Activator::CreateInstance(TService::typeid, service_includes)); }
-	catch (System::Exception^ error) { Console::WriteLine(error->Message); }
+	Tuple<TService, List<System::Type^>^>^ service_instance = nullptr;
+	// если не удалось найти некоторые зависимости в контейнере
+	if (dependencies_collected != service_requirement->Length) 
+	{
+		Console::WriteLine("dependencies_collected != service_requirement->Length");
+		return service_instance;
+	}
+	try 
+	{
+		TService service = safe_cast<TService>(Activator::CreateInstance(TService::typeid, service_includes));
+		service_instance = Tuple::Create(service, service_dependencies);
+	}
+	catch (System::Exception^ error) { Console::WriteLine(error->Message + "\nFrom \"ServiceManagerBuilder\""); }
 
 	return service_instance;
 }
@@ -37,11 +52,11 @@ bool ServiceManagerBuilder::service_registration(void)
 
 	if (provider_interface != nullptr && service_interface != nullptr)
 	{
-		TService service = dependency_injection<TService>();
+		Tuple<TService, List<System::Type^>^>^ service = dependency_injection<TService>();
 		if (service != nullptr)
 		{
-			return collection->add_service<TService>(
-				gcnew ServiceRecord(TProvider::typeid, (ServiceBase^)service)
+			return this->collection->add_service<TService>(
+				gcnew ServiceRecord(TProvider::typeid, (ServiceBase^)(service->Item1), service->Item2)
 			);
 		}
 	}
