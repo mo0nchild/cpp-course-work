@@ -5,6 +5,7 @@
 using namespace System;
 using namespace Services;
 using namespace Manager;
+using namespace Models;
 
 int main(array<String^>^ args) 
 {
@@ -21,6 +22,8 @@ int main(array<String^>^ args)
 
 	GarageManager^ garage_manager = (GarageManager^) myservice1->Service;
 	OrderController^ order_controller = (OrderController^) myservice2->Service;
+
+	order_controller->order_process();
 
 	Console::ReadKey();
 	return 0;

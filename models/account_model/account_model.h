@@ -4,14 +4,16 @@ namespace Models
 {
 	public ref class AccountBaseModel abstract
 	{
-	private:
-		System::String^ account_username;
-		System::UInt32 account_age;
-		System::Guid account_guid;
+	private:	System::String^ account_username;
+	private:	System::UInt32 account_age;
+	private:	System::Guid account_guid;
 
 	public: 
-		AccountBaseModel(System::Void) { }
-		virtual ~AccountBaseModel(System::Void) { }
+		AccountBaseModel(System::String^ name, System::UInt32 age)
+			: account_age(age), account_guid(System::Guid::NewGuid())
+		{ this->account_username = name; }
+
+		virtual ~AccountBaseModel(System::Void) { delete account_username; }
 
 		property System::String^ Username 
 		{
@@ -23,21 +25,28 @@ namespace Models
 		{
 		public: System::UInt32 get(System::Void) { return this->account_age; }
 		}
+
+		property System::Guid Id 
+		{
+		public: System::Guid get(System::Void) { return this->account_guid; }
+		}
 	};
 
 	public ref class AccountDriverModel sealed : AccountBaseModel 
 	{
 		// лецензия, права (машины), 
 	public: 
-		AccountDriverModel(System::Void) : AccountBaseModel() { }
-		virtual ~AccountDriverModel(System::Void) { }
+		AccountDriverModel(System::String^ name, System::UInt32 age) : AccountBaseModel(name, age) 
+		{ }
+		virtual ~AccountDriverModel(System::Void) { AccountBaseModel::~AccountBaseModel(); }
 	};
 
 	public ref class AccountPassengerModel sealed : AccountBaseModel
 	{
 		// номер карты, адрес
 	public:
-		AccountPassengerModel(System::Void) : AccountBaseModel() { }
-		virtual ~AccountPassengerModel(System::Void) { }
+		AccountPassengerModel(System::String^ name, System::UInt32 age) : AccountBaseModel(name, age) 
+		{ }
+		virtual ~AccountPassengerModel(System::Void) { AccountBaseModel::~AccountBaseModel(); }
 	};
 }

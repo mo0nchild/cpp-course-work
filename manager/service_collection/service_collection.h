@@ -8,10 +8,8 @@ namespace Manager
 		property System::Type^ ServiceProvider;
 		property ServiceBase^ ServiceInstance;
 		property List<System::Type^>^ ServiceDependencies;
-		System::Guid ServiceGuid;
 
 		ServiceRecord(System::Type^ provider, ServiceBase^ service, List<System::Type^>^ dependencies)
-			: ServiceGuid(System::Guid::NewGuid())
 		{
 			this->ServiceDependencies = dependencies;
 			this->ServiceProvider = provider;
