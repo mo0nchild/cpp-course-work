@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<service_parameters>
+	<garage_collection_size>100</garage_collection_size>
+	<order_wait_seconds>10</order_wait_seconds>
+</service_parameters>

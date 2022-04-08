@@ -33,6 +33,9 @@
     <ClCompile Include="manager\service_items\service_item.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="services\controllers\controller_base.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="manager\manager.h">
@@ -68,5 +71,8 @@
     <ClInclude Include="models\account_model\account_model.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="services\services_settings.xml" />
   </ItemGroup>
 </Project>

@@ -28,12 +28,15 @@ namespace Services
 		virtual ~ManagerBaseProvider(System::Void) { }
 	};
 
+	public enum class DriverStateType { Busy, Ready, Idle };
+
 	public value struct DriveComplex 
 	{
 		property Models::CarBaseModel^ CarModel;
 		property Models::AccountDriverModel^ DriverModel;
 
-		property System::Boolean IsBusy;
+		property System::Guid ComplexGuid;
+		property DriverStateType DriverState;
 	};
 	
 	public ref class GarageCollection 
@@ -49,6 +52,20 @@ namespace Services
 		}
 		~GarageCollection(System::Void) { delete car_collection; }
 
+		property DriveComplex CarsArray[int]
+		{
+		public: DriveComplex get(int index) 
+			{ 
+				if (index < collection_space_used) return this->car_collection[index];
+				throw gcnew System::Exception("From GarageCollection: Index out of range");
+			}
+		}
+
+		property System::UInt16 CarsArraySize 
+		{
+		public: System::UInt16 get(System::Void) { return this->collection_space_used; }
+		}
+
 		GarageCollection^ add_car_model(DriveComplex new_car) 
 		{
 			if (this->collection_space_used < this->car_collection->Length) 
@@ -57,25 +74,28 @@ namespace Services
 			}
 			return this;
 		}
-
-
-
 	};
 
 	public ref class GarageManager sealed: ManagerBase
 	{
 		GarageCollection^ car_garage_collection;
+
 	public:
-		GarageManager(System::Void) { this->car_garage_collection = gcnew GarageCollection(GARAGE_COLLECTION_SIZE); }
-		virtual ~GarageManager(System::Void) { }
+		GarageManager(System::Void) 
+		{
+			this->car_garage_collection = gcnew GarageCollection(GARAGE_COLLECTION_SIZE); 
+		}
+		virtual ~GarageManager(System::Void) { delete car_garage_collection; }
 
 		// свойство: выводить свободные машины (без водителя)
 
-		// generic<TCarType> (heavy, light)
+		
 		System::Boolean car_request(Models::CarModelTypes car_type) 
 		{
-
+			return false;
 		}
+
+		
 
 	};
 

@@ -15,6 +15,11 @@ namespace Models
 			: model_type(car_type) { this->moder_driver = driver; }
 
 		virtual ~CarBaseModel(System::Void) { }
+
+		property CarModelTypes CarType 
+		{
+		public: CarModelTypes get(System::Void) { return this->model_type; }
+		}
 	};
 
 	public ref class CarLightModel sealed : CarBaseModel 

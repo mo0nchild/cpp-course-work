@@ -117,6 +117,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="manager\service_items\service_item.cpp" />
+    <ClCompile Include="services\controllers\controller_base.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="manager\service_attribute\service_attribute.cpp" />
     <ClCompile Include="manager\service_collection\service_collection.cpp" />
@@ -135,6 +136,9 @@
     <ClInclude Include="services\controllers\controller_base.h" />
     <ClInclude Include="services\managers\manager_base.h" />
     <ClInclude Include="services\messenger\messenger.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="services\services_settings.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

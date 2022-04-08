@@ -2,10 +2,14 @@
 #include "../../manager/manager.h"
 #include "../managers/manager_base.h"
 
+#define ORDER_REQUEST_SECOND 15
+
 namespace Services 
 {
 	using namespace System;
 	using namespace System::Collections::Generic;
+	using namespace System::Threading;
+	using namespace System::Threading::Tasks;
 
 	public ref class ControllerBase : Manager::ServiceBase
 	{
@@ -27,39 +31,42 @@ namespace Services
 		virtual ~ControllerBaseProvider(System::Void) { }
 	};
 
-	public value struct OrderToken sealed
+	private value struct OrderControllerToken sealed
 	{
-		System::String^ order_comment;
-		Models::AccountBaseModel^ order_client;
+	public:	property System::String^ OrderAddress;
+	public:	property Models::CarModelTypes CarType;
 
+		  OrderControllerToken(System::String^ address, Models::CarModelTypes type)
+		  {
+			  this->CarType = type;
+			  this->OrderAddress = address;
+		  }
 	};
-
-	[Manager::ServiceAttribute::ServiceRequireAttribute(GarageManager::typeid)]
+	 
+	[Manager::ServiceAttribute::ServiceRequireAttribute(Services::GarageManager::typeid)]
 	public ref class OrderController sealed : ControllerBase
 	{
 		System::UInt32 orders_count;
-		System::Threading::Thread^ order_processing = nullptr;
+		OrderControllerToken order_toker;
+		GarageManager^ service_garage_manager = nullptr;
+		
+		CancellationTokenSource^ cancel_source = nullptr;
+		CancellationToken request_cancel_token;
 
-		List<OrderToken>^ order_collection;
-		GarageManager^ service_garage_manager;
+	public:		delegate System::Void RequestCallback(System::Boolean);
+	public:		event RequestCallback^ RequestCallbackEvent;
+
+	private:	System::Boolean order_process(System::Void);
+	private:	System::Void order_callback(Task<bool>^ task) { RequestCallbackEvent(task->Result); }
 
 	public:
 		OrderController(GarageManager^ garage_manager) : ControllerBase(), orders_count(0)
-		{
-			this->order_collection = gcnew List<OrderToken>();
-			this->service_garage_manager = garage_manager;
-		}
-		virtual ~OrderController(System::Void) { }
-
-		void create_order(OrderToken order_information)
-		{
-			
-		}
-
-		Models::CarBaseModel^ order_process(String^ address, Models::CarModelTypes type)
-		{
-			
-		}
+		{ this->service_garage_manager = garage_manager; }
+		virtual ~OrderController(System::Void) { delete cancel_source; }
+		
+		generic<class TCarModelClass> where TCarModelClass: Models::CarBaseModel
+		System::Void registration_order(String^ request_address, Models::CarModelTypes car_type);
+		System::Void cancellation_order(System::Void);
 	};
 
 	public ref class ErrorController : ControllerBase 
@@ -67,7 +74,5 @@ namespace Services
 	public:
 		ErrorController(System::Void) { }
 		~ErrorController(System::Void) { }
-
-
 	};
 }
