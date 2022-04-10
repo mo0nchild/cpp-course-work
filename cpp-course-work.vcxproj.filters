@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\main.cpp">
+    <ClCompile Include="main.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="manager\service_manager_builder\service_manager_builder.cpp">
@@ -33,7 +33,13 @@
     <ClCompile Include="manager\service_items\service_item.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="services\controllers\controller_base.cpp">
+    <ClCompile Include="services\order_controller\order_controller.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="services\depot_manager\depot_manager.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="services\database_provider\database_provider.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -56,19 +62,25 @@
     <ClInclude Include="manager\service_items\service_items.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="services\controllers\controller_base.h">
+    <ClInclude Include="services\order_controller\order_controller.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="services\managers\manager_base.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="services\messenger\messenger.h">
+    <ClInclude Include="services\depot_manager\depot_manager.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="models\cars_model\cars_model.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="models\account_model\account_model.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="services\database_provider\database_provider.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="services\services.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="services\account_manager\account_manager.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

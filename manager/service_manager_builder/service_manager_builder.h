@@ -28,11 +28,10 @@ namespace Manager
 		System::UInt16 registration_count;
 		ServiceCollection^ collection;
 
-		using ServiceRequire = ServiceAttribute::ServiceRequireAttribute;
-		using ServiceRequireTarget = ServiceAttribute::ServiceRequireTargetAttribute;
-
-		generic <class TService> where TService: IServiceBase 
+	public:	using ServiceRequire = ServiceAttribute::ServiceRequireAttribute;
+	private: generic <class TService> where TService: IServiceBase 
 			Tuple<TService, List<System::Type^>^>^ dependency_injection(System::Void);
+
 	public:
 		ServiceManagerBuilder(System::Void): manager_is_created(false), registration_count(0)
 		{ 

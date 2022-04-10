@@ -117,12 +117,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="manager\service_items\service_item.cpp" />
-    <ClCompile Include="services\controllers\controller_base.cpp" />
-    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="services\database_provider\database_provider.cpp" />
+    <ClCompile Include="services\order_controller\order_controller.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="manager\service_attribute\service_attribute.cpp" />
     <ClCompile Include="manager\service_collection\service_collection.cpp" />
     <ClCompile Include="manager\service_manager\service_manager.cpp" />
     <ClCompile Include="manager\service_manager_builder\service_manager_builder.cpp" />
+    <ClCompile Include="services\depot_manager\depot_manager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="manager\manager.h" />
@@ -133,12 +135,24 @@
     <ClInclude Include="manager\service_manager_builder\service_manager_builder.h" />
     <ClInclude Include="models\account_model\account_model.h" />
     <ClInclude Include="models\cars_model\cars_model.h" />
-    <ClInclude Include="services\controllers\controller_base.h" />
-    <ClInclude Include="services\managers\manager_base.h" />
-    <ClInclude Include="services\messenger\messenger.h" />
+    <ClInclude Include="services\account_manager\account_manager.h" />
+    <ClInclude Include="services\order_controller\order_controller.h" />
+    <ClInclude Include="services\database_provider\database_provider.h" />
+    <ClInclude Include="services\services.h" />
+    <ClInclude Include="services\depot_manager\depot_manager.h" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="services\services_settings.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="MySql.Data">
+      <HintPath>..\..\..\Libraries\v4.8\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

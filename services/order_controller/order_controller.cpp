@@ -1,4 +1,4 @@
-#include "controller_base.h"
+#include "order_controller.h"
 
 using namespace Services;
 
@@ -9,18 +9,20 @@ System::Void OrderController::registration_order(String^ request_address, Models
 	this->cancel_source = gcnew CancellationTokenSource();
 	this->request_cancel_token = cancel_source->Token;
 
+	this->service_depot_manager->add_request(order_toker);
 	Task<System::Boolean>^ order_processing = gcnew Task<System::Boolean>(
 		gcnew System::Func<bool>(this, &Services::OrderController::order_process), 
 		this->request_cancel_token
 	);
-	order_processing->ContinueWith(
-		gcnew System::Action<Task<bool>^>(this, &Services::OrderController::order_callback));
+
+	order_processing->ContinueWith(gcnew System::Action<Task<bool>^>(
+		this, &Services::OrderController::order_callback));
 	order_processing->Start();
 }
 
 System::Void OrderController::cancellation_order(System::Void)
 {
-	try { Console::WriteLine("cancel"); this->cancel_source->Cancel(); }
+	try { this->cancel_source->Cancel(); }
 	catch (System::Exception^ error) { Console::WriteLine(error->Message); }
 }
 
@@ -29,7 +31,8 @@ System::Boolean OrderController::order_process(System::Void)
 	for (System::UInt32 seconds = 0; seconds < ORDER_REQUEST_SECOND; seconds++)
 	{
 		if (this->request_cancel_token.IsCancellationRequested) { break; }
-		else if (service_garage_manager->car_request(this->order_toker.CarType)) { return true; }
+		else if (service_depot_manager->check_request(order_toker.OrderTokenGuid))
+		{ return true; }
 
 		Thread::Sleep(System::TimeSpan(0, 0, 1));
 	}
