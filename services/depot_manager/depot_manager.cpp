@@ -13,7 +13,7 @@ System::Boolean DepotManager::add_request(Services::OrderControllerToken order_t
 	return true;
 }
 
-System::Boolean DepotManager::check_request(System::Guid order_id)
+System::Boolean DepotManager::check_request(System::Guid order_id, RequestType request_type)
 {
 	/*for (int i = 0; i < this->test_find_pair->Count; i++)
 	{
@@ -23,7 +23,7 @@ System::Boolean DepotManager::check_request(System::Guid order_id)
 	return false;
 }
 
-System::Void DepotManager::accept_request(Guid order_id, Guid driver_id)
+System::Boolean DepotManager::accept_request(Guid order_id, Guid driver_id)
 {
 	/*for each (auto i in request_driver)
 	{
@@ -32,4 +32,5 @@ System::Void DepotManager::accept_request(Guid order_id, Guid driver_id)
 			test_find_pair->Add(gcnew OrderPairConnection(order_id, driver_id));
 		}
 	}*/
+	return true;
 }

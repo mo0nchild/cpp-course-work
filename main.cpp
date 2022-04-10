@@ -30,7 +30,21 @@ int main(array<String^>^ args)
 	Manager::IServiceProvider^ myservice3 = manager->get_service<SqlDatabaseManager^>();
 
 	SqlDatabaseManager^ db = (SqlDatabaseManager^)myservice3->Service;
-	db->get_data();
+
+	List<IDatabaseManager::KeyValuePair^>^ req_row = gcnew List<IDatabaseManager::KeyValuePair^>();
+	req_row->Add(gcnew IDatabaseManager::KeyValuePair("car_type", "suprume"));
+	req_row->Add(gcnew IDatabaseManager::KeyValuePair("address", "Yrupinsk"));
+	db->send_database_data(req_row);
+
+	List<IDatabaseManager::KeyValuePair^>^ arr = gcnew List<IDatabaseManager::KeyValuePair^>();
+	arr->Add(gcnew IDatabaseManager::KeyValuePair("car_type", "econom"));
+	auto rows = db->get_database_data(arr);
+
+	for each (auto items in rows) 
+	{
+		for each (auto i in items) { Console::Write(i->ToString() + " "); }
+		Console::WriteLine();
+	}
 
 	/*DepotManager^ garage_manager = (DepotManager^) myservice1->Service;
 	OrderController^ order_controller = (OrderController^) myservice2->Service;

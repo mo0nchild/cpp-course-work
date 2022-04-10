@@ -6,40 +6,38 @@
 namespace Services 
 {
 	using namespace MySql::Data;
+	using namespace System::Collections::Generic;
+
 	public interface class IDatabaseManager 
 	{
+	public: using KeyValuePair = System::Tuple<System::String^, System::String^>;
+	public: using RequestRow = System::Collections::Generic::List<System::String^>;
 
+		List<RequestRow^>^ get_database_data(List<KeyValuePair^>^ searching_param);
+		System::Boolean send_database_data(List<KeyValuePair^>^ request_param);
+		System::Boolean delete_database_data(List<KeyValuePair^>^ searching_param);
 	};
 
 	public ref class SqlDatabaseManager sealed : Manager::ServiceBase, IDatabaseManager
 	{
-		MySqlClient::MySqlConnection^ db_connection = nullptr;
+	private: MySqlClient::MySqlConnection^ db_connection = nullptr;
+		System::String^ table_name = nullptr;
 
 	public:
 		SqlDatabaseManager(System::Void) : Manager::ServiceBase()
 		{ this->db_connection = gcnew MySqlClient::MySqlConnection(DATABASE_CONNECTION_STRING); }
-		
-		virtual ~SqlDatabaseManager(System::Void) { delete this->db_connection; }
+		virtual ~SqlDatabaseManager(System::Void) { delete this->db_connection, this->table_name; }
 
-		System::Boolean get_data(System::Void) 
+		property System::String^ TableName 
 		{
-			try 
-			{
-				db_connection->Open();
-
-				MySqlClient::MySqlCommand^ command = gcnew MySqlClient::MySqlCommand("select * from my_table", this->db_connection);
-				MySqlClient::MySqlDataReader^ reader = command->ExecuteReader();
-
-				while (reader->Read()) 
-				{
-					System::Console::WriteLine(reader[1]->ToString());
-				}
-			}
-			catch (MySqlClient::MySqlException^ error) {}
-			finally { db_connection->Close(); }
-
-			return true;
+		public: System::String^ get(System::Void) { return this->table_name; }
+		public: System::Void set(System::String^ value) { this->table_name = value; }
 		}
 
+		virtual System::Boolean send_database_data(List<IDatabaseManager::KeyValuePair^>^ request_param);
+		virtual System::Boolean delete_database_data(List<IDatabaseManager::KeyValuePair^>^ searching_param);
+
+		virtual List<IDatabaseManager::RequestRow^>^ get_database_data(
+			List<IDatabaseManager::KeyValuePair^>^ searching_param);
 	};
 }

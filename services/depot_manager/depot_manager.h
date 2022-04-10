@@ -20,49 +20,12 @@ namespace Services
 		property System::Guid ComplexGuid;
 		property DriverStateType DriverState;
 	};
-	
-	public ref class GarageCollection 
-	{
-		// (модель машины, )
-		array<DriveComplex>^ car_collection = nullptr;
-		System::UInt16 collection_space_used;
-
-	public:
-		GarageCollection(System::UInt32 garage_size) : collection_space_used(0)
-		{
-			this->car_collection = gcnew array<DriveComplex>(garage_size);
-		}
-		~GarageCollection(System::Void) { delete car_collection; }
-
-		property DriveComplex CarsArray[int]
-		{
-		public: DriveComplex get(int index) 
-			{ 
-				if (index < collection_space_used) return this->car_collection[index];
-				throw gcnew System::Exception("From GarageCollection: Index out of range");
-			}
-		}
-
-		property System::UInt16 CarsArraySize 
-		{
-		public: System::UInt16 get(System::Void) { return this->collection_space_used; }
-		}
-
-		GarageCollection^ add_car_model(DriveComplex new_car) 
-		{
-			if (this->collection_space_used < this->car_collection->Length) 
-			{
-				car_collection[this->collection_space_used++] = new_car;
-			}
-			return this;
-		}
-	};
 
 	public value struct OrderControllerToken sealed
 	{
-	public:	property System::String^ OrderAddress;
-	public:	property Models::CarModelTypes CarType;
-	public: property System::Guid OrderTokenGuid;
+	public:		property System::String^ OrderAddress;
+	public:		property Models::CarModelTypes CarType;
+	public:		property System::Guid OrderTokenGuid;
 
 		  OrderControllerToken(System::String^ address, Models::CarModelTypes type)
 		  {
@@ -76,19 +39,17 @@ namespace Services
 	public ref class DepotManager sealed : Manager::ServiceBase
 	{
 		// (id клиента, id водителя)
-	public:	using OrderPairConnection = System::Tuple<System::Guid, System::Guid>;
+	public:		using OrderPairConnection = System::Tuple<System::Guid, System::Guid>;
+	public:		enum class RequestType : System::UInt16 { Process, Delete };
 
-		GarageCollection^ car_garage_collection = nullptr;
+	private:
 		SqlDatabaseManager^ database_manager = nullptr;
 		OrderPairConnection^ connected_pair = nullptr;
 
 	public:
 		DepotManager(SqlDatabaseManager^ db_manager) : Manager::ServiceBase()
-		{
-			this->car_garage_collection = gcnew GarageCollection(GARAGE_COLLECTION_SIZE);
-			this->database_manager = db_manager;
-		}
-		virtual ~DepotManager(System::Void) { delete car_garage_collection; }
+		{ this->database_manager = db_manager; }
+		virtual ~DepotManager(System::Void) { delete connected_pair; }
 
 		property List<System::Tuple<System::Guid, System::String^>^>^ DriverRequest
 		{
@@ -96,11 +57,10 @@ namespace Services
 		}
 		// добавить свойство: выводить свободные машины (без водителя)
 
-		// для клиента
 		System::Boolean add_request(Services::OrderControllerToken order_token);
-		System::Boolean check_request(System::Guid order_id);
-		// для водителя
-		System::Void accept_request(System::Guid order_id, System::Guid driver_id);
+		System::Boolean check_request(System::Guid order_id, RequestType request_type);
+
+		System::Boolean accept_request(System::Guid order_id, System::Guid driver_id);
 
 	};
 }

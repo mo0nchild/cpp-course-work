@@ -31,7 +31,8 @@ System::Boolean OrderController::order_process(System::Void)
 	for (System::UInt32 seconds = 0; seconds < ORDER_REQUEST_SECOND; seconds++)
 	{
 		if (this->request_cancel_token.IsCancellationRequested) { break; }
-		else if (service_depot_manager->check_request(order_toker.OrderTokenGuid))
+		else if (service_depot_manager->check_request(
+			order_toker.OrderTokenGuid, DepotManager::RequestType::Process));
 		{ return true; }
 
 		Thread::Sleep(System::TimeSpan(0, 0, 1));
