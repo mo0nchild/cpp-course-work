@@ -66,7 +66,20 @@ System::Boolean SqlDatabaseManager::send_database_data(List<IDatabaseManager::Ke
 	return true;
 }
 
-System::Boolean SqlDatabaseManager::delete_database_data(List<IDatabaseManager::KeyValuePair^>^ searching_param)
+System::Boolean SqlDatabaseManager::delete_database_data(IDatabaseManager::KeyValuePair^ searching_param)
 {
+	if (searching_param == nullptr) return false;
+
+	this->db_connection->Open();
+	try {
+		System::String^ request = System::String::Concat( "delete from order_collection where ", 
+			searching_param->Item1, " = \"", searching_param->Item2, "\"");
+
+		MySqlClient::MySqlCommand^ sql_command = gcnew MySqlClient::MySqlCommand(request, this->db_connection);
+		sql_command->ExecuteNonQuery();
+	}
+	catch (MySqlClient::MySqlException^ error) { System::Console::WriteLine(error->Message); return false; }
+	finally { db_connection->Close(); }
+
 	return true;
 }

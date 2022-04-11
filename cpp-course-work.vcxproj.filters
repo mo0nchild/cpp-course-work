@@ -83,6 +83,9 @@
     <ClInclude Include="services\account_manager\account_manager.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="services\order_controller\order_controller_token.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="services\services_settings.xml" />

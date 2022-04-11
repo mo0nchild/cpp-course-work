@@ -15,7 +15,7 @@ namespace Services
 
 		List<RequestRow^>^ get_database_data(List<KeyValuePair^>^ searching_param);
 		System::Boolean send_database_data(List<KeyValuePair^>^ request_param);
-		System::Boolean delete_database_data(List<KeyValuePair^>^ searching_param);
+		System::Boolean delete_database_data(KeyValuePair^ searching_param);
 	};
 
 	public ref class SqlDatabaseManager sealed : Manager::ServiceBase, IDatabaseManager
@@ -35,7 +35,7 @@ namespace Services
 		}
 
 		virtual System::Boolean send_database_data(List<IDatabaseManager::KeyValuePair^>^ request_param);
-		virtual System::Boolean delete_database_data(List<IDatabaseManager::KeyValuePair^>^ searching_param);
+		virtual System::Boolean delete_database_data(IDatabaseManager::KeyValuePair^ searching_param);
 
 		virtual List<IDatabaseManager::RequestRow^>^ get_database_data(
 			List<IDatabaseManager::KeyValuePair^>^ searching_param);

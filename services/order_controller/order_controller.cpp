@@ -22,6 +22,9 @@ System::Void OrderController::registration_order(String^ request_address, Models
 
 System::Void OrderController::cancellation_order(System::Void)
 {
+	this->service_depot_manager->check_request(
+		this->order_toker.OrderTokenGuid, DepotManager::RequestType::Delete);
+
 	try { this->cancel_source->Cancel(); }
 	catch (System::Exception^ error) { Console::WriteLine(error->Message); }
 }
@@ -31,9 +34,8 @@ System::Boolean OrderController::order_process(System::Void)
 	for (System::UInt32 seconds = 0; seconds < ORDER_REQUEST_SECOND; seconds++)
 	{
 		if (this->request_cancel_token.IsCancellationRequested) { break; }
-		else if (service_depot_manager->check_request(
-			order_toker.OrderTokenGuid, DepotManager::RequestType::Process));
-		{ return true; }
+		else if (this->service_depot_manager->check_request(this->order_toker.OrderTokenGuid, 
+			DepotManager::RequestType::Process)) { return true; }
 
 		Thread::Sleep(System::TimeSpan(0, 0, 1));
 	}

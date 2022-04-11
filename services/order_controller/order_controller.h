@@ -2,6 +2,7 @@
 #include "../../manager/manager.h"
 #include "../depot_manager/depot_manager.h"
 #include "../../models/cars_model/cars_model.h"
+#include "order_controller_token.h"
 
 #define ORDER_REQUEST_SECOND 15
 
@@ -37,10 +38,4 @@ namespace Services
 		System::Void cancellation_order(System::Void);
 	};
 
-	public ref class ErrorController : Manager::ServiceBase
-	{
-	public:
-		ErrorController(System::Void) : Manager::ServiceBase() { }
-		virtual ~ErrorController(System::Void) { }
-	};
 }

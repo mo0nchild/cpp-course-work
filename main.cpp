@@ -31,10 +31,7 @@ int main(array<String^>^ args)
 
 	SqlDatabaseManager^ db = (SqlDatabaseManager^)myservice3->Service;
 
-	List<IDatabaseManager::KeyValuePair^>^ req_row = gcnew List<IDatabaseManager::KeyValuePair^>();
-	req_row->Add(gcnew IDatabaseManager::KeyValuePair("car_type", "suprume"));
-	req_row->Add(gcnew IDatabaseManager::KeyValuePair("address", "Yrupinsk"));
-	db->send_database_data(req_row);
+	db->delete_database_data(gcnew IDatabaseManager::KeyValuePair("car_type", "econom"));
 
 	List<IDatabaseManager::KeyValuePair^>^ arr = gcnew List<IDatabaseManager::KeyValuePair^>();
 	arr->Add(gcnew IDatabaseManager::KeyValuePair("car_type", "econom"));

@@ -136,6 +136,7 @@
     <ClInclude Include="models\account_model\account_model.h" />
     <ClInclude Include="models\cars_model\cars_model.h" />
     <ClInclude Include="services\account_manager\account_manager.h" />
+    <ClInclude Include="services\order_controller\order_controller_token.h" />
     <ClInclude Include="services\order_controller\order_controller.h" />
     <ClInclude Include="services\database_provider\database_provider.h" />
     <ClInclude Include="services\services.h" />

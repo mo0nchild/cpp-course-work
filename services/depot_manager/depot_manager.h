@@ -2,6 +2,7 @@
 #include "../../manager/manager.h"
 #include "../../models/cars_model/cars_model.h"
 #include "../database_provider/database_provider.h"
+#include "../order_controller/order_controller_token.h"
 
 #define GARAGE_COLLECTION_SIZE 100
 
@@ -19,20 +20,6 @@ namespace Services
 
 		property System::Guid ComplexGuid;
 		property DriverStateType DriverState;
-	};
-
-	public value struct OrderControllerToken sealed
-	{
-	public:		property System::String^ OrderAddress;
-	public:		property Models::CarModelTypes CarType;
-	public:		property System::Guid OrderTokenGuid;
-
-		  OrderControllerToken(System::String^ address, Models::CarModelTypes type)
-		  {
-			  this->OrderTokenGuid = System::Guid::NewGuid();
-			  this->OrderAddress = address;
-			  this->CarType = type;
-		  }
 	};
 
 	[Manager::ServiceAttribute::ServiceRequireAttribute(Services::SqlDatabaseManager::typeid)]
