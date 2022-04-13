@@ -35,6 +35,7 @@ System::Boolean OrderController::accept_request(System::Guid order_id, System::G
 	OrderControllerDbScheme^ request_result = safe_cast<OrderControllerDbScheme^>(request_row[0]);
 	bool delete_check = this->service_sql_manager->set_scheme_struct<Services::OrderControllerDbScheme^>()
 		->delete_database_data(gcnew Services::IDatabaseManager::KeyValuePair("order_guid", order_id.ToString()));
+
 	if (delete_check != false)
 	{
 		request_result->driver_guid = driver_id.ToString();
