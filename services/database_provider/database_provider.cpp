@@ -1,6 +1,28 @@
+#pragma once
 #include "database_provider.h"
 
 using namespace Services;
+
+List<System::String^>^ SqlDatabaseManager::CurrentScheme::get(System::Void)
+{
+	List<System::String^>^ copy_list = gcnew List<System::String^>();
+	for each (auto item in this->db_keys_name) { copy_list->Add(safe_cast<System::String^>(item->Clone())); }
+	return copy_list;
+}
+
+generic <class TSchemeStruct> Services::SqlDatabaseManager^ SqlDatabaseManager::set_scheme_struct(System::Void)
+{
+	System::Type^ scheme_deconstruct = TSchemeStruct::typeid;
+	if(scheme_deconstruct->GetInterface("ISqlDataBaseSchemeType") == nullptr) 
+		throw gcnew SqlDatabaseManagerException("From SqlDatabaseManager: Does Not Implement ISqlDataBaseSchemeType");
+	array<System::Reflection::PropertyInfo^>^ property_list = scheme_deconstruct->GetProperties();
+
+	this->db_scheme_type = scheme_deconstruct;
+	this->db_keys_name->Clear();
+	
+	for (int i = 0; i < property_list->Length; i++) { this->db_keys_name->Add(property_list[i]->Name); }
+	return this;
+}
 
 List<IDatabaseManager::RequestRow^>^ SqlDatabaseManager::get_database_data(
 	List<IDatabaseManager::KeyValuePair^>^ searching_param)
@@ -10,54 +32,64 @@ List<IDatabaseManager::RequestRow^>^ SqlDatabaseManager::get_database_data(
 
 	this->db_connection->Open();
 	try {
-		System::String^ request = "select * from order_collection where 1";
+		System::String^ request = "select * from " + this->db_table_name + " where 1";
 		for each (auto item in searching_param)
-		{
-			request = System::String::Concat(request, " and ", item->Item1, " = \"", item->Item2, "\"");
-		}
+		{ request = System::String::Concat(request, " and ", item->Item1, " = \"", item->Item2, "\""); }
 
 		MySqlClient::MySqlCommand^ sql_command = gcnew MySqlClient::MySqlCommand(request, this->db_connection);
 		MySqlClient::MySqlDataReader^ sql_reader = sql_command->ExecuteReader();
 
 		while (sql_reader->Read())
 		{
-			IDatabaseManager::RequestRow^ request_row = gcnew IDatabaseManager::RequestRow();
-			for (int i = 0; i < sql_reader->FieldCount; i++) { request_row->Add(sql_reader[i]->ToString()); }
+			IDatabaseManager::RequestRow^ request_row = nullptr;
+			array<System::Object^>^ param = gcnew array<System::Object^>(sql_reader->FieldCount - 1);
+			for (int i = 1; i < sql_reader->FieldCount; i++) { param[i - 1] = sql_reader[i]->ToString(); }
+
+			try { request_row = System::Activator::CreateInstance(this->db_scheme_type, param); }
+			catch (System::Exception^ error)
+			{ sql_reader->Close(); this->db_connection->Close(); return nullptr; }
+
 			request_result->Add(request_row);
 		}
 		sql_reader->Close();
 	}
 	catch (MySqlClient::MySqlException^ error) { System::Console::WriteLine(error->Message); }
-	finally { db_connection->Close(); }
+	finally { this->db_connection->Close(); }
 
 	return request_result;
 }
 
-System::Boolean SqlDatabaseManager::send_database_data(List<IDatabaseManager::KeyValuePair^>^ request_param)
+System::String^ build_request_string(IDatabaseManager::RequestRow^ request_type, System::String^ request_key)
+{
+	System::Reflection::PropertyInfo^ prop_info = 
+		request_type->GetType()->GetProperty(request_key, BindingFlags::Public | BindingFlags::Instance);
+	return prop_info->GetValue(request_type)->ToString();
+}
+
+System::Boolean SqlDatabaseManager::send_database_data(IDatabaseManager::RequestRow^ request_param)
 {
 	if (request_param == nullptr) return false;
+	System::Type^ request_type = request_param->GetType();
+	array<System::Reflection::PropertyInfo^>^ fields_list = request_type->GetProperties();
 
 	this->db_connection->Open();
 	try {
-		System::String^ request = "select * from order_collection where 1";
-
 		MySqlClient::MySqlCommand^ sql_command = this->db_connection->CreateCommand();
-		sql_command->CommandText = "insert into order_collection(" + request_param[0]->Item1;
-		for (int i = 1; i < request_param->Count; i++)
+		sql_command->CommandText = "insert into " + this->db_table_name + " (" + fields_list[0]->Name;
+		for (int i = 1; i < fields_list->Length; i++)
 		{
-			sql_command->CommandText += System::String::Concat(",", request_param[i]->Item1);
+			sql_command->CommandText += System::String::Concat(",", fields_list[i]->Name);
 		}
-		sql_command->CommandText += System::String::Concat(") values (\"", request_param[0]->Item2, "\"");
+		sql_command->CommandText += System::String::Concat(
+			") values (\"", build_request_string(request_param, fields_list[0]->Name), "\"");
 
-		for(int i = 1; i < request_param->Count; i++)
+		for(int i = 1; i < fields_list->Length; i++)
 		{
-			sql_command->CommandText += System::String::Concat(", ?", request_param[i]->Item1);
-			sql_command->Parameters->Add("?" + request_param[i]->Item1, MySqlClient::MySqlDbType::VarChar)->Value 
-				= request_param[i]->Item2;
+			sql_command->CommandText += System::String::Concat(", ?", fields_list[i]->Name);
+			sql_command->Parameters->Add("?" + fields_list[i]->Name, MySqlClient::MySqlDbType::VarChar)->Value
+				= build_request_string(request_param, fields_list[i]->Name);
 		}
 		sql_command->CommandText += ");";
-		System::Console::WriteLine(sql_command->CommandText);
-
 		sql_command->ExecuteNonQuery();
 	}
 	catch (System::Exception^ error) { System::Console::WriteLine(error->Message); return false; }
@@ -72,7 +104,7 @@ System::Boolean SqlDatabaseManager::delete_database_data(IDatabaseManager::KeyVa
 
 	this->db_connection->Open();
 	try {
-		System::String^ request = System::String::Concat( "delete from order_collection where ", 
+		System::String^ request = System::String::Concat( "delete from " + this->db_table_name + " where ",
 			searching_param->Item1, " = \"", searching_param->Item2, "\"");
 
 		MySqlClient::MySqlCommand^ sql_command = gcnew MySqlClient::MySqlCommand(request, this->db_connection);

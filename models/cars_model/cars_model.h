@@ -16,7 +16,7 @@ namespace Models
 
 		virtual ~CarBaseModel(System::Void) { }
 
-		property CarModelTypes CarType 
+		property Models::CarModelTypes CarType
 		{
 		public: CarModelTypes get(System::Void) { return this->model_type; }
 		}

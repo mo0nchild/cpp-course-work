@@ -13,11 +13,14 @@ namespace Services
 	using namespace System::Threading;
 	using namespace System::Threading::Tasks;
 
-	[Manager::ServiceAttribute::ServiceRequireAttribute(Services::DepotManager::typeid)]
+	[Manager::ServiceAttribute::ServiceRequireAttribute(Services::SqlDatabaseManager::typeid)]
 	public ref class OrderController sealed : Manager::ServiceBase
 	{
-		Services::OrderControllerToken order_toker;
-		DepotManager^ service_depot_manager = nullptr;
+	public:		using OrderPairConnection = System::Tuple<System::Guid, System::Guid>;
+	private:
+		Services::OrderControllerToken order_token;
+		Services::SqlDatabaseManager^ service_sql_manager = nullptr;
+		OrderPairConnection^ connected_pair = nullptr;
 		
 		System::Threading::CancellationTokenSource^ cancel_source = nullptr;
 		System::Threading::CancellationToken request_cancel_token;
@@ -27,15 +30,23 @@ namespace Services
 		  
 	private:	System::Boolean order_process(System::Void);
 	private:	System::Void order_callback(Task<bool>^ task) { RequestCallbackEvent(task->Result); }
+	private:	System::Boolean add_request(System::Void);
 
 	public:
-		OrderController(DepotManager^ depot_manager) : Manager::ServiceBase()
-		{ this->service_depot_manager = depot_manager; }
+		OrderController(Services::SqlDatabaseManager^ sql_manager) : Manager::ServiceBase()
+		{ this->service_sql_manager = sql_manager; }
 		virtual ~OrderController(System::Void) { delete cancel_source; }
 		
+		// переделать эту ъуйню.
+		property Services::OrderControllerToken OrderToken 
+		{
+		public: OrderControllerToken get(System::Void) { return this->order_token; }
+		}
+
 		generic<class TCarModelClass> where TCarModelClass: Models::CarBaseModel
-		System::Void registration_order(String^ request_address, Models::CarModelTypes car_type);
-		System::Void cancellation_order(System::Void);
+		Task<Boolean>^ registration_order(String^ request_address, Models::CarModelTypes car_type);
+		System::Boolean accept_request(System::Guid order_id, System::Guid driver_id);
+		System::Boolean cancellation_order(System::Void);
 	};
 
 }
