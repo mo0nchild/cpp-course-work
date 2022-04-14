@@ -2,7 +2,8 @@
 #include "../../manager/manager.h"
 #include "../../models/cars_model/cars_model.h"
 #include "../database_provider/database_provider.h"
-#include "../order_controller/order_controller_token.h"
+#include "depot_manager_token.h"
+#include "depot_manager_scheme.h"
 
 #define GARAGE_COLLECTION_SIZE 100
 
@@ -11,45 +12,39 @@ namespace Services
 	using namespace System;
 	using namespace System::Collections::Generic;
 
-	public enum class DriverStateType : System::UInt16 { Busy, Ready, Idle };
-
-	public value struct DriveComplex sealed
+	public interface class IDepotManager 
 	{
-		property Models::CarBaseModel^ CarModel;
-		property Models::AccountDriverModel^ DriverModel;
+	public:		System::Boolean return_car_model(System::Void);
+	public:		generic <class TCarClass> where TCarClass : Models::CarBaseModel
+					System::Boolean rent_car_model(Models::CarBaseModel^ car_model);
 
-		property System::Guid ComplexGuid;
-		property DriverStateType DriverState;
+	public:		Services::DriveComplexDbScheme^ get_driver_complexs(System::Guid driver_guid);
+	public:		List<System::Guid>^ get_drivers_guid(System::Void);
 	};
 
 	[Manager::ServiceAttribute::ServiceRequireAttribute(Services::SqlDatabaseManager::typeid)]
-	public ref class DepotManager sealed : Manager::ServiceBase
+	public ref class DepotManager sealed : Manager::ServiceBase, Services::IDepotManager
 	{
-		// (id клиента, id водителя)
-	/*public:		using OrderPairConnection = System::Tuple<System::Guid, System::Guid>;
-	public:		enum class RequestType : System::UInt16 { Process, Delete };*/
-
-	private:
-		SqlDatabaseManager^ database_manager = nullptr;
-		/**/
+	private:	Services::DriveComplexToken^ drive_complex = nullptr;
+	private:	SqlDatabaseManager^ service_sql_manager = nullptr;
 
 	public:
 		DepotManager(SqlDatabaseManager^ db_manager) : Manager::ServiceBase()
-		{ this->database_manager = db_manager; }
-		virtual ~DepotManager(System::Void) {  }
+		{ this->service_sql_manager = db_manager; }
+		virtual ~DepotManager(System::Void) { delete this->drive_complex; }
 
-		/*property List<System::Tuple<System::Guid, System::String^>^>^ DriverRequest
-		{
-		public: List<System::Tuple<System::Guid, System::String^>^>^ get(System::Void);
-		}*/
-		// добавить свойство: выводить свободные машины (без водителя)
+		property DriveComplexToken::DriverStateType DriverState
+		{ public: DriveComplexToken::DriverStateType get(System::Void) { return drive_complex->DriverState; } }
 
+		property System::Guid DriverGuid 
+		{ public: System::Guid get(System::Void) { return this->drive_complex->ComplexGuid; } }
 
-		// убрать эти методы в oder_controller
-		/*System::Boolean add_request(Services::OrderControllerToken order_token);
-		System::Boolean check_request(System::Guid order_id, RequestType request_type);
+		virtual Services::DriveComplexDbScheme^ get_driver_complexs(Guid driver_guid) override;
+		virtual List<System::Guid>^ get_drivers_guid(System::Void) override;
 
-		System::Boolean accept_request(System::Guid order_id, System::Guid driver_id);*/
+		generic <class TCarClass> where TCarClass : Models::CarBaseModel
+			virtual System::Boolean rent_car_model(Models::CarBaseModel^ car_model) override;
 
+		virtual System::Boolean return_car_model(System::Void) override;
 	};
 }

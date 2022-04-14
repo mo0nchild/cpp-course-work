@@ -89,6 +89,15 @@
     <ClInclude Include="services\order_controller\order_controller_scheme.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="services\depot_manager\depot_manager_scheme.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="services\depot_manager\depot_manager_token.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="services\database_provider\database_provider_attribute.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="services\services_settings.xml" />

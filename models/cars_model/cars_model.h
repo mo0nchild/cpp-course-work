@@ -3,23 +3,25 @@
 
 namespace Models 
 {
-	public enum class CarModelTypes { CarTypeEconom, CarTypePremium, CarTypeChild };
+	public enum class CarModelTypes : System::UInt16 { CarTypeEconom, CarTypePremium, CarTypeChild };
+	public enum class CarModelColor : System::UInt16 { CarColorBlack, CarColorWhite, CarColorRed, CarColorYellow };
 
 	public ref class CarBaseModel abstract
 	{
-	protected: CarModelTypes model_type;
-	protected: AccountDriverModel^ moder_driver = nullptr;
+	private:	CarModelTypes model_type;
+	private:	CarModelColor model_color;
+	private:	System::UInt16 car_speed;
 
+	public:	property AccountDriverModel^ moder_driver;
+		  
 	public:
-		CarBaseModel(CarModelTypes car_type, AccountDriverModel^ driver) 
+		CarBaseModel(CarModelTypes car_type, AccountDriverModel^ driver)
 			: model_type(car_type) { this->moder_driver = driver; }
 
 		virtual ~CarBaseModel(System::Void) { }
 
 		property Models::CarModelTypes CarType
-		{
-		public: CarModelTypes get(System::Void) { return this->model_type; }
-		}
+		{ public: CarModelTypes get(System::Void) { return this->model_type; } }
 	};
 
 	public ref class CarLightModel sealed : CarBaseModel 
@@ -32,7 +34,7 @@ namespace Models
 
 	public ref class CarHeavyModel sealed : CarBaseModel
 	{
-		AccountDriverModel^ support_driver = nullptr;
+		property AccountDriverModel^ support_driver;
 	public:
 		CarHeavyModel(CarModelTypes car_type, AccountDriverModel^ driver1, AccountDriverModel^ driver2)
 			: CarBaseModel(car_type, driver1) { this->support_driver = driver2; }

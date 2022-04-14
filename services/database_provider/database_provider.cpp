@@ -34,7 +34,7 @@ List<IDatabaseManager::RequestRow^>^ SqlDatabaseManager::get_database_data(
 	try {
 		System::String^ request = "select * from " + this->db_table_name + " where 1";
 		for each (auto item in searching_param)
-		{ request = System::String::Concat(request, " and ", item->Item1, " = \"", item->Item2, "\""); }
+		{ request = System::String::Concat(request, " or ", item->Item1, " = \"", item->Item2, "\""); }
 
 		MySqlClient::MySqlCommand^ sql_command = gcnew MySqlClient::MySqlCommand(request, this->db_connection);
 		MySqlClient::MySqlDataReader^ sql_reader = sql_command->ExecuteReader();
@@ -66,27 +66,36 @@ System::String^ build_request_string(IDatabaseManager::RequestRow^ request_type,
 	return prop_info->GetValue(request_type)->ToString();
 }
 
+System::String^ build_field_name(System::Reflection::PropertyInfo^ field) 
+{
+	SqlDatabaseFieldAttribute^ service_requirement = safe_cast<array<SqlDatabaseFieldAttribute^>^>(
+		System::Attribute::GetCustomAttributes(field->GetType(), SqlDatabaseFieldAttribute::typeid))[0];
+
+	return service_requirement->FieldName;
+}
+
 System::Boolean SqlDatabaseManager::send_database_data(IDatabaseManager::RequestRow^ request_param)
 {
-	if (request_param == nullptr) return false;
 	System::Type^ request_type = request_param->GetType();
-	array<System::Reflection::PropertyInfo^>^ fields_list = request_type->GetProperties();
+	if (request_param == nullptr || request_type != this->db_scheme_type) return false;
+	array<System::Reflection::PropertyInfo^>^ fields_list = this->db_scheme_type->GetProperties();
 
 	this->db_connection->Open();
 	try {
 		MySqlClient::MySqlCommand^ sql_command = this->db_connection->CreateCommand();
-		sql_command->CommandText = "insert into " + this->db_table_name + " (" + fields_list[0]->Name;
+		sql_command->CommandText = "insert into " + this->db_table_name + " (" + build_field_name(fields_list[0]);
 		for (int i = 1; i < fields_list->Length; i++)
 		{
-			sql_command->CommandText += System::String::Concat(",", fields_list[i]->Name);
+			sql_command->CommandText += System::String::Concat(",", build_field_name(fields_list[i]));
 		}
-		sql_command->CommandText += System::String::Concat(
-			") values (\"", build_request_string(request_param, fields_list[0]->Name), "\"");
+		sql_command->CommandText += System::String::Concat(") values (\"",
+			build_request_string(request_param, fields_list[0]->Name), "\"");
 
 		for(int i = 1; i < fields_list->Length; i++)
 		{
 			sql_command->CommandText += System::String::Concat(", ?", fields_list[i]->Name);
-			sql_command->Parameters->Add("?" + fields_list[i]->Name, MySqlClient::MySqlDbType::VarChar)->Value
+			sql_command->Parameters->Add("?" + build_field_name(fields_list[i]), 
+				MySqlClient::MySqlDbType::VarChar)->Value
 				= build_request_string(request_param, fields_list[i]->Name);
 		}
 		sql_command->CommandText += ");";

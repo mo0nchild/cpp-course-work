@@ -2,6 +2,25 @@
 
 using namespace Services;
 
+List<Services::OrderControllerDbScheme^>^ OrderController::OrderList::get(System::Void)
+{
+	List<IDatabaseManager::KeyValuePair^>^ request_data = gcnew List<IDatabaseManager::KeyValuePair^>();
+	request_data->Add(gcnew IDatabaseManager::KeyValuePair("order_status", "False"));
+	request_data->Add(gcnew IDatabaseManager::KeyValuePair("order_status", "True"));
+
+	this->service_sql_manager->TableName = "order_collection";
+	auto request_result = this->service_sql_manager
+		->set_scheme_struct<Services::OrderControllerDbScheme^>()->get_database_data(request_data);
+	
+	Console::WriteLine(request_result->Count);
+
+	List<Services::OrderControllerDbScheme^>^ function_result = gcnew List<Services::OrderControllerDbScheme^>();
+	for each (auto item in request_result) 
+	{ function_result->Add(safe_cast<Services::OrderControllerDbScheme^>(item)); }
+
+	return function_result;
+}
+
 System::Boolean OrderController::add_request(System::Void)
 {
 	Services::OrderControllerDbScheme^ request_data = gcnew Services::OrderControllerDbScheme();
@@ -23,6 +42,7 @@ System::Boolean OrderController::add_request(System::Void)
 
 System::Boolean OrderController::accept_request(System::Guid order_id, System::Guid driver_id)
 {
+	Services::DriveComplexDbScheme^ request_driver = this->service_depot_manager->get_driver_complexs(driver_id);
 	this->service_sql_manager->TableName = "order_collection";
 	auto request_keys_list = gcnew List<IDatabaseManager::KeyValuePair^>();
 	request_keys_list->Add(gcnew IDatabaseManager::KeyValuePair("order_guid", order_id.ToString()));
@@ -33,6 +53,10 @@ System::Boolean OrderController::accept_request(System::Guid order_id, System::G
 		throw gcnew Services::OrderControllerTokenException("From OrderController: order_guid accept_request");
 
 	OrderControllerDbScheme^ request_result = safe_cast<OrderControllerDbScheme^>(request_row[0]);
+	// проверка валидности принимаемого заказа с текущим водителем
+	if (request_driver->car_class != request_result->car_class || 
+		request_driver->car_type != request_result->car_type) return false;
+
 	bool delete_check = this->service_sql_manager->set_scheme_struct<Services::OrderControllerDbScheme^>()
 		->delete_database_data(gcnew Services::IDatabaseManager::KeyValuePair("order_guid", order_id.ToString()));
 
@@ -47,8 +71,7 @@ System::Boolean OrderController::accept_request(System::Guid order_id, System::G
 	}
 	else return false;
 
-	this->order_token.DriverTokenGuid = driver_id;
-	this->order_token.OrderStatus = true;
+	this->order_token = OrderControllerToken::create_from_dbscheme(request_result);
 	return true;
 }
 

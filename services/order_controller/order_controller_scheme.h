@@ -5,14 +5,14 @@ namespace Services
 {
 	public ref struct OrderControllerDbScheme sealed : SqlDatabaseManager::ISqlDataBaseSchemeType
 	{
-	public:		property System::String^ order_guid;
-	public:		property System::String^ driver_guid;
-	public:		property System::String^ car_type;
-	public:		property System::String^ car_class;
+	public: [Services::SqlDatabaseFieldAttribute("order_guid")]		property System::String^ order_guid;
+	public: [Services::SqlDatabaseFieldAttribute("driver_guid")]	property System::String^ driver_guid;
+	public: [Services::SqlDatabaseFieldAttribute("car_type")]		property System::String^ car_type;
+	public: [Services::SqlDatabaseFieldAttribute("car_class")]		property System::String^ car_class;
 
-	public:		property System::String^ address;
-	public:		property System::String^ date_time;
-	public:		property System::String^ order_status;
+	public: [Services::SqlDatabaseFieldAttribute("address")]		property System::String^ address;
+	public: [Services::SqlDatabaseFieldAttribute("date_time")]		property System::String^ date_time;
+	public: [Services::SqlDatabaseFieldAttribute("order_status")]	property System::String^ order_status;
 
 		  OrderControllerDbScheme(System::String^ p1, System::String^ p2, System::String^ p3, System::String^ p4,
 			  System::String^ p5, System::String^ p6, System::String^ p7)

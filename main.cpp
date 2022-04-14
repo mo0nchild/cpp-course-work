@@ -56,14 +56,26 @@ int main(array<String^>^ args)
 
 	DepotManager^ garage_manager = (DepotManager^) myservice1->Service;
 	OrderController^ order_controller = (OrderController^) myservice2->Service;
+	auto list = garage_manager->get_drivers_guid();
 
-	order_controller->RequestCallbackEvent += gcnew OrderController::RequestCallback(test_request);
-	order_controller->registration_order<Models::CarLightModel^>("адрес", Models::CarModelTypes::CarTypeEconom);
+	for each (auto i in list) 
+	{
+		Console::WriteLine(i);
+	}
 
-	Thread::Sleep(2000);
+	//order_controller->RequestCallbackEvent += gcnew OrderController::RequestCallback(test_request);
+	//order_controller->registration_order<Models::CarLightModel^>("адрес", Models::CarModelTypes::CarTypeEconom);
+
+	/*Thread::Sleep(2000);
 
 	order_controller->accept_request(order_controller->OrderToken.OrderTokenGuid, System::Guid::NewGuid());
-	order_controller->cancellation_order();
+	order_controller->cancellation_order();*/
+
+	/*auto list = order_controller->OrderList;
+	for each (auto i in list) 
+	{
+		Console::WriteLine("->" + i->date_time->ToString());
+	}*/
 
 	//Guid accept;
 	//for each ( auto i in garage_manager->DriverRequest) 

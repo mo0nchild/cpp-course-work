@@ -22,14 +22,10 @@ namespace Models
 		}
 
 		property System::UInt32 Age 
-		{
-		public: System::UInt32 get(System::Void) { return this->account_age; }
-		}
+		{ public: System::UInt32 get(System::Void) { return this->account_age; } }
 
 		property System::Guid Id 
-		{
-		public: System::Guid get(System::Void) { return this->account_guid; }
-		}
+		{ public: System::Guid get(System::Void) { return this->account_guid; } }
 	};
 
 	public ref class AccountDriverModel sealed : AccountBaseModel 

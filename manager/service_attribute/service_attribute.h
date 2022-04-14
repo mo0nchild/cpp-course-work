@@ -6,13 +6,13 @@ namespace Manager
 	
 	inline namespace ServiceAttribute
 	{
-		[System::AttributeUsage(System::AttributeTargets::Class)]
+		[System::AttributeUsage(System::AttributeTargets::Class, AllowMultiple = true)]
 		ref class ServiceRequireAttribute sealed : System::Attribute
 		{
 		private: System::Type^ requirement;
 		public:
 
-			ServiceRequireAttribute(System::Type^ list) { this->Requirement = list; }
+			ServiceRequireAttribute(System::Type^ list) : System::Attribute() { this->Requirement = list; }
 			virtual ~ServiceRequireAttribute(System::Void) { }
 
 			property System::Type^ Requirement
