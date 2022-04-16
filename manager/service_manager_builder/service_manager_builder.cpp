@@ -26,7 +26,6 @@ Tuple<TService, List<System::Type^>^>^ ServiceManagerBuilder::dependency_injecti
 			service_dependencies->Add(service_requirement[i]->Requirement);
 		}
 	}
-
 	Tuple<TService, List<System::Type^>^>^ service_instance = nullptr;
 	// если не удалось найти некоторые зависимости в контейнере
 	if (dependencies_collected != service_requirement->Length) 

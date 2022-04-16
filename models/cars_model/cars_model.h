@@ -10,18 +10,21 @@ namespace Models
 	{
 	private:	CarModelTypes model_type;
 	private:	CarModelColor model_color;
-	private:	System::UInt16 car_speed;
+	private:	System::UInt16 model_speed;
 
-	public:	property AccountDriverModel^ moder_driver;
-		  
 	public:
-		CarBaseModel(CarModelTypes car_type, AccountDriverModel^ driver)
-			: model_type(car_type) { this->moder_driver = driver; }
-
+		CarBaseModel(CarModelTypes car_type, AccountDriverModel^ driver) : model_type(car_type) 
+		{ }
 		virtual ~CarBaseModel(System::Void) { }
 
 		property Models::CarModelTypes CarType
 		{ public: CarModelTypes get(System::Void) { return this->model_type; } }
+		
+		property Models::CarModelColor CarColor
+		{ public: CarModelColor get(System::Void) { return this->model_color; } }
+
+		property System::UInt16 CarSpeed
+		{ public: System::UInt16 get(System::Void) { return this->model_speed; } }
 	};
 
 	public ref class CarLightModel sealed : CarBaseModel 
@@ -34,10 +37,9 @@ namespace Models
 
 	public ref class CarHeavyModel sealed : CarBaseModel
 	{
-		property AccountDriverModel^ support_driver;
 	public:
 		CarHeavyModel(CarModelTypes car_type, AccountDriverModel^ driver1, AccountDriverModel^ driver2)
-			: CarBaseModel(car_type, driver1) { this->support_driver = driver2; }
+			: CarBaseModel(car_type, driver1) { }
 
 		virtual ~CarHeavyModel(System::Void) { }
 	};

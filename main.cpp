@@ -21,6 +21,7 @@ int main(array<String^>^ args)
 	builder->service_registration<MyServicesProvider^, SqlDatabaseManager^>();
 	builder->service_registration<MyServicesProvider^, DepotManager^>();
 	builder->service_registration<MyServicesProvider^, OrderController^>();
+	builder->service_registration<MyServicesProvider^, AccountManager^>();
 
 	ServiceManager^ manager = builder->create_manager(
 		gcnew System::Collections::Generic::Dictionary<String^, Object^>()
@@ -28,6 +29,21 @@ int main(array<String^>^ args)
 	Manager::IServiceProvider^ myservice1 = manager->get_service<DepotManager^>();
 	Manager::IServiceProvider^ myservice2 = manager->get_service<OrderController^>();
 	Manager::IServiceProvider^ myservice3 = manager->get_service<SqlDatabaseManager^>();
+	Manager::IServiceProvider^ myservice4 = manager->get_service<AccountManager^>();
+
+	AccountManager^ account_manager = (AccountManager^)myservice4->Service;
+	/*bool check = account_manager->registration_account<Models::AccountClientModel^>("user", "123456789", 
+		gcnew Models::AccountClientModel("Tulen2", 18, Models::AccountModelGender::MaleGender,
+			"-------------------"));*/
+	bool check = account_manager->authorization_account("user", "123456789");
+	Console::WriteLine(check);
+	Console::WriteLine(account_manager->AccountToken.AccountModel->Username);
+	Thread::Sleep(2000);
+
+	account_manager->delete_account();
+	Console::WriteLine(account_manager->AccountToken.AccountModel->Username);
+	Console::WriteLine(account_manager->AccountToken.AccountModel->Username);
+	
 
 	//SqlDatabaseManager^ db = (SqlDatabaseManager^)myservice3->Service;
 	//db->TableName = "order_collection";
@@ -54,7 +70,7 @@ int main(array<String^>^ args)
 	//bool check1 = db->send_database_data(scheme);
 	//bool check2 = db->delete_database_data(gcnew Services::IDatabaseManager::KeyValuePair("car_class", "123123"));
 
-	DepotManager^ garage_manager = (DepotManager^) myservice1->Service;
+	/*DepotManager^ garage_manager = (DepotManager^) myservice1->Service;
 	OrderController^ order_controller = (OrderController^) myservice2->Service;
 	auto list = garage_manager->get_drivers_guid();
 
@@ -63,8 +79,8 @@ int main(array<String^>^ args)
 		Console::WriteLine(i);
 	}
 
-	//order_controller->RequestCallbackEvent += gcnew OrderController::RequestCallback(test_request);
-	//order_controller->registration_order<Models::CarLightModel^>("адрес", Models::CarModelTypes::CarTypeEconom);
+	order_controller->OrderRequestCallback += gcnew OrderController::RequestCallback(test_request);
+	order_controller->registration_order<Models::CarLightModel^>("адрес", Models::CarModelTypes::CarTypeEconom);*/
 
 	/*Thread::Sleep(2000);
 

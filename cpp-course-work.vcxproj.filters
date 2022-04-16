@@ -42,6 +42,18 @@
     <ClCompile Include="services\database_provider\database_provider.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="services\account_manager\account_manager.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="models\account_model\account_model.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="models\cars_model\cars_model.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="services\account_manager\account_manager_scheme.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="manager\manager.h">
@@ -98,8 +110,17 @@
     <ClInclude Include="services\database_provider\database_provider_attribute.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="services\account_manager\account_manager_scheme.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="services\account_manager\account_manager_token.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="services\services_settings.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="services\database_provider\database_setup.sql" />
   </ItemGroup>
 </Project>

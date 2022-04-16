@@ -6,14 +6,13 @@ namespace Services
 	public ref class DriveComplexTokenException sealed : System::Exception
 	{
 	public:
-		DriveComplexTokenException(System::String^ message) : System::Exception(message)
-		{ }
+		DriveComplexTokenException(System::String^ message) : System::Exception(message) { }
 		virtual ~DriveComplexTokenException(System::Void) { }
 	};
 
 	public value struct DriveComplexToken sealed
 	{
-		enum class DriverStateType : System::UInt16 { Busy, Ready, Idle };
+	public:	enum class DriverStateType : System::UInt16 { Busy, Ready, Idle };
 	public:	property Models::CarBaseModel^ CarModel;
 	public:	property Models::AccountDriverModel^ DriverModel;
 
@@ -28,8 +27,6 @@ namespace Services
 
 	public: DriveComplexToken(Models::CarBaseModel^ car_model, Models::AccountDriverModel^ driver_model)
 		: complex_guid(System::Guid::NewGuid()), driver_state(DriverStateType::Busy)
-	{
-		this->CarModel = car_model; this->DriverModel = driver_model;
-	}
+		{ this->CarModel = car_model; this->DriverModel = driver_model; }
 	};
 }

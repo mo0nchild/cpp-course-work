@@ -15,7 +15,7 @@ namespace Services
 	public: using KeyValuePair = System::Tuple<System::String^, System::String^>;
 	public: using RequestRow = System::Object;
 
-		List<RequestRow^>^ get_database_data(List<KeyValuePair^>^ searching_param);
+		List<RequestRow^>^ get_database_data(List<KeyValuePair^>^ searching_param, System::Boolean mergering);
 
 		System::Boolean send_database_data(IDatabaseManager::RequestRow^ request_param);
 		System::Boolean delete_database_data(IDatabaseManager::KeyValuePair^ searching_param);
@@ -30,9 +30,10 @@ namespace Services
 	public ref class SqlDatabaseManager sealed : Manager::ServiceBase, IDatabaseManager
 	{
 	public: interface class ISqlDataBaseSchemeType { };
+		  value struct SqlDatabaseFieldKey { System::String^ Attribute; System::String^ ClassField; };
 	private: 
 		MySqlClient::MySqlConnection^ db_connection = nullptr;
-		List<System::String^>^ db_keys_name = nullptr;
+		List<SqlDatabaseFieldKey>^ db_keys_name = nullptr;
 
 		System::String^ db_table_name = nullptr;
 		System::Type^ db_scheme_type = nullptr;
@@ -41,10 +42,13 @@ namespace Services
 		SqlDatabaseManager(System::Void) : Manager::ServiceBase()
 		{ 
 			this->db_connection = gcnew MySqlClient::MySqlConnection(DATABASE_CONNECTION_STRING); 
-			this->db_keys_name = gcnew List<System::String^>();
+			this->db_keys_name = gcnew List<SqlDatabaseFieldKey>();
 		}
 		virtual ~SqlDatabaseManager(System::Void) 
-		{ delete this->db_connection, this->db_table_name, this->db_keys_name; }
+		{ 
+			delete this->db_connection, this->db_table_name, this->db_keys_name; 
+			Manager::ServiceBase::~ServiceBase();
+		}
 
 		property System::String^ TableName 
 		{
@@ -62,6 +66,6 @@ namespace Services
 		virtual System::Boolean delete_database_data(IDatabaseManager::KeyValuePair^ searching_param);
 
 		virtual List<IDatabaseManager::RequestRow^>^ get_database_data(
-			List<IDatabaseManager::KeyValuePair^>^ searching_param) override;
+			List<IDatabaseManager::KeyValuePair^>^ searching_param, System::Boolean mergering) override;
 	};
 }

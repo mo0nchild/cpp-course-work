@@ -1,8 +1,10 @@
 #pragma once
 #include "../database_provider/database_provider.h"
+#include "../database_provider/database_provider_attribute.h"
 
 namespace Services 
 {
+	[Services::SqlDatabaseTableAttribute("order_collection")]
 	public ref struct OrderControllerDbScheme sealed : SqlDatabaseManager::ISqlDataBaseSchemeType
 	{
 	public: [Services::SqlDatabaseFieldAttribute("order_guid")]		property System::String^ order_guid;

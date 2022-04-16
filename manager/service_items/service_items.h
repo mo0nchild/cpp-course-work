@@ -26,7 +26,7 @@ namespace Manager
 		virtual property System::Boolean ServiceState 
 		{
 		public: System::Boolean get(System::Void) override { return this->service_state; }
-		protected: System::Void set(System::Boolean value) { this->service_state = value; }
+		protected: System::Void set(System::Boolean value) override { this->service_state = value; }
 		};
 
 		virtual property System::Guid ServiceGuid 

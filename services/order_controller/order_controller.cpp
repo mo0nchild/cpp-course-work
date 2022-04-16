@@ -7,12 +7,8 @@ List<Services::OrderControllerDbScheme^>^ OrderController::OrderList::get(System
 	List<IDatabaseManager::KeyValuePair^>^ request_data = gcnew List<IDatabaseManager::KeyValuePair^>();
 	request_data->Add(gcnew IDatabaseManager::KeyValuePair("order_status", "False"));
 	request_data->Add(gcnew IDatabaseManager::KeyValuePair("order_status", "True"));
-
-	this->service_sql_manager->TableName = "order_collection";
 	auto request_result = this->service_sql_manager
-		->set_scheme_struct<Services::OrderControllerDbScheme^>()->get_database_data(request_data);
-	
-	Console::WriteLine(request_result->Count);
+		->set_scheme_struct<Services::OrderControllerDbScheme^>()->get_database_data(request_data, true);
 
 	List<Services::OrderControllerDbScheme^>^ function_result = gcnew List<Services::OrderControllerDbScheme^>();
 	for each (auto item in request_result) 
@@ -34,22 +30,21 @@ System::Boolean OrderController::add_request(System::Void)
 	request_data->date_time = this->order_token.OrderDate.ToString();
 	request_data->order_status = Convert::ToBoolean(0).ToString();
 
-	this->service_sql_manager->TableName = "order_collection";
-	return this->service_sql_manager
-		->set_scheme_struct<Services::OrderControllerDbScheme^>()
+	return this->service_sql_manager->set_scheme_struct<Services::OrderControllerDbScheme^>()
 		->send_database_data(request_data);
 }
 
 System::Boolean OrderController::accept_request(System::Guid order_id, System::Guid driver_id)
 {
 	Services::DriveComplexDbScheme^ request_driver = this->service_depot_manager->get_driver_complexs(driver_id);
-	this->service_sql_manager->TableName = "order_collection";
 	auto request_keys_list = gcnew List<IDatabaseManager::KeyValuePair^>();
 	request_keys_list->Add(gcnew IDatabaseManager::KeyValuePair("order_guid", order_id.ToString()));
 
 	List<IDatabaseManager::RequestRow^>^ request_row = this->service_sql_manager
-		->set_scheme_struct<Services::OrderControllerDbScheme^>()->get_database_data(request_keys_list);
-	if (request_row->Count > 1 || request_row == nullptr)
+		->set_scheme_struct<Services::OrderControllerDbScheme^>()->get_database_data(request_keys_list, true);
+
+	//изменено request_row->Count > 1
+	if (request_row->Count != 1 || request_row == nullptr)
 		throw gcnew Services::OrderControllerTokenException("From OrderController: order_guid accept_request");
 
 	OrderControllerDbScheme^ request_result = safe_cast<OrderControllerDbScheme^>(request_row[0]);
@@ -94,7 +89,6 @@ Task<System::Boolean>^ OrderController::registration_order(System::String^ reque
 
 System::Boolean OrderController::cancellation_order(System::Void)
 {
-	this->service_sql_manager->TableName = "order_collection";
 	System::Boolean check = this->service_sql_manager
 		->set_scheme_struct<Services::OrderControllerDbScheme^>()
 		->delete_database_data(gcnew IDatabaseManager::KeyValuePair("order_guid", this->order_token.OrderTokenGuid.ToString()));
@@ -115,10 +109,9 @@ System::Boolean OrderController::order_process(System::Void)
 		List<IDatabaseManager::KeyValuePair^>^ search_param = gcnew List<IDatabaseManager::KeyValuePair^>();
 		search_param->Add(gcnew IDatabaseManager::KeyValuePair("order_guid", this->order_token.OrderTokenGuid.ToString()));
 
-		this->service_sql_manager->TableName = "order_collection";
 		List<IDatabaseManager::RequestRow^>^ request_result = this->service_sql_manager
 			->set_scheme_struct<Services::OrderControllerDbScheme^>()
-			->get_database_data(search_param);
+			->get_database_data(search_param, true);
 		if (request_result == nullptr) return false;
 
 		// забираю первое вхождение в выборку (т.к guid уникальный ключ)

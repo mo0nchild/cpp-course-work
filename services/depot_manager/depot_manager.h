@@ -16,7 +16,7 @@ namespace Services
 	{
 	public:		System::Boolean return_car_model(System::Void);
 	public:		generic <class TCarClass> where TCarClass : Models::CarBaseModel
-					System::Boolean rent_car_model(Models::CarBaseModel^ car_model);
+		System::Boolean rent_car_model(Models::CarBaseModel^ car_model);
 
 	public:		Services::DriveComplexDbScheme^ get_driver_complexs(System::Guid driver_guid);
 	public:		List<System::Guid>^ get_drivers_guid(System::Void);
@@ -26,12 +26,12 @@ namespace Services
 	public ref class DepotManager sealed : Manager::ServiceBase, Services::IDepotManager
 	{
 	private:	Services::DriveComplexToken^ drive_complex = nullptr;
-	private:	SqlDatabaseManager^ service_sql_manager = nullptr;
+	private:	Services::SqlDatabaseManager^ service_sql_manager = nullptr;
 
 	public:
 		DepotManager(SqlDatabaseManager^ db_manager) : Manager::ServiceBase()
 		{ this->service_sql_manager = db_manager; }
-		virtual ~DepotManager(System::Void) { delete this->drive_complex; }
+		virtual ~DepotManager(System::Void) { delete this->drive_complex; Manager::ServiceBase::~ServiceBase(); }
 
 		property DriveComplexToken::DriverStateType DriverState
 		{ public: DriveComplexToken::DriverStateType get(System::Void) { return drive_complex->DriverState; } }
