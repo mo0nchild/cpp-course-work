@@ -22,16 +22,19 @@ namespace Services
 	public:		System::Boolean cancellation_order(System::Void);
 	};
 
-	[Manager::ServiceAttribute::ServiceRequireAttribute(Services::DepotManager::typeid)]
 	[Manager::ServiceAttribute::ServiceRequireAttribute(Services::SqlDatabaseManager::typeid)]
+	[Manager::ServiceAttribute::ServiceRequireAttribute(Services::DepotManager::typeid)]
 	public ref class OrderController sealed : Manager::ServiceBase, Services::IOrderController
 	{
 	public:		using OrderPairConnection = System::Tuple<System::Guid, System::Guid>;
 	public:		delegate System::Void RequestCallback(System::Boolean);
-	private:
-		Services::OrderControllerToken order_token;
+	private:	
+		System::UInt32 session_order_count;
+	
 		Services::SqlDatabaseManager^ service_sql_manager = nullptr;
 		Services::DepotManager^ service_depot_manager = nullptr;
+		
+		Services::OrderControllerToken^ order_token = nullptr;
 		OrderPairConnection^ connected_pair = nullptr;
 		
 		System::Threading::CancellationTokenSource^ cancel_source = nullptr;
@@ -40,23 +43,26 @@ namespace Services
 	public:	
 		event RequestCallback^ OrderRequestCallback 
 		{
-			System::Void add(RequestCallback^ handler) { this->request_callback += handler; }
+			System::Void add(RequestCallback^ handler)	{ this->request_callback += handler; }
 			System::Void remove(RequestCallback^ handler) { this->request_callback -= handler; }
 		}
+		property System::UInt32 SessionOrderCount 
+		{ public: System::UInt32 get(System::Void) { return this->session_order_count; } }
 
 	private:	System::Boolean add_request(System::Void);
 	private:	System::Boolean order_process(System::Void);
+
 		System::Void order_callback(Task<bool>^ task)
 		{ this->request_callback(task->Result); this->request_callback = nullptr; }
 
 	public:
 		OrderController(DepotManager^ depot_manager, SqlDatabaseManager^ sql_manager)
-			: Manager::ServiceBase()
+			: Manager::ServiceBase(), session_order_count(0)
 		{ this->service_sql_manager = sql_manager; this->service_depot_manager = depot_manager; }
 		virtual ~OrderController(System::Void) { delete cancel_source; Manager::ServiceBase::~ServiceBase(); }
 		
-		property Services::OrderControllerToken OrderToken 
-		{ public: OrderControllerToken get(System::Void) { return this->order_token; } }
+		property Services::OrderControllerToken^ OrderToken 
+		{ public: OrderControllerToken^ get(System::Void) { return this->order_token; } }
 
 		property List<Services::OrderControllerDbScheme^>^ OrderList 
 		{ public: List<Services::OrderControllerDbScheme^>^ get(System::Void); }

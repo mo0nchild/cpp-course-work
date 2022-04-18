@@ -13,11 +13,11 @@ namespace Manager
 {
 	public ref class ManagerBooking sealed
 	{
-	public: ManagerBooking(System::Void) { }
-	public:	virtual ~ManagerBooking(System::Void) { }
-
 	public: static ServiceManagerBuilder^ create_builder(System::Void) 
 		{ return gcnew Manager::ServiceManagerBuilder(); }
+
+	public: ManagerBooking(System::Void) { }
+	public:	virtual ~ManagerBooking(System::Void) { }
 	};
 }
 

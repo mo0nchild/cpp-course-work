@@ -53,34 +53,33 @@ namespace Models
 	{
 		// лецензия, права (машины), 
 		System::Guid driver_licence = System::Guid::Empty;
-		System::UInt16 driver_experience = 0;
+		System::Guid bank_card = System::Guid::Empty;
 	public:
 		property System::Guid Licence { System::Guid get(System::Void) { return this->driver_licence; } }
-		property System::UInt16 Experience { System::UInt16 get(System::Void) { return this->driver_experience; } }
+		property System::Guid BankCard { System::Guid get(System::Void) { return this->bank_card; } }
 	public: 
-		AccountDriverModel(String^ name, UInt32 age, AccountModelGender gender, Guid licence, UInt16 experience)
+		AccountDriverModel(String^ name, UInt32 age, AccountModelGender gender, Guid licence, Guid bank_card)
 			: Models::AccountBaseModel(name, age, gender)
 		{
-			this->driver_experience = experience; 
+			this->bank_card = bank_card;
 			this->driver_licence = licence;
 		}
 		virtual ~AccountDriverModel(System::Void) { AccountBaseModel::~AccountBaseModel(); }
 
 		virtual System::Object^ Clone(System::Void) override
-		{ return gcnew AccountDriverModel((String^)Username->Clone(), Age, Gender, driver_licence, driver_experience); }
+		{ return gcnew AccountDriverModel((String^)Username->Clone(), Age, Gender, driver_licence, bank_card); }
 	};
 
 	public ref class AccountClientModel sealed : Models::AccountBaseModel
 	{
-		System::String^ bank_card = nullptr;
-	public: property System::String^ BankCard { System::String^ get(System::Void) { return (String^)bank_card->Clone(); } }
+		System::Guid bank_card = System::Guid::Empty;
+	public: property System::Guid BankCard { System::Guid get(System::Void) { return this->bank_card; } }
 	public:
-		AccountClientModel(System::String^ name, System::UInt32 age, AccountModelGender gender, System::String^ bank_card)
-			: AccountBaseModel(name, age, gender) { this->bank_card = bank_card; }
-
-		virtual ~AccountClientModel(System::Void) { delete this->bank_card; AccountBaseModel::~AccountBaseModel(); }
+		AccountClientModel(System::String^ name, System::UInt32 age, AccountModelGender gender,
+			System::Guid bank_card) : AccountBaseModel(name, age, gender), bank_card(bank_card) { }
+		virtual ~AccountClientModel(System::Void) { delete bank_card; AccountBaseModel::~AccountBaseModel(); }
 
 		virtual System::Object^ Clone(System::Void) override
-		{ return gcnew AccountClientModel((String^)Username->Clone(), Age, Gender, (String^)bank_card->Clone()); }
+		{ return gcnew AccountClientModel((String^)Username->Clone(), Age, Gender, bank_card); }
 	};
 }

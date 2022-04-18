@@ -7,6 +7,32 @@ generic <class TEnum> TEnum convert_to_enum(System::String^ value)
 	return safe_cast<TEnum>(System::Enum::Parse(TEnum::typeid, value, true));
 }
 
+List<AccountManager::AccountInfo>^ AccountManager::AccountList::get(System::Void) 
+{  
+	List<IDatabaseManager::KeyValuePair^>^ request_list = gcnew List<IDatabaseManager::KeyValuePair^>();
+	request_list->Add(gcnew IDatabaseManager::KeyValuePair("account_state", "True"));
+	request_list->Add(gcnew IDatabaseManager::KeyValuePair("account_state", "False"));
+
+	List<IDatabaseManager::RequestRow^>^ response_list = this->service_sql_manager
+		->set_scheme_struct<AccountAuthenticationDbScheme^>()->get_database_data(request_list, true);
+	if (response_list == nullptr)
+		throw gcnew AccountManagerTokenException(AccountManager::typeid, "AccountList::get DB error");
+
+	List<AccountManager::AccountInfo>^ result = gcnew List<AccountManager::AccountInfo>();
+	for each (IDatabaseManager::RequestRow ^ item in response_list)
+	{
+		AccountAuthenticationDbScheme^ account_scheme = (AccountAuthenticationDbScheme^)item;
+		try {
+			result->Add(AccountManager::AccountInfo{ System::Guid::Parse(account_scheme->account_guid),
+				account_scheme->login, convert_to_enum<AccountManagerToken::AccountManagerType>(account_scheme->type),
+				System::Boolean::Parse(account_scheme->state)});
+		}
+		catch (System::Exception^ error) { Console::WriteLine(error->Message); }
+	}
+
+	return result;
+}
+
 generic <class TAccountModel> where TAccountModel : Models::AccountBaseModel
 	System::Boolean AccountManager::registration_account(System::String^ login, System::String^ password,
 	TAccountModel account_model)

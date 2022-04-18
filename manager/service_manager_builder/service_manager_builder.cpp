@@ -4,14 +4,14 @@
 using namespace Manager;
 
 generic <class TService> where TService: IServiceBase 
-Tuple<TService, List<System::Type^>^>^ ServiceManagerBuilder::dependency_injection(System::Void)
+	System::Tuple<TService, List<System::Type^>^>^ ServiceManagerBuilder::dependency_injection(System::Void)
 {
 	array<ServiceRequire^>^ service_requirement = safe_cast<array<ServiceRequire^>^>(
 		Attribute::GetCustomAttributes(TService::typeid, ServiceRequire::typeid));
 
 	System::UInt16 dependencies_collected(0);
-	List<System::Type^>^ service_dependencies = gcnew List<System::Type^>();
-	array<Object^>^ service_includes = nullptr;
+	Generic::List<System::Type^>^ service_dependencies = gcnew Generic::List<System::Type^>();
+	array<System::Object^>^ service_includes = nullptr;
 	
 	if (service_requirement) 
 	{
@@ -33,8 +33,7 @@ Tuple<TService, List<System::Type^>^>^ ServiceManagerBuilder::dependency_injecti
 		Console::WriteLine("dependencies_collected != service_requirement->Length");
 		return service_instance;
 	}
-	try 
-	{
+	try {
 		TService service = safe_cast<TService>(Activator::CreateInstance(TService::typeid, service_includes));
 		service_instance = Tuple::Create(service, service_dependencies);
 	}
@@ -43,29 +42,28 @@ Tuple<TService, List<System::Type^>^>^ ServiceManagerBuilder::dependency_injecti
 	return service_instance;
 }
 
-generic<class TProvider, class TService> where TService: IServiceBase
-bool ServiceManagerBuilder::service_registration(void)
+generic<class TProvider, class TService> where TService: Manager::IServiceBase
+	System::Boolean ServiceManagerBuilder::service_registration(System::Void)
 {
 	Type^ provider_interface = TProvider::typeid->GetInterface("IServiceProvider");
 	Type^ service_interface = TService::typeid->GetInterface("IServiceBase");
 
 	if (provider_interface != nullptr && service_interface != nullptr)
 	{
-		Tuple<TService, List<System::Type^>^>^ service = dependency_injection<TService>();
+		System::Tuple<TService, Generic::List<System::Type^>^>^ service = dependency_injection<TService>();
 		if (service != nullptr)
 		{
-			return this->collection->add_service<TService>(
-				gcnew ServiceRecord(TProvider::typeid, (ServiceBase^)(service->Item1), service->Item2)
-			);
+			return this->collection->add_service<TService>(gcnew Manager::ServiceRecord(
+				TProvider::typeid, (Manager::ServiceBase^)(service->Item1), service->Item2));
 		}
 	}
 	return false;
 }
 
-ServiceManager^ ServiceManagerBuilder::create_manager(Dictionary<String^, Object^>^ manager_parameter)
+Manager::ServiceManager^ ServiceManagerBuilder::create_manager(
+	Collections::Generic::Dictionary<System::String^, System::Object^>^ manager_parameter)
 {
 	if (manager_is_created) throw gcnew ServiceManagerBuilderException("Менеджер уже создан");
-
 	manager_is_created = true;
 	return gcnew ServiceManager(collection, manager_parameter);
 }

@@ -3,10 +3,11 @@
 
 using namespace Manager;
 
-generic<class TService> bool ServiceCollection::add_service(ServiceRecord^ service_record)
+generic <class TService> where TService : Manager::IServiceBase
+	System::Boolean ServiceCollection::add_service(Manager::ServiceRecord^ service_record)
 {
 	// проверка на наличие добавляемого сервиса в коллекции
-	for each (ServiceRecord^ item in this->services_collection)
+	for each (Manager::ServiceRecord^ item in this->services_collection)
 	{
 		try { TService check = safe_cast<TService>(item->ServiceInstance); return false; }
 		catch (System::InvalidCastException^ error) { }
@@ -18,13 +19,11 @@ generic<class TService> bool ServiceCollection::add_service(ServiceRecord^ servi
 System::Type^ ServiceCollection::ServiceType::get(System::String^ index)
 {
 	System::Type^ service_result = nullptr;
-	for each (ServiceRecord ^ item in this->services_collection) 
+	for each (Manager::ServiceRecord ^ item in this->services_collection)
 	{
 		if (index == item->ServiceInstance->GetType()->Name || 
-			index == item->ServiceInstance->ToString())
-		{
-			service_result = item->ServiceInstance->GetType();	
-		}
+			index == item->ServiceInstance->ToString()) 
+			{ service_result = item->ServiceInstance->GetType(); }
 	}
 	return service_result;
 }

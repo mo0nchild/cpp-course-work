@@ -19,14 +19,15 @@ List<Services::OrderControllerDbScheme^>^ OrderController::OrderList::get(System
 
 System::Boolean OrderController::add_request(System::Void)
 {
+	this->session_order_count++;
 	Services::OrderControllerDbScheme^ request_data = gcnew Services::OrderControllerDbScheme();
 
 	request_data->address = this->order_token.OrderAddress;
 	request_data->car_class = this->order_token.CarModelClass->Name;
 	request_data->car_type = this->order_token.CarModelType.ToString();
 	
-	request_data->driver_guid = this->order_token.DriverTokenGuid.ToString();
-	request_data->order_guid = this->order_token.OrderTokenGuid.ToString();
+	request_data->driver_guid = this->order_token.DriverGuid.ToString();
+	request_data->client_guid = this->order_token.ClientGuid.ToString();
 	request_data->date_time = this->order_token.OrderDate.ToString();
 	request_data->order_status = Convert::ToBoolean(0).ToString();
 
@@ -45,7 +46,7 @@ System::Boolean OrderController::accept_request(System::Guid order_id, System::G
 
 	//изменено request_row->Count > 1
 	if (request_row->Count != 1 || request_row == nullptr)
-		throw gcnew Services::OrderControllerTokenException("From OrderController: order_guid accept_request");
+		throw gcnew Services::OrderControllerTokenException(OrderController::typeid, "order_guid accept_request");
 
 	OrderControllerDbScheme^ request_result = safe_cast<OrderControllerDbScheme^>(request_row[0]);
 	// проверка валидности принимаемого заказа с текущим водителем
