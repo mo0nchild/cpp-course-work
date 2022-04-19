@@ -36,11 +36,46 @@ generic <class TSchemeStruct> Services::SqlDatabaseManager^ SqlDatabaseManager::
 	return this;
 }
 
+System::String^ build_request_string(IDatabaseManager::RequestRow^ request_type, System::String^ request_key)
+{
+	System::Reflection::PropertyInfo^ prop_info = nullptr;
+
+	try { prop_info = request_type->GetType()->GetProperty(request_key, BindingFlags::Public | BindingFlags::Instance); }
+	catch (System::Exception^ error) { Console::WriteLine(error->Message); return nullptr; }
+
+	return prop_info->GetValue(request_type)->ToString();
+}
+
+System::Boolean SqlDatabaseManager::update_database_date(IDatabaseManager::RequestRow^ request_param,
+	IDatabaseManager::KeyValuePair^ searching_param)
+{
+	if (request_param == nullptr || searching_param == nullptr || db_keys_name->Count == 0) return false;
+	this->db_connection->Open();
+	try 
+	{
+		System::String^ request_string = "update " + this->db_table_name + " set ";
+		for(int i = 0; i < db_keys_name->Count; i++)
+		{
+			request_string = String::Concat(request_string, db_keys_name[i].Attribute, " = \"",
+				build_request_string(request_param, db_keys_name[i].ClassField), "\" ");
+			if (i != db_keys_name->Count - 1) request_string += ", ";
+		}
+		request_string = String::Concat(request_string, " where ", searching_param->Item1, " = \"", searching_param->Item2, "\"");
+
+		MySqlClient::MySqlCommand^ sql_command = gcnew MySqlClient::MySqlCommand(request_string, this->db_connection);
+		sql_command->ExecuteNonQuery();
+	}
+	catch (MySqlClient::MySqlException^ error) { System::Console::WriteLine(error->Message); return false; }
+	finally { this->db_connection->Close(); }
+
+	return true;
+}
+
 List<IDatabaseManager::RequestRow^>^ SqlDatabaseManager::get_database_data(
 	List<IDatabaseManager::KeyValuePair^>^ searching_param, System::Boolean mergering)
 {
 	List<IDatabaseManager::RequestRow^>^ request_result = gcnew List<IDatabaseManager::RequestRow^>();
-	if (searching_param == nullptr) return request_result;
+	if (searching_param == nullptr || db_keys_name->Count == 0) return request_result;
 
 	this->db_connection->Open();
 	try {
@@ -71,17 +106,10 @@ List<IDatabaseManager::RequestRow^>^ SqlDatabaseManager::get_database_data(
 	return request_result;
 }
 
-System::String^ build_request_string(IDatabaseManager::RequestRow^ request_type, System::String^ request_key)
-{
-	System::Reflection::PropertyInfo^ prop_info = 
-		request_type->GetType()->GetProperty(request_key, BindingFlags::Public | BindingFlags::Instance);
-	return prop_info->GetValue(request_type)->ToString();
-}
-
 System::Boolean SqlDatabaseManager::send_database_data(IDatabaseManager::RequestRow^ request_param)
 {
 	System::Type^ request_type = request_param->GetType();
-	if (request_param == nullptr || request_type != this->db_scheme_type) return false;
+	if (request_param == nullptr || request_type != this->db_scheme_type || db_keys_name->Count == 0) return false;
 	System::Boolean request_result = true;
 
 	this->db_connection->Open();
@@ -115,7 +143,7 @@ System::Boolean SqlDatabaseManager::send_database_data(IDatabaseManager::Request
 
 System::Boolean SqlDatabaseManager::delete_database_data(IDatabaseManager::KeyValuePair^ searching_param)
 {
-	if (searching_param == nullptr) return false;
+	if (searching_param == nullptr || db_keys_name->Count == 0) return false;
 
 	this->db_connection->Open();
 	try {

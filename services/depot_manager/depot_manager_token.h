@@ -44,14 +44,15 @@ namespace Services
 		public: System::Void set(DriverStateType value) { this->driver_state = value; }
 		};
 
-	public: DriveComplexToken(Models::CarBaseModel^ car_model, System::Guid driver_guid) 
-		: driver_guid(System::Guid::NewGuid()), driver_state(DriverStateType::Idle) 
-		{ this->CarModel = car_model;}
+	public: 
+		DriveComplexToken(Models::CarBaseModel^ car_model, Guid driver_guid, Type^ car_model_type)
+		: driver_guid(driver_guid), driver_state(DriverStateType::Idle)
+		{ this->CarModel = car_model; this->CarModelType = car_model_type; }
 
 		virtual System::Object^ Clone(System::Void) override
 		{
 			Services::DriveComplexToken^ token = gcnew Services::DriveComplexToken(
-				(Models::CarBaseModel^)CarModel->Clone(), this->driver_guid);
+				(Models::CarBaseModel^)CarModel->Clone(), this->driver_guid, CarModelType);
 			token->DriverState = this->driver_state;
 			return token;
 		}

@@ -16,6 +16,7 @@ namespace Services
 	public: using RequestRow = System::Object;
 
 		List<RequestRow^>^ get_database_data(List<KeyValuePair^>^ searching_param, System::Boolean mergering);
+		System::Boolean update_database_date(RequestRow^ request_param, KeyValuePair^ searching_param);
 
 		System::Boolean send_database_data(IDatabaseManager::RequestRow^ request_param);
 		System::Boolean delete_database_data(IDatabaseManager::KeyValuePair^ searching_param);
@@ -61,6 +62,9 @@ namespace Services
 
 		property List<System::String^>^ CurrentScheme { List<System::String^>^ get(System::Void); }
 		generic <class TSchemeStruct> Services::SqlDatabaseManager^ set_scheme_struct(System::Void);
+
+		virtual System::Boolean update_database_date(IDatabaseManager::RequestRow^ request_param,
+			IDatabaseManager::KeyValuePair^ searching_param) override;
 
 		virtual System::Boolean send_database_data(IDatabaseManager::RequestRow^ request_param);
 		virtual System::Boolean delete_database_data(IDatabaseManager::KeyValuePair^ searching_param);
