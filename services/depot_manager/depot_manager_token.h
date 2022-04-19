@@ -56,6 +56,5 @@ namespace Services
 			token->DriverState = this->driver_state;
 			return token;
 		}
-
 	};
 }

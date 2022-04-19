@@ -63,7 +63,7 @@ generic<class TProvider, class TService> where TService: Manager::IServiceBase
 Manager::ServiceManager^ ServiceManagerBuilder::create_manager(
 	Collections::Generic::Dictionary<System::String^, System::Object^>^ manager_parameter)
 {
-	if (manager_is_created) throw gcnew ServiceManagerBuilderException("Менеджер уже создан");
+	if (manager_is_created) throw gcnew ServiceManagerBuilderException(ServiceManagerBuilder::typeid, "Менеджер уже создан");
 	manager_is_created = true;
 	return gcnew ServiceManager(collection, manager_parameter);
 }

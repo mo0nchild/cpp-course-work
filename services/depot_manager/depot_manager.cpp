@@ -20,13 +20,6 @@ generic <class TCarClass> where TCarClass : Models::CarBaseModel
 	System::Boolean DepotManager::rent_car_model(TCarClass car_model, System::Guid driver_guid)
 {
 	if (this->drive_complex != nullptr) return false;
-
-	//List<IDatabaseManager::KeyValuePair^>^ key_pair = gcnew List<IDatabaseManager::KeyValuePair^>();
-	//key_pair->Add(gcnew IDatabaseManager::KeyValuePair("car_class", TCarClass::typeid->Name));
-	//key_pair->Add(gcnew IDatabaseManager::KeyValuePair("car_type", car_model->CarType.ToString()));
-	//key_pair->Add(gcnew IDatabaseManager::KeyValuePair("car_speed", car_model->CarSpeed.ToString()));
-	//key_pair->Add(gcnew IDatabaseManager::KeyValuePair("car_color", car_model->CarColor.ToString()));
-
 	List<IDatabaseManager::KeyValuePair^>^ key_pair = create_car_request(car_model, TCarClass::typeid);
 
 	auto request_items = service_sql_manager->set_scheme_struct<Services::CarModelDbScheme^>()
@@ -67,13 +60,6 @@ generic <class TCarClass> where TCarClass : Models::CarBaseModel
 System::Boolean DepotManager::return_car_model(System::Void)
 {
 	if (this->drive_complex == nullptr) return false;
-
-	//List<IDatabaseManager::KeyValuePair^>^ key_pair = gcnew List<IDatabaseManager::KeyValuePair^>();
-	//key_pair->Add(gcnew IDatabaseManager::KeyValuePair("car_class", this->drive_complex->CarModelType->Name));
-	//key_pair->Add(gcnew IDatabaseManager::KeyValuePair("car_type", this->drive_complex->CarModel->CarType.ToString()));
-	//key_pair->Add(gcnew IDatabaseManager::KeyValuePair("car_speed", this->drive_complex->CarModel->CarSpeed.ToString()));
-	//key_pair->Add(gcnew IDatabaseManager::KeyValuePair("car_color", this->drive_complex->CarModel->CarColor.ToString()));
-
 	List<IDatabaseManager::KeyValuePair^>^ key_pair 
 		= create_car_request(this->drive_complex->CarModel, this->drive_complex->CarModelType);
 
@@ -115,22 +101,35 @@ System::Boolean DepotManager::return_car_model(System::Void)
 
 System::Boolean DepotManager::update_drive_state(DriveComplexToken::DriverStateType state)
 {
+	if (this->drive_complex == nullptr) return false;
+
+	List<IDatabaseManager::KeyValuePair^>^ key_pair = gcnew List<IDatabaseManager::KeyValuePair^>();
+	key_pair->Add(gcnew IDatabaseManager::KeyValuePair("driver_guid", this->DriverGuid.ToString()));
+
+	auto request_items = service_sql_manager->set_scheme_struct<Services::DriveComplexDbScheme^>()
+		->get_database_data(key_pair, false);
+	if (request_items == nullptr || request_items->Count <= 0) return false;
+
+	Services::DriveComplexDbScheme^ response_item = nullptr;
+	try { response_item = safe_cast<Services::DriveComplexDbScheme^>(request_items[0]); }
+	catch (System::Exception^ error) { Console::WriteLine(error->Message); return false; }
+
+	response_item->driver_state = state.ToString();
+	if (!service_sql_manager->set_scheme_struct<Services::DriveComplexDbScheme^>()
+		->update_database_date(response_item, gcnew IDatabaseManager::KeyValuePair("driver_guid", response_item->driver_guid)))
+		return false;
+
+	this->drive_complex->DriverState = state;
 	return true;
 }
 
 generic <class TCarClass> where TCarClass : Models::CarBaseModel
 	System::Boolean DepotManager::add_car_model(TCarClass car_model, System::UInt16 count)
 {
-	//List<IDatabaseManager::KeyValuePair^>^ key_pair = gcnew List<IDatabaseManager::KeyValuePair^>();
-	//key_pair->Add(gcnew IDatabaseManager::KeyValuePair("car_class", TCarClass::typeid->Name));
-	//key_pair->Add(gcnew IDatabaseManager::KeyValuePair("car_type", car_model->CarType.ToString()));
-	//key_pair->Add(gcnew IDatabaseManager::KeyValuePair("car_speed", car_model->CarSpeed.ToString()));
-	//key_pair->Add(gcnew IDatabaseManager::KeyValuePair("car_color", car_model->CarColor.ToString()));
-
 	List<IDatabaseManager::KeyValuePair^>^ key_pair = create_car_request(car_model, TCarClass::typeid);
-
 	auto request_items = service_sql_manager->set_scheme_struct<Services::CarModelDbScheme^>()
 		->get_database_data(key_pair, false);
+
 	if (request_items == nullptr || request_items->Count <= 0) 
 	{
 		Services::CarModelDbScheme^ model = gcnew Services::CarModelDbScheme();
@@ -157,7 +156,6 @@ generic <class TCarClass> where TCarClass : Models::CarBaseModel
 			->update_database_date(item, gcnew IDatabaseManager::KeyValuePair("group_guid", item->group_guid)))
 			return false;
 	}
-
 	return true;
 }
 
@@ -173,7 +171,7 @@ DriveComplexToken::DriverStateType DepotManager::DriverState::get(System::Void)
 	throw gcnew Services::DriveComplexTokenException(DepotManager::typeid, "drive complex not found");
 }
 
-List<System::Guid>^ DepotManager::get_drivers_guid(System::Void)
+Generic::List<System::Guid>^ DepotManager::get_all_drivers(System::Void)
 {
 	List<System::Guid>^ driver_list = gcnew List<System::Guid>();
 	List<IDatabaseManager::KeyValuePair^>^ request_key = gcnew List<IDatabaseManager::KeyValuePair^>();
@@ -183,7 +181,6 @@ List<System::Guid>^ DepotManager::get_drivers_guid(System::Void)
 
 	auto response_param = this->service_sql_manager->set_scheme_struct<Services::DriveComplexDbScheme^>()
 		->get_database_data(request_key, true);
-
 	for each (IDatabaseManager::RequestRow^ item in response_param) 
 	{
 		try { 
@@ -193,6 +190,54 @@ List<System::Guid>^ DepotManager::get_drivers_guid(System::Void)
 		catch (System::Exception^ error) { Console::WriteLine(error->Message); }
 	}
 	return driver_list;
+}
+
+Generic::List<DepotManager::CarGarageItems>^ DepotManager::get_all_cars(System::Void)
+{
+	List<DepotManager::CarGarageItems>^ car_list = gcnew List<DepotManager::CarGarageItems>();
+	List<IDatabaseManager::KeyValuePair^>^ request_key = gcnew List<IDatabaseManager::KeyValuePair^>();
+
+	request_key->Add(gcnew IDatabaseManager::KeyValuePair("car_class", "CarLightModel"));
+	request_key->Add(gcnew IDatabaseManager::KeyValuePair("car_class", "CarHeavyModel"));
+
+	auto response_param = this->service_sql_manager->set_scheme_struct<Services::CarModelDbScheme^>()
+		->get_database_data(request_key, true);
+	if (response_param == nullptr || response_param->Count <= 0) return nullptr;
+
+	for each (auto item in response_param) 
+	{
+		Services::CarModelDbScheme^ car_model = nullptr;
+		Services::DepotManager::CarGarageItems garage_item;
+
+		Models::CarModelTypes garage_item_type;
+		Models::CarModelColor garage_item_color;
+		System::UInt32 garage_item_speed(0);
+
+		try {
+			car_model = safe_cast<Services::CarModelDbScheme^>(item);
+			garage_item_type = convert_to_enum<Models::CarModelTypes>(car_model->car_type);
+			garage_item_color = convert_to_enum<Models::CarModelColor>(car_model->car_color);
+			garage_item_speed = System::UInt32::Parse(car_model->car_speed);
+			garage_item.CarCount = System::UInt32::Parse(car_model->car_count);
+		}
+		catch (System::Exception^ error) { Console::WriteLine(error->Message); continue; }
+		
+		if (car_model->car_class == "CarHeavyModel")
+		{
+			garage_item.CarModel = gcnew Models::CarHeavyModel(garage_item_type, garage_item_color, garage_item_speed);
+			garage_item.CarClass = Models::CarHeavyModel::typeid;
+			
+		}
+		else if (car_model->car_class == "CarLightModel")
+		{
+			garage_item.CarModel = gcnew Models::CarLightModel(garage_item_type, garage_item_color, garage_item_speed);
+			garage_item.CarClass = Models::CarLightModel::typeid;
+		}
+		else continue;
+		car_list->Add(garage_item);
+	}
+
+	return car_list;
 }
 
 Services::DriveComplexDbScheme^ DepotManager::get_driver_complexs(System::Guid driver_guid)

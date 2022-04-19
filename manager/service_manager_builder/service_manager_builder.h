@@ -10,10 +10,23 @@ namespace Manager
 	using namespace System::Collections::Generic;
 	using namespace System::Collections;
 
-	public ref class ServiceManagerBuilderException : System::Exception 
+	public ref class ServiceManagerBuilderException sealed : System::Exception
 	{
-	public: ServiceManagerBuilderException(String^ message): System::Exception(message) { }
-		  virtual ~ServiceManagerBuilderException(System::Void) { }
+	private:	System::Type^ exception_attach_from = nullptr;
+	public:
+		property System::Type^ AttachFrom
+		{ public: System::Type^ get(System::Void) { return this->exception_attach_from; } }
+
+		virtual property System::String^ Message
+		{
+		public: System::String^ get(System::Void) override
+			{ return "From " + exception_attach_from->ToString() + ": " + Exception::Message; }
+		}
+	public:
+		ServiceManagerBuilderException(System::Type^ from, System::String^ message) : System::Exception(message)
+		{ this->exception_attach_from = from; }
+
+		virtual ~ServiceManagerBuilderException(System::Void) { delete exception_attach_from; }
 	};
 
 	public interface class IServiceManagerBuilder

@@ -22,37 +22,32 @@ public:
 
 		service_builder->service_registration<MyServicesProvider^, SqlDatabaseManager^>();
 		service_builder->service_registration<MyServicesProvider^, DepotManager^>();
+
 		service_builder->service_registration<MyServicesProvider^, OrderController^>();
 		service_builder->service_registration<MyServicesProvider^, AccountManager^>();
 
 		Manager::ServiceManager^ services_manager = service_builder->create_manager(
 			gcnew Generic::Dictionary<System::String^, System::Object^>());
 
-		/*Manager::IServiceProvider^ depot_manager_provider = services_manager->get_service<DepotManager^>();
+		Manager::IServiceProvider^ depot_manager_provider = services_manager->get_service<DepotManager^>();
 		DepotManager^ depot_manager = (DepotManager^)depot_manager_provider->Service;
-		depot_manager->rent_car_model<Models::CarLightModel^>(
-			gcnew Models::CarLightModel(CarModelTypes::CarTypeEconom, CarModelColor::CarColorBlack, 10), System::Guid::NewGuid());
-		
-		auto result = depot_manager->rent_car_model<Models::CarLightModel^>(
-			gcnew Models::CarLightModel(CarModelTypes::CarTypeEconom, CarModelColor::CarColorBlack, 10), System::Guid::NewGuid());
 
-		auto sended = depot_manager->add_car_model<Models::CarHeavyModel^>(gcnew Models::CarHeavyModel(CarModelTypes::CarTypeEconom, CarModelColor::CarColorRed, 20), 3);
+		depot_manager->rent_car_model<Models::CarHeavyModel^>(
+			gcnew Models::CarHeavyModel(CarModelTypes::CarTypeEconom, CarModelColor::CarColorRed, 20), System::Guid::NewGuid());
 
-		Console::WriteLine("add: " + sended);
+		auto drivers = depot_manager->get_all_drivers();
 
-		Console::WriteLine(result);
+		for each (auto i in drivers)
+		{
+			Console::WriteLine(i.ToString());
+		}
+
+		depot_manager->update_drive_state(DriveComplexToken::DriverStateType::Ready);
+
 		Console::WriteLine(depot_manager->DriverState);
-		Console::WriteLine(depot_manager->DriverGuid);
-		Console::ReadKey("вернуть?");
-		depot_manager->return_car_model();*/
+		Console::ReadKey();
 
-
-		/*Manager::IServiceProvider^ myservice = services_manager->get_service<AccountManager^>();
-		AccountManager^ account_manager = (AccountManager^)myservice->Service;
-
-		Console::WriteLine(account_manager->authorization_account("user1", "123456789"));
-		delete account_manager;*/
-
+		depot_manager->return_car_model();
 		//Views::authorization_page form;
 		//System::Windows::Forms::Application::Run(%form);
 		Console::ReadKey();

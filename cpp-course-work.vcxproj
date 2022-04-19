@@ -121,6 +121,7 @@
     <ClCompile Include="models\cars_model\cars_model.cpp" />
     <ClCompile Include="services\account_manager\account_manager.cpp" />
     <ClCompile Include="services\account_manager\account_manager_scheme.cpp" />
+    <ClCompile Include="services\bank_controller\bank_controller.cpp" />
     <ClCompile Include="services\database_provider\database_provider.cpp" />
     <ClCompile Include="services\order_controller\order_controller.cpp" />
     <ClCompile Include="main.cpp" />
@@ -142,6 +143,8 @@
     <ClInclude Include="services\account_manager\account_manager_token.h" />
     <ClInclude Include="services\account_manager\account_manager.h" />
     <ClInclude Include="services\account_manager\account_manager_scheme.h" />
+    <ClInclude Include="services\bank_controller\bank_controller.h" />
+    <ClInclude Include="services\bank_controller\bank_controller_scheme.h" />
     <ClInclude Include="services\database_provider\database_provider_attribute.h" />
     <ClInclude Include="services\depot_manager\depot_manager_scheme.h" />
     <ClInclude Include="services\depot_manager\depot_manager_token.h" />

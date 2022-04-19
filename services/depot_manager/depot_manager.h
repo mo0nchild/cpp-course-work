@@ -11,6 +11,7 @@ namespace Services
 {
 	using namespace System;
 	using namespace System::Collections::Generic;
+	using namespace System::Collections;
 
 	public interface class IDepotManager 
 	{
@@ -26,6 +27,9 @@ namespace Services
 	[Manager::ServiceAttribute::ServiceRequireAttribute(Services::SqlDatabaseManager::typeid)]
 	public ref class DepotManager sealed : Manager::ServiceBase, Services::IDepotManager
 	{
+	public:	value struct CarGarageItems 
+		{ property System::UInt32 CarCount; Models::CarBaseModel^ CarModel; System::Type^ CarClass; };
+
 	private:	Services::DriveComplexToken^ drive_complex = nullptr;
 	private:	Services::SqlDatabaseManager^ service_sql_manager = nullptr;
 	private:	System::Boolean service_disposed;
@@ -40,22 +44,19 @@ namespace Services
 
 		virtual ~DepotManager(System::Void) { delete this->drive_complex; ServiceBase::~ServiceBase(); }
 		!DepotManager(System::Void)
-		{ if (!service_disposed && drive_complex != nullptr) { return_car_model(); service_disposed = true; } }
+		{ if(!service_disposed && drive_complex != nullptr) { return_car_model(); service_disposed = true; } }
 
 		Services::DriveComplexDbScheme^ get_driver_complexs(System::Guid driver_guid);
-		List<System::Guid>^ get_drivers_guid(System::Void);
 		System::Boolean update_drive_state(DriveComplexToken::DriverStateType state);
+
+		Generic::List<System::Guid>^ get_all_drivers(System::Void);
+		Generic::List<DepotManager::CarGarageItems>^ get_all_cars(System::Void);
 
 		generic <class TCarClass> where TCarClass : Models::CarBaseModel
 			virtual System::Boolean add_car_model(TCarClass car_model, UInt16 count) override;
 
 		generic <class TCarClass> where TCarClass : Models::CarBaseModel
 			virtual System::Boolean rent_car_model(TCarClass car_model, System::Guid driver_guid);
-
-		// получение списка доступных авто в гараже
-
-
-
 
 		virtual System::Boolean return_car_model(System::Void) override;
 	};
