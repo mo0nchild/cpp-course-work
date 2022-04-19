@@ -2,7 +2,7 @@
 
 using namespace Services;
 
-generic <class TEnum> TEnum convert_to_enum(System::String^ value)
+generic <class TEnum> TEnum convert_to_enum_cool(System::String^ value)
 {
 	return safe_cast<TEnum>(System::Enum::Parse(TEnum::typeid, value, true));
 }
@@ -24,7 +24,7 @@ List<AccountManager::AccountInfo>^ AccountManager::AccountList::get(System::Void
 		AccountAuthenticationDbScheme^ account_scheme = (AccountAuthenticationDbScheme^)item;
 		try {
 			result->Add(AccountManager::AccountInfo{ System::Guid::Parse(account_scheme->account_guid),
-				account_scheme->login, convert_to_enum<AccountManagerToken::AccountManagerType>(account_scheme->type),
+				account_scheme->login, convert_to_enum_cool<AccountManagerToken::AccountManagerType>(account_scheme->type),
 				System::Boolean::Parse(account_scheme->state)});
 		}
 		catch (System::Exception^ error) { Console::WriteLine(error->Message); }
@@ -116,7 +116,7 @@ System::Boolean AccountManager::authorization_account(System::String^ login, Sys
 
 	try { 
 		account_guid = System::Guid::Parse(account_auth->account_guid); 
-		account_type = convert_to_enum<AccountManagerToken::AccountManagerType>(account_auth->type);
+		account_type = convert_to_enum_cool<AccountManagerToken::AccountManagerType>(account_auth->type);
 	}
 	catch (System::Exception^ error) { Console::WriteLine(error->Message); return false; }
 
@@ -181,7 +181,7 @@ System::Boolean AccountManager::sign_out_account(System::Void)
 
 	AccountManagerToken::AccountManagerType account_enum_type;
 	try {
-		account_enum_type = convert_to_enum<AccountManagerToken::AccountManagerType>(account_auth->type);
+		account_enum_type = convert_to_enum_cool<AccountManagerToken::AccountManagerType>(account_auth->type);
 	}
 	catch (System::Exception^ error) { Console::WriteLine(error->Message); return false; }
 
@@ -258,7 +258,7 @@ System::Boolean AccountManager::delete_account(System::Void)
 
 	AccountManagerToken::AccountManagerType account_enum_type;
 	try {
-		account_enum_type = convert_to_enum<AccountManagerToken::AccountManagerType>(account_auth->type);
+		account_enum_type = convert_to_enum_cool<AccountManagerToken::AccountManagerType>(account_auth->type);
 	}
 	catch (System::Exception^ error) { Console::WriteLine(error->Message); return false; }
 	switch (account_enum_type)

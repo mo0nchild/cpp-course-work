@@ -11,11 +11,6 @@ using namespace Services;
 using namespace Manager;
 using namespace Models;
 
-public ref class Test 
-{
-
-};
-
 public ref class Program sealed
 {
 public:
@@ -33,6 +28,16 @@ public:
 		Manager::ServiceManager^ services_manager = service_builder->create_manager(
 			gcnew Generic::Dictionary<System::String^, System::Object^>());
 
+		Manager::IServiceProvider^ depot_manager_provider = services_manager->get_service<DepotManager^>();
+		DepotManager^ depot_manager = (DepotManager^)depot_manager_provider->Service;
+		auto result = depot_manager->rent_car_model<Models::CarLightModel^>(
+			gcnew Models::CarLightModel(CarModelTypes::CarTypeEconom, CarModelColor::CarColorBlack, 10), System::Guid::NewGuid());
+		
+		Console::WriteLine(result);
+		Console::WriteLine(depot_manager->DriverState);
+		Console::WriteLine(depot_manager->DriverGuid);
+		Console::ReadKey("вернуть?");
+		depot_manager->return_car_model();
 		/*Manager::IServiceProvider^ myservice = services_manager->get_service<AccountManager^>();
 		AccountManager^ account_manager = (AccountManager^)myservice->Service;
 
@@ -41,6 +46,7 @@ public:
 
 		//Views::authorization_page form;
 		//System::Windows::Forms::Application::Run(%form);
+		Console::ReadKey();
 		return System::Int32(0);
 	}
 };

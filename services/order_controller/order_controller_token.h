@@ -36,9 +36,8 @@ namespace Services
 	public: property System::Type^ CarModelClass;
 	public:	property System::String^ OrderAddress;
 	public: 
-		OrderControllerToken(String^ order_address, Models::CarModelTypes car_model, Type^ car_class
-			, System::Guid client, System::Guid driver) 
-			: ClientGuid(client), DriverGuid(driver), OrderDate(System::DateTime::Now), OrderStatus(false)
+		OrderControllerToken(String^ order_address, Models::CarModelTypes car_model, Type^ car_class, Guid client) 
+			: ClientGuid(client), DriverGuid(Guid::Empty), OrderDate(System::DateTime::Now), OrderStatus(false)
 		{
 			if (car_class->IsSubclassOf(Models::CarBaseModel::typeid) != true)
 			{ throw gcnew OrderControllerTokenException(OrderControllerToken::typeid, "car_class"); }
@@ -60,7 +59,7 @@ namespace Services
 
 			System::Guid driver_guid = System::Guid::Parse(scheme->driver_guid);
 			System::Guid client_guid = System::Guid::Parse(scheme->client_guid);
-			OrderControllerToken token(scheme->address, car_model, car_class, client_guid, driver_guid);
+			OrderControllerToken token(scheme->address, car_model, car_class, client_guid);
 		
 			token.OrderStatus = Convert::ToBoolean(scheme->order_status);
 			token.OrderDate = System::DateTime::Parse(scheme->date_time);

@@ -28,6 +28,7 @@ namespace Services
 	{
 	public:	enum class DriverStateType : System::UInt16 { Busy, Ready, Idle };
 	public:		property Models::CarBaseModel^ CarModel;
+	public:		property System::Type^ CarModelType;
 
 	private:	Services::DriveComplexToken::DriverStateType driver_state;
 	private:	System::Guid driver_guid;
@@ -44,13 +45,13 @@ namespace Services
 		};
 
 	public: DriveComplexToken(Models::CarBaseModel^ car_model, System::Guid driver_guid) 
-		: driver_guid(System::Guid::NewGuid()), driver_state(DriverStateType::Busy) 
+		: driver_guid(System::Guid::NewGuid()), driver_state(DriverStateType::Idle) 
 		{ this->CarModel = car_model;}
 
 		virtual System::Object^ Clone(System::Void) override
 		{
 			Services::DriveComplexToken^ token = gcnew Services::DriveComplexToken(
-				(CarBaseModel^)CarModel->Clone(), this->driver_guid);
+				(Models::CarBaseModel^)CarModel->Clone(), this->driver_guid);
 			token->DriverState = this->driver_state;
 			return token;
 		}

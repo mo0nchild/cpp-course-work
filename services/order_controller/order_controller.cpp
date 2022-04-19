@@ -22,13 +22,13 @@ System::Boolean OrderController::add_request(System::Void)
 	this->session_order_count++;
 	Services::OrderControllerDbScheme^ request_data = gcnew Services::OrderControllerDbScheme();
 
-	request_data->address = this->order_token.OrderAddress;
-	request_data->car_class = this->order_token.CarModelClass->Name;
-	request_data->car_type = this->order_token.CarModelType.ToString();
+	request_data->address = this->order_token->OrderAddress;
+	request_data->car_class = this->order_token->CarModelClass->Name;
+	request_data->car_type = this->order_token->CarModelType.ToString();
 	
-	request_data->driver_guid = this->order_token.DriverGuid.ToString();
-	request_data->client_guid = this->order_token.ClientGuid.ToString();
-	request_data->date_time = this->order_token.OrderDate.ToString();
+	request_data->driver_guid = this->order_token->DriverGuid.ToString();
+	request_data->client_guid = this->order_token->ClientGuid.ToString();
+	request_data->date_time = this->order_token->OrderDate.ToString();
 	request_data->order_status = Convert::ToBoolean(0).ToString();
 
 	return this->service_sql_manager->set_scheme_struct<Services::OrderControllerDbScheme^>()
@@ -74,7 +74,7 @@ System::Boolean OrderController::accept_request(System::Guid order_id, System::G
 generic<class TCarModelClass> where TCarModelClass: Models::CarBaseModel
 Task<System::Boolean>^ OrderController::registration_order(System::String^ request_address, Models::CarModelTypes car_type)
 {
-	this->order_token = OrderControllerToken(request_address, car_type, TCarModelClass::typeid);
+	this->order_token = gcnew OrderControllerToken(request_address, car_type, TCarModelClass::typeid, Guid::NewGuid());
 	this->cancel_source = gcnew CancellationTokenSource();
 	this->request_cancel_token = cancel_source->Token;
 
@@ -90,15 +90,16 @@ Task<System::Boolean>^ OrderController::registration_order(System::String^ reque
 
 System::Boolean OrderController::cancellation_order(System::Void)
 {
-	System::Boolean check = this->service_sql_manager
-		->set_scheme_struct<Services::OrderControllerDbScheme^>()
-		->delete_database_data(gcnew IDatabaseManager::KeyValuePair("order_guid", this->order_token.OrderTokenGuid.ToString()));
+	if (this->order_token == nullptr) return false;
+
+	System::Boolean check = this->service_sql_manager->set_scheme_struct<Services::OrderControllerDbScheme^>()
+		->delete_database_data(gcnew IDatabaseManager::KeyValuePair("order_guid", this->order_token->ClientGuid.ToString()));
 
 	try { this->cancel_source->Cancel(); }
 	catch (System::Exception^ error) { Console::WriteLine(error->Message); return false; }
 
-	this->order_token.DriverTokenGuid = System::Guid::Empty;
-	this->order_token.OrderStatus = false;
+	this->order_token->DriverGuid = System::Guid::Empty;
+	this->order_token->OrderStatus = false;
 	return check;
 }
 
@@ -108,7 +109,7 @@ System::Boolean OrderController::order_process(System::Void)
 	{
 		if (this->request_cancel_token.IsCancellationRequested) { break; }
 		List<IDatabaseManager::KeyValuePair^>^ search_param = gcnew List<IDatabaseManager::KeyValuePair^>();
-		search_param->Add(gcnew IDatabaseManager::KeyValuePair("order_guid", this->order_token.OrderTokenGuid.ToString()));
+		search_param->Add(gcnew IDatabaseManager::KeyValuePair("order_guid", this->order_token->ClientGuid.ToString()));
 
 		List<IDatabaseManager::RequestRow^>^ request_result = this->service_sql_manager
 			->set_scheme_struct<Services::OrderControllerDbScheme^>()

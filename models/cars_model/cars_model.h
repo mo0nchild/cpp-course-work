@@ -35,6 +35,8 @@ namespace Models
 		CarLightModel(Models::CarModelTypes car_type, Models::CarModelColor color, System::UInt16 speed)
 			: CarBaseModel(car_type, color, speed) { }
 		virtual ~CarLightModel(System::Void) { }
+
+		virtual System::Object^ Clone(System::Void) override { return gcnew CarLightModel(CarType, CarColor, CarSpeed); }
 		virtual System::Void car_drive(System::Void) override { Console::WriteLine("Идем на легковой машине"); }
 	};
 
@@ -43,8 +45,9 @@ namespace Models
 	public:
 		CarHeavyModel(Models::CarModelTypes car_type, Models::CarModelColor color, System::UInt16 speed)
 			: CarBaseModel(car_type, color, speed) { }
-
 		virtual ~CarHeavyModel(System::Void) { }
+
+		virtual System::Object^ Clone(System::Void) override { return gcnew CarHeavyModel(CarType, CarColor, CarSpeed); }
 		virtual System::Void car_drive(System::Void) override { Console::WriteLine("Идем на легковой машине"); }
 	};
 
