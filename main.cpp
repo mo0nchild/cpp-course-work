@@ -21,6 +21,7 @@ public:
 		Manager::ServiceManagerBuilder^ service_builder = Manager::ManagerBooking::create_builder();
 
 		service_builder->service_registration<MyServicesProvider^, SqlDatabaseManager^>();
+		service_builder->service_registration<MyServicesProvider^, BankController^>();
 		service_builder->service_registration<MyServicesProvider^, DepotManager^>();
 
 		service_builder->service_registration<MyServicesProvider^, OrderController^>();
@@ -29,25 +30,6 @@ public:
 		Manager::ServiceManager^ services_manager = service_builder->create_manager(
 			gcnew Generic::Dictionary<System::String^, System::Object^>());
 
-		Manager::IServiceProvider^ depot_manager_provider = services_manager->get_service<DepotManager^>();
-		DepotManager^ depot_manager = (DepotManager^)depot_manager_provider->Service;
-
-		depot_manager->rent_car_model<Models::CarHeavyModel^>(
-			gcnew Models::CarHeavyModel(CarModelTypes::CarTypeEconom, CarModelColor::CarColorRed, 20), System::Guid::NewGuid());
-
-		auto drivers = depot_manager->get_all_drivers();
-
-		for each (auto i in drivers)
-		{
-			Console::WriteLine(i.ToString());
-		}
-
-		depot_manager->update_drive_state(DriveComplexToken::DriverStateType::Ready);
-
-		Console::WriteLine(depot_manager->DriverState);
-		Console::ReadKey();
-
-		depot_manager->return_car_model();
 		//Views::authorization_page form;
 		//System::Windows::Forms::Application::Run(%form);
 		Console::ReadKey();

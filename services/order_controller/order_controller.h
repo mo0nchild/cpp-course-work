@@ -22,8 +22,8 @@ namespace Services
 	public:		System::Boolean cancellation_order(System::Void);
 	};
 
-	[Manager::ServiceAttribute::ServiceRequireAttribute(Services::DepotManager::typeid)]
 	[Manager::ServiceAttribute::ServiceRequireAttribute(Services::SqlDatabaseManager::typeid)]
+	[Manager::ServiceAttribute::ServiceRequireAttribute(Services::DepotManager::typeid)]
 	public ref class OrderController sealed : Manager::ServiceBase, Services::IOrderController
 	{
 	public:		using OrderPairConnection = System::Tuple<System::Guid, System::Guid>;

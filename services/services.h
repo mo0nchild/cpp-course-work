@@ -7,6 +7,7 @@
 #include "depot_manager/depot_manager.h"
 #include "order_controller/order_controller.h"
 #include "account_manager/account_manager.h"
+#include "bank_controller/bank_controller.h"
 
 namespace Services 
 {

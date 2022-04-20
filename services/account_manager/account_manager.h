@@ -48,7 +48,7 @@ namespace Services
 		{ this->service_sql_manager = sql_manager; }
 
 		virtual ~AccountManager(System::Void) { AccountManager::!AccountManager(); }
-		!AccountManager(System::Void) { if (!service_disposed) { this->sign_out_account(); service_disposed = true;} }
+		!AccountManager(System::Void) { if (!service_disposed) { this->sign_out_account(); service_disposed = true; } }
 
 		generic <class TAccountModel> where TAccountModel : Models::AccountBaseModel
 		virtual System::Boolean registration_account(System::String^ login, System::String^ password,

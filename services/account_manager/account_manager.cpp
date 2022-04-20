@@ -8,8 +8,7 @@ generic <class TEnum> TEnum convert_to_enum_cool(System::String^ value)
 }
 
 List<AccountManager::AccountInfo>^ AccountManager::AccountList::get(System::Void) 
-{  
-	List<IDatabaseManager::KeyValuePair^>^ request_list = gcnew List<IDatabaseManager::KeyValuePair^>();
+{  	List<IDatabaseManager::KeyValuePair^>^ request_list = gcnew List<IDatabaseManager::KeyValuePair^>();
 	request_list->Add(gcnew IDatabaseManager::KeyValuePair("account_state", "True"));
 	request_list->Add(gcnew IDatabaseManager::KeyValuePair("account_state", "False"));
 
@@ -42,7 +41,7 @@ generic <class TAccountModel> where TAccountModel : Models::AccountBaseModel
 
 	List<IDatabaseManager::RequestRow^>^ response_list = this->service_sql_manager
 		->set_scheme_struct<AccountAuthenticationDbScheme^>()->get_database_data(request_list, false);
-	if (response_list == nullptr || response_list->Count != 0) return false;
+	if (response_list == nullptr || response_list->Count > 0) return false;
 
 	AccountManagerToken::AccountManagerType account_type;
 	if (TAccountModel::typeid->Name == "AccountAdminModel") account_type = AccountManagerToken::AccountManagerType::Admin;
@@ -137,24 +136,24 @@ System::Boolean AccountManager::authorization_account(System::String^ login, Sys
 	case AccountManagerToken::AccountManagerType::Driver:
 		response_obj = this->service_sql_manager->set_scheme_struct<AccountDriversDbScheme^>()
 			->get_database_data(request_key, true);
+		if (response_obj == nullptr || response_obj->Count != 1) return false;
 		account_model = AccountDriversDbScheme::cast_to_model((AccountDriversDbScheme^)response_obj[0]);
 	break;
 	case AccountManagerToken::AccountManagerType::Client: 
 		response_obj = this->service_sql_manager->set_scheme_struct<AccountClientsDbScheme^>()
 			->get_database_data(request_key, true);
+		if (response_obj == nullptr || response_obj->Count != 1) return false;
 		account_model = AccountClientsDbScheme::cast_to_model((AccountClientsDbScheme^)response_obj[0]);
 	break;
 	}
 
 	if (account_model == nullptr) return false;
-	System::Boolean account_state_update_1 = this->service_sql_manager->set_scheme_struct<AccountAuthenticationDbScheme^>()
-		->delete_database_data(gcnew IDatabaseManager::KeyValuePair("account_guid", account_guid.ToString()));
 
-	System::Boolean account_state_update_2 = this->service_sql_manager->set_scheme_struct<AccountAuthenticationDbScheme^>()
-		->send_database_data(gcnew AccountAuthenticationDbScheme(account_guid.ToString(), account_auth->login,
-			account_auth->password, account_auth->type, true.ToString()));
+	account_auth->state = true.ToString();
+	System::Boolean account_state_update = this->service_sql_manager->set_scheme_struct<AccountAuthenticationDbScheme^>()
+		->update_database_date(account_auth, gcnew IDatabaseManager::KeyValuePair("account_guid", account_auth->account_guid));
+	if (account_state_update != true) return false;
 
-	if (account_state_update_1 != true || account_state_update_2 != true) return false;
 	this->AccountToken = AccountManagerToken(account_type, account_model, account_guid);
 	this->account_initialized = true;
 	return true;
@@ -172,19 +171,16 @@ System::Boolean AccountManager::sign_out_account(System::Void)
 	if (response_list == nullptr || response_list->Count != 1) return false;
 	AccountAuthenticationDbScheme^ account_auth = safe_cast<AccountAuthenticationDbScheme^>(response_list[0]);
 
-	System::Boolean account_state_update_1 = this->service_sql_manager->set_scheme_struct<AccountAuthenticationDbScheme^>()
-		->delete_database_data(gcnew IDatabaseManager::KeyValuePair("account_guid", account_auth->account_guid));
-
-	System::Boolean account_state_update_2 = this->service_sql_manager->set_scheme_struct<AccountAuthenticationDbScheme^>()
-		->send_database_data(gcnew AccountAuthenticationDbScheme(account_auth->account_guid, account_auth->login,
-			account_auth->password, account_auth->type, false.ToString()));
+	account_auth->state = false.ToString();
+	System::Boolean account_state_update = this->service_sql_manager->set_scheme_struct<AccountAuthenticationDbScheme^>()
+		->update_database_date(account_auth, gcnew IDatabaseManager::KeyValuePair("account_guid", account_auth->account_guid));
+	if (account_state_update != true) return false;
 
 	AccountManagerToken::AccountManagerType account_enum_type;
 	try {
 		account_enum_type = convert_to_enum_cool<AccountManagerToken::AccountManagerType>(account_auth->type);
 	}
 	catch (System::Exception^ error) { Console::WriteLine(error->Message); return false; }
-
 	this->account_initialized = false;
 	this->AccountToken = AccountManagerToken(account_enum_type, nullptr, System::Guid::Empty);
 	return true;
@@ -194,45 +190,41 @@ generic <class TAccountModel> where TAccountModel : Models::AccountBaseModel
 	System::Boolean AccountManager::update_account(TAccountModel account_model)
 {
 	if (this->IsInitialized != true) return false;
-	
+	IDatabaseManager::KeyValuePair^ upload_key = gcnew IDatabaseManager::KeyValuePair(
+		"account_guid", this->AccountToken.AccountGuid.ToString());
 	switch (this->AccountToken.AccountType)
 	{
-	case AccountManagerToken::AccountManagerType::Admin: 
+	case AccountManagerToken::AccountManagerType::Admin:;
 	{
 		if (TAccountModel::typeid->Name != "AccountAdminModel") return false;
+		IDatabaseManager::RequestRow^ upload_model = AccountAdminsDbScheme::cast_to_scheme(
+			(Models::AccountAdminModel^)account_model, this->AccountToken.AccountGuid);
 
-		bool delete_check = this->service_sql_manager->set_scheme_struct<AccountAdminsDbScheme^>()
-			->delete_database_data(gcnew IDatabaseManager::KeyValuePair("account_guid", AccountToken.AccountGuid.ToString()));
-		if (delete_check != true) return false;
-
-		bool upload_check = this->service_sql_manager->set_scheme_struct<AccountAdminsDbScheme^>()
-			->send_database_data(AccountAdminsDbScheme::cast_to_scheme((AccountAdminModel^)account_model, AccountToken.AccountGuid));
+		System::Boolean upload_check = this->service_sql_manager->set_scheme_struct<AccountAdminsDbScheme^>()
+			->update_database_date(upload_model, upload_key);
 		if (upload_check != true) return false;
 	}
 		break;
-	case AccountManagerToken::AccountManagerType::Client:
+	case AccountManagerToken::AccountManagerType::Client:;
 	{
 		if (TAccountModel::typeid->Name != "AccountClientModel") return false;
+		IDatabaseManager::RequestRow^ upload_model = AccountClientsDbScheme::cast_to_scheme(
+			(Models::AccountClientModel^)account_model, this->AccountToken.AccountGuid);
 
-		bool delete_check = this->service_sql_manager->set_scheme_struct<AccountClientsDbScheme^>()
-			->delete_database_data(gcnew IDatabaseManager::KeyValuePair("account_guid", AccountToken.AccountGuid.ToString()));
-		if (delete_check != true) return false;
-
-		bool upload_check = this->service_sql_manager->set_scheme_struct<AccountClientsDbScheme^>()
-			->send_database_data(AccountClientsDbScheme::cast_to_scheme((AccountClientModel^)account_model, AccountToken.AccountGuid));
+		System::Boolean upload_check = this->service_sql_manager->set_scheme_struct<AccountClientsDbScheme^>()
+			->update_database_date(upload_model, upload_key);
 		if (upload_check != true) return false;
+
 	}
 		break;
-	case AccountManagerToken::AccountManagerType::Driver:
+	case AccountManagerToken::AccountManagerType::Driver:;
 	{
 		if (TAccountModel::typeid->Name != "AccountDriverModel") return false;
-
-		bool delete_check = this->service_sql_manager->set_scheme_struct<AccountDriversDbScheme^>()
-			->delete_database_data(gcnew IDatabaseManager::KeyValuePair("account_guid", AccountToken.AccountGuid.ToString()));
-		if (delete_check != true) return false;
-
-		bool upload_check = this->service_sql_manager->set_scheme_struct<AccountDriversDbScheme^>()
-			->send_database_data(AccountDriversDbScheme::cast_to_scheme((AccountDriverModel^)account_model, AccountToken.AccountGuid));
+		IDatabaseManager::RequestRow^ upload_model = AccountDriversDbScheme::cast_to_scheme(
+			(Models::AccountDriverModel^)account_model, this->AccountToken.AccountGuid);
+		
+		System::Boolean upload_check = this->service_sql_manager->set_scheme_struct<AccountDriversDbScheme^>()
+			->update_database_date(upload_model, upload_key);
 		if (upload_check != true) return false;
 	}
 		break;
@@ -279,7 +271,6 @@ System::Boolean AccountManager::delete_account(System::Void)
 
 	this->service_sql_manager->set_scheme_struct<AccountAuthenticationDbScheme^>()
 		->delete_database_data(request_key);
-	
 	
 	this->account_initialized = false;
 	this->AccountToken = AccountManagerToken(account_enum_type, nullptr, System::Guid::Empty);
