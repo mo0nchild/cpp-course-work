@@ -55,7 +55,7 @@ namespace Services
 		{ this->request_callback(task->Result); this->request_callback = nullptr; }
 
 	public:
-		OrderController(DepotManager^ depot_manager, SqlDatabaseManager^ sql_manager)
+		OrderController(SqlDatabaseManager^ sql_manager, DepotManager^ depot_manager)
 			: Manager::ServiceBase(), session_order_count(0), service_disposed(false)
 		{ this->service_sql_manager = sql_manager; this->service_depot_manager = depot_manager; }
 

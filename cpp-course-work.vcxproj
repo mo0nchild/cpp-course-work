@@ -130,6 +130,7 @@
     <ClCompile Include="manager\service_manager\service_manager.cpp" />
     <ClCompile Include="manager\service_manager_builder\service_manager_builder.cpp" />
     <ClCompile Include="services\depot_manager\depot_manager.cpp" />
+    <ClCompile Include="views\authorization\authorization_page.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="manager\manager.h" />
@@ -154,6 +155,9 @@
     <ClInclude Include="services\database_provider\database_provider.h" />
     <ClInclude Include="services\services.h" />
     <ClInclude Include="services\depot_manager\depot_manager.h" />
+    <ClInclude Include="views\authorization\authorization_page.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="services\services_settings.xml" />
@@ -170,6 +174,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="services\database_provider\database_setup.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="views\authorization\authorization_page.resx">
+      <DependentUpon>views\authorization\authorization_page.h</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

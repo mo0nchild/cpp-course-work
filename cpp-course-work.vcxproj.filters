@@ -57,6 +57,9 @@
     <ClCompile Include="services\bank_controller\bank_controller.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="views\authorization\authorization_page.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="manager\manager.h">
@@ -123,6 +126,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="services\bank_controller\bank_controller_scheme.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="views\authorization\authorization_page.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
