@@ -129,19 +129,19 @@ System::Boolean AccountManager::authorization_account(System::String^ login, Sys
 	case AccountManagerToken::AccountManagerType::Admin:
 		
 		response_obj = this->service_sql_manager->set_scheme_struct<AccountAdminsDbScheme^>()
-			->get_database_data(request_key, true);
+			->get_database_data(request_key, false);
 		if (response_obj == nullptr || response_obj->Count != 1) return false;
 		account_model = AccountAdminsDbScheme::cast_to_model((AccountAdminsDbScheme^)response_obj[0]);
 	break;
 	case AccountManagerToken::AccountManagerType::Driver:
 		response_obj = this->service_sql_manager->set_scheme_struct<AccountDriversDbScheme^>()
-			->get_database_data(request_key, true);
+			->get_database_data(request_key, false);
 		if (response_obj == nullptr || response_obj->Count != 1) return false;
 		account_model = AccountDriversDbScheme::cast_to_model((AccountDriversDbScheme^)response_obj[0]);
 	break;
 	case AccountManagerToken::AccountManagerType::Client: 
 		response_obj = this->service_sql_manager->set_scheme_struct<AccountClientsDbScheme^>()
-			->get_database_data(request_key, true);
+			->get_database_data(request_key, false);
 		if (response_obj == nullptr || response_obj->Count != 1) return false;
 		account_model = AccountClientsDbScheme::cast_to_model((AccountClientsDbScheme^)response_obj[0]);
 	break;
@@ -194,8 +194,7 @@ generic <class TAccountModel> where TAccountModel : Models::AccountBaseModel
 		"account_guid", this->AccountToken.AccountGuid.ToString());
 	switch (this->AccountToken.AccountType)
 	{
-	case AccountManagerToken::AccountManagerType::Admin:;
-	{
+	case AccountManagerToken::AccountManagerType::Admin: {
 		if (TAccountModel::typeid->Name != "AccountAdminModel") return false;
 		IDatabaseManager::RequestRow^ upload_model = AccountAdminsDbScheme::cast_to_scheme(
 			(Models::AccountAdminModel^)account_model, this->AccountToken.AccountGuid);
@@ -203,10 +202,8 @@ generic <class TAccountModel> where TAccountModel : Models::AccountBaseModel
 		System::Boolean upload_check = this->service_sql_manager->set_scheme_struct<AccountAdminsDbScheme^>()
 			->update_database_date(upload_model, upload_key);
 		if (upload_check != true) return false;
-	}
-		break;
-	case AccountManagerToken::AccountManagerType::Client:;
-	{
+	}	break;
+	case AccountManagerToken::AccountManagerType::Client: {
 		if (TAccountModel::typeid->Name != "AccountClientModel") return false;
 		IDatabaseManager::RequestRow^ upload_model = AccountClientsDbScheme::cast_to_scheme(
 			(Models::AccountClientModel^)account_model, this->AccountToken.AccountGuid);
@@ -214,11 +211,8 @@ generic <class TAccountModel> where TAccountModel : Models::AccountBaseModel
 		System::Boolean upload_check = this->service_sql_manager->set_scheme_struct<AccountClientsDbScheme^>()
 			->update_database_date(upload_model, upload_key);
 		if (upload_check != true) return false;
-
-	}
-		break;
-	case AccountManagerToken::AccountManagerType::Driver:;
-	{
+	}	break;
+	case AccountManagerToken::AccountManagerType::Driver: {
 		if (TAccountModel::typeid->Name != "AccountDriverModel") return false;
 		IDatabaseManager::RequestRow^ upload_model = AccountDriversDbScheme::cast_to_scheme(
 			(Models::AccountDriverModel^)account_model, this->AccountToken.AccountGuid);
@@ -226,8 +220,7 @@ generic <class TAccountModel> where TAccountModel : Models::AccountBaseModel
 		System::Boolean upload_check = this->service_sql_manager->set_scheme_struct<AccountDriversDbScheme^>()
 			->update_database_date(upload_model, upload_key);
 		if (upload_check != true) return false;
-	}
-		break;
+	}	break;
 	}
 
 	this->AccountToken = AccountManagerToken(AccountToken.AccountType, account_model, AccountToken.AccountGuid);

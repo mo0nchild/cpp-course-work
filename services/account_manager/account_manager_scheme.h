@@ -57,21 +57,21 @@ namespace Services
 	public: [Services::SqlDatabaseFieldAttribute("age")]				property System::String^ age;
 	public: [Services::SqlDatabaseFieldAttribute("gender")]				property System::String^ gender;
 	public: [Services::SqlDatabaseFieldAttribute("driver_licence")]		property System::String^ licence;
-	public: [Services::SqlDatabaseFieldAttribute("back_card")]			property System::String^ back_card;
+	public: [Services::SqlDatabaseFieldAttribute("bank_card")]			property System::String^ bank_card;
 
 		  AccountDriversDbScheme(System::String^ p1, System::String^ p2, System::String^ p3,
 			  System::String^ p4, System::String^ p5, System::String^ p6)
 		  {
 			  this->account_guid = p1;	this->username = p2;	this->age = p3;	this->gender = p4;	
-			  this->licence = p5;		this->back_card = p6;
+			  this->licence = p5;		this->bank_card = p6;
 		  }
 		  AccountDriversDbScheme(System::Void)
 		  {
 			  this->account_guid = "";	this->username = "";	this->age = "";	this->gender = "";
-			  this->licence = "";		this->back_card = "";
+			  this->licence = "";		this->bank_card = "";
 		  }
 
-		  virtual ~AccountDriversDbScheme(System::Void) { delete account_guid, username, age, gender, licence, back_card; }
+		  virtual ~AccountDriversDbScheme(System::Void) { delete account_guid, username, age, gender, licence, bank_card; }
 		  static Models::AccountDriverModel^ cast_to_model(AccountDriversDbScheme^ scheme);
 		  static AccountDriversDbScheme^ cast_to_scheme(Models::AccountDriverModel^ model, System::Guid guid);
 	};

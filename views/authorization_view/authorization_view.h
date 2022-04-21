@@ -2,9 +2,13 @@
 #include "../../manager/manager.h"
 #include "../../services/services.h"
 
+#include "../bank_settings_view/bank_settings_view.h"
+#include "../admin_page_view/admin_page_view.h"
+#include "../driver_page_view/driver_page_view.h"
+#include "../client_page_view/client_page_view.h"
+
 namespace Views 
 {
-
 	using namespace System;
 	using namespace System::ComponentModel;
 	using namespace System::Collections;
@@ -12,47 +16,44 @@ namespace Views
 	using namespace System::Data;
 	using namespace System::Drawing;
 
+	using namespace Services;
+	using namespace Models;
 	/// <summary>
-	/// Сводка для MyForm
+	/// Сводка для AuthorizationView
 	/// </summary>
-	public ref class AuthorizationPage : public System::Windows::Forms::Form
+	public ref class AuthorizationView : public System::Windows::Forms::Form
 	{
+		Manager::ServiceManager^ service_manager = nullptr;
+
+		Services::BankController^ bank_controller = nullptr;
+		Services::AccountManager^ account_manager = nullptr;
 	public:
-		AuthorizationPage(System::Void)
+		AuthorizationView(System::Void) { InitializeComponent(); }
+
+		AuthorizationView(Manager::ServiceManager^ service_manager)
 		{
 			InitializeComponent();
-			//
-			//TODO: добавьте код конструктора
-			//
-		}
+			this->service_manager = service_manager;
 
-		AuthorizationPage(Manager::ServiceManager^ service_manager)
-		{
-			InitializeComponent();
-			
-			Console::WriteLine(service_manager->ServiceCount);
-			Manager::IServiceProvider^ bank_provider = service_manager->get_service<Services::BankController^>();
-			Services::BankController^ bank_service = (Services::BankController^)bank_provider->Service;
+			Manager::IServiceProvider^ bank_controller_provider = this->service_manager->get_service<Services::BankController^>();
+			Manager::IServiceProvider^ account_manager_provider = this->service_manager->get_service<Services::AccountManager^>();
 
-			bank_service->load_bank_account(System::Guid::Parse("0b5e375c-d826-4f9b-8c61-e71102f93cc1"));
-			auto list = bank_service->get_bank_accounts();
-
-			for each (auto i in list) Console::WriteLine(i);
+			this->account_manager = (Services::AccountManager^)account_manager_provider->Service;
+			this->bank_controller = (Services::BankController^)bank_controller_provider->Service;
 		}
 
 	protected:
 		/// <summary>
 		/// Освободить все используемые ресурсы.
 		/// </summary>
-		~AuthorizationPage(System::Void)
-		{
-			if (components)
-			{
-				delete components;
-			}
+		~AuthorizationView(System::Void) 
+		{ 
+			if (components) delete components; 
+			if(this->account_manager->IsInitialized) this->account_manager->sign_out_account();
+			Application::Exit();
 		}
+
 	private: System::Windows::Forms::TabControl^ page_list;
-	protected:
 	private: System::Windows::Forms::TabPage^ page_authorization;
 	private: System::Windows::Forms::TabPage^ page_registration;
 	private: System::Windows::Forms::Label^ page1_label_login;
@@ -71,8 +72,6 @@ namespace Views
 	private: System::Windows::Forms::TabPage^ page2_tabpage_client;
 	private: System::Windows::Forms::TabPage^ page2_tabpage_driver;
 
-
-
 	private: System::Windows::Forms::Label^ page2_label_age;
 	private: System::Windows::Forms::NumericUpDown^ page2_numeric_age;
 	private: System::Windows::Forms::Label^ page2_label_gender;
@@ -89,17 +88,6 @@ namespace Views
 	private: System::Windows::Forms::TextBox^ pagedriver_textbox_licence;
 	private: System::Windows::Forms::Label^ pageadmin_label_permissions;
 	private: System::Windows::Forms::ComboBox^ pageadmin_combobox_permissions;
-
-
-
-
-
-
-
-
-
-
-
 
 	private:
 		/// <summary>
@@ -175,18 +163,19 @@ namespace Views
 			// 
 			// page_authorization
 			// 
+			this->page_authorization->BackColor = System::Drawing::Color::Transparent;
 			this->page_authorization->Controls->Add(this->page1_button_authorize);
 			this->page_authorization->Controls->Add(this->page1_label_password);
 			this->page_authorization->Controls->Add(this->page1_textbox_password);
 			this->page_authorization->Controls->Add(this->page1_label_login);
 			this->page_authorization->Controls->Add(this->page1_textbox_login);
+			this->page_authorization->ForeColor = System::Drawing::Color::CornflowerBlue;
 			this->page_authorization->Location = System::Drawing::Point(4, 24);
 			this->page_authorization->Name = L"page_authorization";
 			this->page_authorization->Padding = System::Windows::Forms::Padding(3);
 			this->page_authorization->Size = System::Drawing::Size(444, 375);
 			this->page_authorization->TabIndex = 0;
 			this->page_authorization->Text = L"Авторизация";
-			this->page_authorization->UseVisualStyleBackColor = true;
 			// 
 			// page1_button_authorize
 			// 
@@ -198,7 +187,7 @@ namespace Views
 			this->page1_button_authorize->TabIndex = 4;
 			this->page1_button_authorize->Text = L"Войти в аккаунт";
 			this->page1_button_authorize->UseVisualStyleBackColor = true;
-			this->page1_button_authorize->Click += gcnew System::EventHandler(this, &AuthorizationPage::page1_button_authorize_Click);
+			this->page1_button_authorize->Click += gcnew System::EventHandler(this, &AuthorizationView::page1_button_authorize_Click);
 			// 
 			// page1_label_password
 			// 
@@ -253,6 +242,7 @@ namespace Views
 			this->page_registration->Controls->Add(this->page2_textbox_password);
 			this->page_registration->Controls->Add(this->page2_label_login);
 			this->page_registration->Controls->Add(this->page2_textbox_login);
+			this->page_registration->ForeColor = System::Drawing::Color::Coral;
 			this->page_registration->Location = System::Drawing::Point(4, 24);
 			this->page_registration->Name = L"page_registration";
 			this->page_registration->Padding = System::Windows::Forms::Padding(3);
@@ -271,7 +261,7 @@ namespace Views
 			this->page2_button_banksettings->TabIndex = 14;
 			this->page2_button_banksettings->Text = L"Банк";
 			this->page2_button_banksettings->UseVisualStyleBackColor = true;
-			this->page2_button_banksettings->Click += gcnew System::EventHandler(this, &AuthorizationPage::page2_button_banksettings_Click);
+			this->page2_button_banksettings->Click += gcnew System::EventHandler(this, &AuthorizationView::page2_button_banksettings_Click);
 			// 
 			// page2_button_registration
 			// 
@@ -283,7 +273,7 @@ namespace Views
 			this->page2_button_registration->TabIndex = 13;
 			this->page2_button_registration->Text = L"Регистрация";
 			this->page2_button_registration->UseVisualStyleBackColor = true;
-			this->page2_button_registration->Click += gcnew System::EventHandler(this, &AuthorizationPage::page2_button_registration_Click);
+			this->page2_button_registration->Click += gcnew System::EventHandler(this, &AuthorizationView::page2_button_registration_Click);
 			// 
 			// page2_tabcontrol_info
 			// 
@@ -514,7 +504,7 @@ namespace Views
 			this->page2_textbox_login->Size = System::Drawing::Size(179, 26);
 			this->page2_textbox_login->TabIndex = 2;
 			// 
-			// AuthorizationPage
+			// AuthorizationView
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
@@ -524,7 +514,7 @@ namespace Views
 			this->MaximumSize = System::Drawing::Size(468, 442);
 			this->MinimizeBox = false;
 			this->MinimumSize = System::Drawing::Size(468, 442);
-			this->Name = L"AuthorizationPage";
+			this->Name = L"AuthorizationView";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Авторизация";
 			this->page_list->ResumeLayout(false);
@@ -544,19 +534,38 @@ namespace Views
 
 		}
 #pragma endregion
+		private: System::Void clear_all_textboxes(System::Void);
 		private: System::Void page1_button_authorize_Click(System::Object^ sender, System::EventArgs^ e) 
 		{
+			System::String^ login_text = this->page1_textbox_login->Text;
+			System::String^ password_text = this->page1_textbox_password->Text;
 
+			System::Boolean login_check = account_manager->authorization_account(login_text, password_text);
+			if (login_check != true) { MessageBox::Show("Невозможно войти в аккаунт", "Ошибка входа"); return; }
+			this->clear_all_textboxes();
+
+			Windows::Forms::Form^ view_preparation = nullptr;
+			switch (this->account_manager->AccountToken.AccountType) 
+			{
+			case AccountManagerToken::AccountManagerType::Admin: 
+				view_preparation = gcnew Views::AdminPageView(this, this->service_manager); break;
+			case AccountManagerToken::AccountManagerType::Client: 
+				view_preparation = gcnew Views::ClientPageView(this, this->service_manager); break;
+			case AccountManagerToken::AccountManagerType::Driver:
+				view_preparation = gcnew Views::DriverPageView(this, this->service_manager); break;
+			}
+			view_preparation->FormClosed += gcnew FormClosedEventHandler(this, &AuthorizationView::form_closed);
+			this->Hide();	view_preparation->Show();
 		}
 
-		private: System::Void page2_button_registration_Click(System::Object^ sender, System::EventArgs^ e) 
+		private: System::Void page2_button_registration_Click(System::Object^ sender, System::EventArgs^ e);
+
+		private: System::Void page2_button_banksettings_Click(System::Object^ sender, System::EventArgs^ e)
 		{
-
+			Views::BankSettingsView^ bank_page = gcnew Views::BankSettingsView(bank_controller);
+			bank_page->ShowDialog();
 		}
 
-		private: System::Void page2_button_banksettings_Click(System::Object^ sender, System::EventArgs^ e) 
-		{
-
-		}
+		private: System::Void form_closed(System::Object^ sender, FormClosedEventArgs^ e) { this->Show(); }
 	};
 }

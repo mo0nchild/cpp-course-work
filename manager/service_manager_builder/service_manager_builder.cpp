@@ -20,8 +20,10 @@ generic <class TService> where TService: IServiceBase
 		{
 			for each (auto service_in_collection in this->collection->ServiceList)
 			{
-				if (service_requirement[i]->Requirement == service_in_collection->ServiceInstance->GetType()) 
+				if (service_requirement[i]->Requirement == service_in_collection->ServiceInstance->GetType())
+				{
 					service_includes[dependencies_collected++] = service_in_collection->ServiceInstance;
+				}
 			}
 			service_dependencies->Add(service_requirement[i]->Requirement);
 		}

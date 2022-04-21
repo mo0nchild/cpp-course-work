@@ -74,7 +74,7 @@ System::Boolean BankController::take_money(System::Int32 money)
 	if (item == nullptr) return false;
 
 	System::Int32 account_money(0);
-	try { account_money = System::UInt32::Parse(item->account_money); }
+	try { account_money = System::Int32::Parse(item->account_money); }
 	catch (System::Exception^ error) { Console::WriteLine(error->Message); return false; }
 
 	if (account_money - money < 0) return false;
@@ -95,7 +95,7 @@ System::Boolean BankController::put_money(System::Int32 money)
 	if (item == nullptr) return false;
 
 	System::Int32 account_money(0);
-	try { account_money = System::UInt32::Parse(item->account_money); }
+	try { account_money = System::Int32::Parse(item->account_money); }
 	catch (System::Exception^ error) { Console::WriteLine(error->Message); return false; }
 
 	this->bank_account->Money = System::Int32(account_money + money);

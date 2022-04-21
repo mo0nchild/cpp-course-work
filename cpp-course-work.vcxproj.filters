@@ -57,7 +57,22 @@
     <ClCompile Include="services\bank_controller\bank_controller.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="views\authorization\authorization_page.cpp">
+    <ClCompile Include="views\authorization_view\authorization_view.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="views\bank_settings_view\bank_settings_view.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="views\admin_page_view\admin_page_view.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="views\client_page_view\client_page_view.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="views\driver_page_view\driver_page_view.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="views\bank_settings_view\bank_settings_operation.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -128,7 +143,22 @@
     <ClInclude Include="services\bank_controller\bank_controller_scheme.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="views\authorization\authorization_page.h">
+    <ClInclude Include="views\authorization_view\authorization_view.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="views\bank_settings_view\bank_settings_view.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="views\admin_page_view\admin_page_view.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="views\client_page_view\client_page_view.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="views\driver_page_view\driver_page_view.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="views\bank_settings_view\bank_settings_operation.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

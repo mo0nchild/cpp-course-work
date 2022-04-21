@@ -36,7 +36,7 @@ Models::AccountDriverModel^ AccountDriversDbScheme::cast_to_model(AccountDrivers
 	try {
 		account_model = gcnew Models::AccountDriverModel(scheme->username, System::UInt32::Parse(scheme->age),
 			fixedconvert_to_enum<Models::AccountModelGender>(scheme->gender),
-			System::Guid::Parse(scheme->licence), System::Guid::Parse(scheme->back_card));
+			System::Guid::Parse(scheme->licence), System::Guid::Parse(scheme->bank_card));
 	}
 	catch (System::Exception^ error) { Console::WriteLine(error->Message); return nullptr; }
 	return account_model;
@@ -50,7 +50,7 @@ AccountDriversDbScheme^ AccountDriversDbScheme::cast_to_scheme(Models::AccountDr
 	account_scheme->age = model->Age.ToString();
 	account_scheme->username = model->Username;
 	account_scheme->gender = model->Gender.ToString();
-	account_scheme->back_card = model->BankCard.ToString();
+	account_scheme->bank_card = model->BankCard.ToString();
 	account_scheme->licence = model->Licence.ToString();
 
 	return account_scheme;

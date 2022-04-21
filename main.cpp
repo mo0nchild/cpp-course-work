@@ -1,6 +1,6 @@
 #include "manager/manager.h"
 #include "services/services.h"
-#include "views/authorization/authorization_page.h"
+#include "views/authorization_view/authorization_view.h"
 
 using namespace System;
 using namespace System::Collections;
@@ -30,7 +30,7 @@ public:
 		Manager::ServiceManager^ services_manager = service_builder->create_manager(
 			gcnew Generic::Dictionary<System::String^, System::Object^>());
 
-		Views::AuthorizationPage^ form = gcnew Views::AuthorizationPage(services_manager);
+		Views::AuthorizationView^ form = gcnew Views::AuthorizationView(services_manager);
 		System::Windows::Forms::Application::Run(form);
 		return System::Int32(0);
 	}
