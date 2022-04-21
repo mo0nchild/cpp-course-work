@@ -3,11 +3,9 @@
 #include "../../services/services.h"
 
 #include "../bank_settings_view/bank_settings_view.h"
-#include "../admin_page_view/admin_page_view.h"
-#include "../driver_page_view/driver_page_view.h"
-#include "../client_page_view/client_page_view.h"
 
-namespace Views {
+namespace Views 
+{
 
 	using namespace System;
 	using namespace System::ComponentModel;
@@ -531,18 +529,13 @@ namespace Views {
 #pragma endregion
 
 		private: System::Void order_request_callback(System::Boolean value) 
-		{
-			if (this->order_proccess == false) return;
-
-			if (!this->service_order_controller->cancellation_order())
-				MessageBox::Show("Произошла ошибка при отмене заказа", "Ошибка");
-
+		{		
+			this->order_proccess = false;
 			MessageBox::Show("Состояние заказа: " + value.ToString(), "Готово");
-
+			
 			this->client_label_waiting->Text = "Состояние заказа";
 			this->client_button_cancel->Enabled = false;
 			this->client_button_order->Enabled = true;
-			this->order_proccess = false;
 		}
 
 		private: System::Void progressbar_proceed(System::Void) 
@@ -554,9 +547,10 @@ namespace Views {
 				this->client_progressbar_waiting->Value -= 3;
 				Thread::Sleep(500);
 			}
+			
 			this->client_progressbar_waiting->Value = 0;
 		}
-
+			   
 		private: System::Void client_button_order_Click(System::Object^ sender, System::EventArgs^ e) 
 		{
 			if (this->client_textbox_address->Text == System::String::Empty) 
@@ -571,7 +565,7 @@ namespace Views {
 			case 1: cartype_field = Models::CarModelTypes::CarTypeChild; break;
 			case 2: cartype_field = Models::CarModelTypes::CarTypePremium; break;
 			}
-
+			
 			this->service_order_controller->OrderRequestCallback += gcnew OrderController::RequestCallback(
 				this, &ClientPageView::order_request_callback);
 
@@ -601,7 +595,8 @@ namespace Views {
 
 		private: System::Void client_button_cancel_Click(System::Object^ sender, System::EventArgs^ e)
 		{
-			this->order_request_callback(false);
+			if (!this->service_order_controller->cancellation_order())
+				MessageBox::Show("Произошла ошибка при отмене заказа", "Ошибка");
 		}
 
 		private: System::Void client_button_refresh_Click(System::Object^ sender, System::EventArgs^ e) 
@@ -641,7 +636,7 @@ namespace Views {
 			}
 
 			try { bankcard_field = System::Guid::Parse(this->client_textbox_bankcard->Text); }
-			catch (System::Exception^ error) { MessageBox::Show("Неверный формат банковской карты", "Ошибка"); return; }
+			catch (System::Exception^) { MessageBox::Show("Неверный формат банковской карты", "Ошибка"); return; }
 			if(username_field == System::String::Empty) { MessageBox::Show("Неверный формат имени", "Ошибка"); return; }
 
 			Models::AccountClientModel^ model = gcnew Models::AccountClientModel(
@@ -677,8 +672,8 @@ namespace Views {
 				account_model = safe_cast<Models::AccountClientModel^>(this->service_account_manager
 					->AccountToken.AccountModel);
 			}
-			catch (System::Exception^ error) { MessageBox::Show("Невозможно определить модель аккаунта", "Ошибка"); return; }
-
+			catch (System::Exception^) { MessageBox::Show("Невозможно определить модель аккаунта", "Ошибка"); return; }
+			
 			list_item = gcnew ListViewItem("Номер банковской карты");
 			list_item->SubItems->Add(account_model->BankCard.ToString());
 			this->client_listview_account->Items->Add(list_item);

@@ -6,9 +6,10 @@
 
 namespace Services 
 {
-	using namespace MySql::Data;
-	using namespace System::Collections::Generic;
+	using namespace System;
 	using namespace System::Reflection;
+	using namespace System::Collections::Generic;
+	using namespace MySql::Data;
 
 	public interface class IDatabaseManager 
 	{
@@ -22,10 +23,22 @@ namespace Services
 		System::Boolean delete_database_data(IDatabaseManager::KeyValuePair^ searching_param);
 	};
 
-	public ref class SqlDatabaseManagerException sealed : System::Exception 
+	public ref class SqlDatabaseManagerException sealed : System::Exception
 	{
-	public: SqlDatabaseManagerException(System::String^ message) : System::Exception(message) { }
-		  virtual ~SqlDatabaseManagerException(System::Void) { }
+	private:	System::Type^ exception_attach_from = nullptr;
+	public:
+		property System::Type^ AttachFrom
+		{ public: System::Type^ get(System::Void) { return this->exception_attach_from; } }
+
+		virtual property System::String^ Message
+		{
+		public: System::String^ get(System::Void) override
+			{ return "From " + exception_attach_from->ToString() + ": " + Exception::Message; }
+		}
+	public:
+		SqlDatabaseManagerException(System::Type^ from, System::String^ message) : System::Exception(message)
+		{ this->exception_attach_from = from; }
+		virtual ~SqlDatabaseManagerException(System::Void) { delete exception_attach_from; }
 	};
 
 	public ref class SqlDatabaseManager sealed : Manager::ServiceBase, IDatabaseManager
@@ -36,6 +49,7 @@ namespace Services
 		MySqlClient::MySqlConnection^ db_connection = nullptr;
 		List<SqlDatabaseFieldKey>^ db_keys_name = nullptr;
 
+		Threading::Mutex^ connection_mutex = nullptr;
 		System::String^ db_table_name = nullptr;
 		System::Type^ db_scheme_type = nullptr;
 
@@ -44,6 +58,7 @@ namespace Services
 		{ 
 			this->db_connection = gcnew MySqlClient::MySqlConnection(DATABASE_CONNECTION_STRING); 
 			this->db_keys_name = gcnew List<SqlDatabaseFieldKey>();
+			this->connection_mutex = gcnew Threading::Mutex();
 		}
 		virtual ~SqlDatabaseManager(System::Void) 
 		{ 

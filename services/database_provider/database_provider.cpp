@@ -19,7 +19,7 @@ generic <class TSchemeStruct> Services::SqlDatabaseManager^ SqlDatabaseManager::
 	this->TableName = scheme_attribute->TableName;
 
 	if(scheme_deconstruct->GetInterface("ISqlDataBaseSchemeType") == nullptr) 
-		throw gcnew SqlDatabaseManagerException("From SqlDatabaseManager: Does Not Implement ISqlDataBaseSchemeType");
+		throw gcnew SqlDatabaseManagerException(SqlDatabaseManager::typeid, "Does Not Implement ISqlDataBaseSchemeType");
 	array<System::Reflection::PropertyInfo^>^ property_list = scheme_deconstruct->GetProperties();
 
 	this->db_scheme_type = scheme_deconstruct;
@@ -50,6 +50,7 @@ System::Boolean SqlDatabaseManager::update_database_date(IDatabaseManager::Reque
 	IDatabaseManager::KeyValuePair^ searching_param)
 {
 	if (request_param == nullptr || searching_param == nullptr || db_keys_name->Count == 0) return false;
+	this->connection_mutex->WaitOne();
 	this->db_connection->Open();
 	try 
 	{
@@ -66,7 +67,7 @@ System::Boolean SqlDatabaseManager::update_database_date(IDatabaseManager::Reque
 		sql_command->ExecuteNonQuery();
 	}
 	catch (MySqlClient::MySqlException^ error) { System::Console::WriteLine(error->Message); return false; }
-	finally { this->db_connection->Close(); }
+	finally { this->db_connection->Close(); this->connection_mutex->ReleaseMutex(); }
 
 	return true;
 }
@@ -77,6 +78,7 @@ List<IDatabaseManager::RequestRow^>^ SqlDatabaseManager::get_database_data(
 	List<IDatabaseManager::RequestRow^>^ request_result = gcnew List<IDatabaseManager::RequestRow^>();
 	if (searching_param == nullptr || db_keys_name->Count == 0) return request_result;
 
+	this->connection_mutex->WaitOne();
 	this->db_connection->Open();
 	try {
 		System::String^ request = "select * from " + this->db_table_name + " where 1";
@@ -101,7 +103,7 @@ List<IDatabaseManager::RequestRow^>^ SqlDatabaseManager::get_database_data(
 		sql_reader->Close();
 	}
 	catch (MySqlClient::MySqlException^ error) { System::Console::WriteLine(error->Message); return nullptr; }
-	finally { this->db_connection->Close(); }
+	finally { this->db_connection->Close(); this->connection_mutex->ReleaseMutex(); }
 
 	return request_result;
 }
@@ -112,6 +114,7 @@ System::Boolean SqlDatabaseManager::send_database_data(IDatabaseManager::Request
 	if (request_param == nullptr || request_type != this->db_scheme_type || db_keys_name->Count == 0) return false;
 	System::Boolean request_result = true;
 
+	this->connection_mutex->WaitOne();
 	this->db_connection->Open();
 	try {
 		MySqlClient::MySqlCommand^ sql_command = this->db_connection->CreateCommand();
@@ -134,10 +137,8 @@ System::Boolean SqlDatabaseManager::send_database_data(IDatabaseManager::Request
 		sql_command->ExecuteNonQuery();
 	}
 	catch (System::Exception^ error) { System::Console::WriteLine(error->Message); request_result = false; }
-	finally { db_connection->Close(); }
+	finally { this->db_connection->Close(); this->connection_mutex->ReleaseMutex(); }
 
-	
-	
 	return request_result;
 }
 
@@ -145,6 +146,7 @@ System::Boolean SqlDatabaseManager::delete_database_data(IDatabaseManager::KeyVa
 {
 	if (searching_param == nullptr || db_keys_name->Count == 0) return false;
 
+	this->connection_mutex->WaitOne();
 	this->db_connection->Open();
 	try {
 		System::String^ request = System::String::Concat( "delete from " + this->db_table_name + " where ",
@@ -154,7 +156,7 @@ System::Boolean SqlDatabaseManager::delete_database_data(IDatabaseManager::KeyVa
 		sql_command->ExecuteNonQuery();
 	}
 	catch (MySqlClient::MySqlException^ error) { System::Console::WriteLine(error->Message); return false; }
-	finally { db_connection->Close(); }
+	finally { this->db_connection->Close(); this->connection_mutex->ReleaseMutex(); }
 
 	return true;
 }
