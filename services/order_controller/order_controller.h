@@ -16,7 +16,8 @@ namespace Services
 	public interface class IOrderController 
 	{
 	public: generic<class TCarModelClass> where TCarModelClass : Models::CarBaseModel
-		Task<Boolean>^ registration_order(String^ request_address, Models::CarModelTypes car_type);
+		System::Boolean registration_order(String^ request_address, Models::CarModelTypes car_type,
+			System::Guid client_guid);
 
 	public:		System::Boolean accept_request(System::Guid order_id, System::Guid driver_id);
 	public:		System::Boolean cancellation_order(System::Void);
@@ -70,8 +71,8 @@ namespace Services
 		{ public: List<Services::OrderControllerDbScheme^>^ get(System::Void); }
 
 		generic<class TCarModelClass> where TCarModelClass: Models::CarBaseModel
-		virtual Task<System::Boolean>^ registration_order(System::String^ request_address, 
-			Models::CarModelTypes car_type) override;
+		virtual System::Boolean registration_order(System::String^ request_address, Models::CarModelTypes car_type,
+			System::Guid client_guid) override;
 
 		virtual System::Boolean accept_request(Guid order_id, Guid driver_id) override;
 		virtual System::Boolean cancellation_order(System::Void) override;

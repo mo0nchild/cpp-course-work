@@ -7,7 +7,7 @@ namespace Services
 	[Services::SqlDatabaseTableAttribute("order_collection")]
 	public ref struct OrderControllerDbScheme sealed : SqlDatabaseManager::ISqlDataBaseSchemeType
 	{
-	public: [Services::SqlDatabaseFieldAttribute("client_guid")]		property System::String^ client_guid;
+	public: [Services::SqlDatabaseFieldAttribute("client_guid")]	property System::String^ client_guid;
 	public: [Services::SqlDatabaseFieldAttribute("driver_guid")]	property System::String^ driver_guid;
 	public: [Services::SqlDatabaseFieldAttribute("car_type")]		property System::String^ car_type;
 	public: [Services::SqlDatabaseFieldAttribute("car_class")]		property System::String^ car_class;

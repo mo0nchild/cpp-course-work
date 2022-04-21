@@ -16,6 +16,9 @@ namespace Views {
 	using namespace System::Data;
 	using namespace System::Drawing;
 
+	using namespace System::Threading::Tasks;
+	using namespace System::Threading;
+
 	using namespace Models;
 	using namespace Services;
 	/// <summary>
@@ -25,17 +28,19 @@ namespace Views {
 	{
 		Manager::ServiceManager^ service_manager = nullptr;
 		Windows::Forms::Form^ start_page = nullptr;
+		System::Boolean order_proccess;
 
 		Services::AccountManager^ service_account_manager = nullptr;
 		Services::DepotManager^ service_depot_manager = nullptr;
 		Services::OrderController^ service_order_controller = nullptr;
 	private: System::Windows::Forms::ColumnHeader^ driver_state;
+	private: System::Windows::Forms::Button^ client_button_cancel;
 
 		Services::BankController^ service_bank_controller = nullptr;
 	public:
 		ClientPageView(System::Void) { InitializeComponent(); }
 
-		ClientPageView(Windows::Forms::Form^ start_page, Manager::ServiceManager^ service_manager)
+		ClientPageView(Windows::Forms::Form^ start_page, Manager::ServiceManager^ service_manager) : order_proccess(false)
 		{ 
 			InitializeComponent(); 
 			this->service_manager = service_manager;
@@ -71,14 +76,14 @@ namespace Views {
 	private: System::Windows::Forms::ProgressBar^ client_progressbar_waiting;
 	private: System::Windows::Forms::ListView^ client_listview_car;
 	private: System::Windows::Forms::TabPage^ client_page_account;
-	private: System::Windows::Forms::ComboBox^ client_combobox_carcolor;
+
 	private: System::Windows::Forms::Button^ client_button_refresh;
 
 
 	private: System::Windows::Forms::TextBox^ client_textbox_address;
 	private: System::Windows::Forms::Button^ client_button_order;
 	private: System::Windows::Forms::Label^ client_label_cartype;
-	private: System::Windows::Forms::Label^ client_label_carcolor;
+
 	private: System::Windows::Forms::Label^ client_label_address;
 	private: System::Windows::Forms::Label^ client_label_carclass;
 	private: System::Windows::Forms::ComboBox^ client_combobox_carclass;
@@ -119,15 +124,14 @@ namespace Views {
 		{
 			this->client_tabcontrol = (gcnew System::Windows::Forms::TabControl());
 			this->client_page_order = (gcnew System::Windows::Forms::TabPage());
+			this->client_button_cancel = (gcnew System::Windows::Forms::Button());
 			this->client_label_waiting = (gcnew System::Windows::Forms::Label());
 			this->client_label_carclass = (gcnew System::Windows::Forms::Label());
 			this->client_combobox_carclass = (gcnew System::Windows::Forms::ComboBox());
 			this->client_label_cartype = (gcnew System::Windows::Forms::Label());
-			this->client_label_carcolor = (gcnew System::Windows::Forms::Label());
 			this->client_label_address = (gcnew System::Windows::Forms::Label());
 			this->client_textbox_address = (gcnew System::Windows::Forms::TextBox());
 			this->client_button_order = (gcnew System::Windows::Forms::Button());
-			this->client_combobox_carcolor = (gcnew System::Windows::Forms::ComboBox());
 			this->client_button_refresh = (gcnew System::Windows::Forms::Button());
 			this->client_label_carlist = (gcnew System::Windows::Forms::Label());
 			this->client_combobox_cartype = (gcnew System::Windows::Forms::ComboBox());
@@ -174,15 +178,14 @@ namespace Views {
 			// 
 			// client_page_order
 			// 
+			this->client_page_order->Controls->Add(this->client_button_cancel);
 			this->client_page_order->Controls->Add(this->client_label_waiting);
 			this->client_page_order->Controls->Add(this->client_label_carclass);
 			this->client_page_order->Controls->Add(this->client_combobox_carclass);
 			this->client_page_order->Controls->Add(this->client_label_cartype);
-			this->client_page_order->Controls->Add(this->client_label_carcolor);
 			this->client_page_order->Controls->Add(this->client_label_address);
 			this->client_page_order->Controls->Add(this->client_textbox_address);
 			this->client_page_order->Controls->Add(this->client_button_order);
-			this->client_page_order->Controls->Add(this->client_combobox_carcolor);
 			this->client_page_order->Controls->Add(this->client_button_refresh);
 			this->client_page_order->Controls->Add(this->client_label_carlist);
 			this->client_page_order->Controls->Add(this->client_combobox_cartype);
@@ -196,14 +199,26 @@ namespace Views {
 			this->client_page_order->Text = L"Заказать машину";
 			this->client_page_order->UseVisualStyleBackColor = true;
 			// 
+			// client_button_cancel
+			// 
+			this->client_button_cancel->Enabled = false;
+			this->client_button_cancel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->client_button_cancel->Location = System::Drawing::Point(335, 131);
+			this->client_button_cancel->Name = L"client_button_cancel";
+			this->client_button_cancel->Size = System::Drawing::Size(283, 29);
+			this->client_button_cancel->TabIndex = 17;
+			this->client_button_cancel->Text = L"Отменить";
+			this->client_button_cancel->UseVisualStyleBackColor = true;
+			this->client_button_cancel->Click += gcnew System::EventHandler(this, &ClientPageView::client_button_cancel_Click);
+			// 
 			// client_label_waiting
 			// 
 			this->client_label_waiting->AutoSize = true;
 			this->client_label_waiting->Location = System::Drawing::Point(28, 391);
 			this->client_label_waiting->Name = L"client_label_waiting";
-			this->client_label_waiting->Size = System::Drawing::Size(192, 17);
+			this->client_label_waiting->Size = System::Drawing::Size(128, 17);
 			this->client_label_waiting->TabIndex = 16;
-			this->client_label_waiting->Text = L"Ожидание принятия заказа";
+			this->client_label_waiting->Text = L"Состояние заказа";
 			// 
 			// client_label_carclass
 			// 
@@ -233,15 +248,6 @@ namespace Views {
 			this->client_label_cartype->TabIndex = 12;
 			this->client_label_cartype->Text = L"Тип Машины";
 			// 
-			// client_label_carcolor
-			// 
-			this->client_label_carcolor->AutoSize = true;
-			this->client_label_carcolor->Location = System::Drawing::Point(332, 113);
-			this->client_label_carcolor->Name = L"client_label_carcolor";
-			this->client_label_carcolor->Size = System::Drawing::Size(99, 17);
-			this->client_label_carcolor->TabIndex = 11;
-			this->client_label_carcolor->Text = L"Цвет машины";
-			// 
 			// client_label_address
 			// 
 			this->client_label_address->AutoSize = true;
@@ -270,19 +276,6 @@ namespace Views {
 			this->client_button_order->Text = L"Заказать";
 			this->client_button_order->UseVisualStyleBackColor = true;
 			this->client_button_order->Click += gcnew System::EventHandler(this, &ClientPageView::client_button_order_Click);
-			// 
-			// client_combobox_carcolor
-			// 
-			this->client_combobox_carcolor->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->client_combobox_carcolor->FormattingEnabled = true;
-			this->client_combobox_carcolor->Items->AddRange(gcnew cli::array< System::Object^  >(4) {
-				L"Черный цвет", L"Белый цвет", L"Красный цвет",
-					L"Желтый цвет"
-			});
-			this->client_combobox_carcolor->Location = System::Drawing::Point(335, 131);
-			this->client_combobox_carcolor->Name = L"client_combobox_carcolor";
-			this->client_combobox_carcolor->Size = System::Drawing::Size(283, 28);
-			this->client_combobox_carcolor->TabIndex = 5;
 			// 
 			// client_button_refresh
 			// 
@@ -537,14 +530,78 @@ namespace Views {
 		}
 #pragma endregion
 
+		private: System::Void order_request_callback(System::Boolean value) 
+		{
+			if (this->order_proccess == false) return;
+
+			if (!this->service_order_controller->cancellation_order())
+				MessageBox::Show("Произошла ошибка при отмене заказа", "Ошибка");
+
+			MessageBox::Show("Состояние заказа: " + value.ToString(), "Готово");
+
+			this->client_label_waiting->Text = "Состояние заказа";
+			this->client_button_cancel->Enabled = false;
+			this->client_button_order->Enabled = true;
+			this->order_proccess = false;
+		}
+
+		private: System::Void progressbar_proceed(System::Void) 
+		{
+			this->client_progressbar_waiting->Value = 100;
+			for (System::Int32 time_index = 0; time_index < 30; time_index++)
+			{
+				if (!this->order_proccess) break;
+				this->client_progressbar_waiting->Value -= 3;
+				Thread::Sleep(500);
+			}
+			this->client_progressbar_waiting->Value = 0;
+		}
+
 		private: System::Void client_button_order_Click(System::Object^ sender, System::EventArgs^ e) 
 		{
 			if (this->client_textbox_address->Text == System::String::Empty) 
 			{ MessageBox::Show("Заполните текстовое поле для адреса", "Требование"); return; }
 
 			System::String^ address_field = this->client_textbox_address->Text;
-			// -------- продолжение ----------------
+			Models::CarModelTypes cartype_field;
 
+			switch (this->client_combobox_cartype->SelectedIndex) 
+			{
+			case 0: cartype_field = Models::CarModelTypes::CarTypeEconom; break;
+			case 1: cartype_field = Models::CarModelTypes::CarTypeChild; break;
+			case 2: cartype_field = Models::CarModelTypes::CarTypePremium; break;
+			}
+
+			this->service_order_controller->OrderRequestCallback += gcnew OrderController::RequestCallback(
+				this, &ClientPageView::order_request_callback);
+
+			System::Guid client_guid = this->service_account_manager->AccountToken.AccountGuid;
+			System::Boolean registered_order;
+
+			if (this->client_combobox_carclass->SelectedIndex == 0) 
+			{
+				registered_order = this->service_order_controller->registration_order<Models::CarLightModel^>(
+					address_field, cartype_field, client_guid);
+			}
+			else 
+			{
+				registered_order = this->service_order_controller->registration_order<Models::CarHeavyModel^>(
+					address_field, cartype_field, client_guid);
+			}
+
+			if (registered_order != true) { MessageBox::Show("Невозможно создать заказ", "Ошибка"); return; }
+			this->client_button_cancel->Enabled = true;
+			this->client_button_order->Enabled = false;
+
+			this->client_label_waiting->Text = "Ожидание принятия заказа...";
+			this->order_proccess = true;
+
+			Task::Run(gcnew Action(this, &ClientPageView::progressbar_proceed));
+		}
+
+		private: System::Void client_button_cancel_Click(System::Object^ sender, System::EventArgs^ e)
+		{
+			this->order_request_callback(false);
 		}
 
 		private: System::Void client_button_refresh_Click(System::Object^ sender, System::EventArgs^ e) 
