@@ -10,7 +10,7 @@ namespace Models
 	{
 	private:	Models::CarModelTypes model_type;
 	private:	Models::CarModelColor model_color;
-	private:	System::UInt16 model_speed;
+	private:	System::UInt32 model_speed;
 	public:
 		property Models::CarModelTypes CarType
 		{ public: CarModelTypes get(System::Void) { return this->model_type; } }
@@ -18,10 +18,10 @@ namespace Models
 		property Models::CarModelColor CarColor
 		{ public: CarModelColor get(System::Void) { return this->model_color; } }
 
-		property System::UInt16 CarSpeed
-		{ public: System::UInt16 get(System::Void) { return this->model_speed; } }
+		property System::UInt32 CarSpeed
+		{ public: System::UInt32 get(System::Void) { return this->model_speed; } }
 	public:
-		CarBaseModel(Models::CarModelTypes car_type, Models::CarModelColor color, System::UInt16 speed)
+		CarBaseModel(Models::CarModelTypes car_type, Models::CarModelColor color, System::UInt32 speed)
 			: model_type(car_type), model_color(color), model_speed(speed) { }
 		virtual ~CarBaseModel(System::Void) { }
 
@@ -32,7 +32,7 @@ namespace Models
 	public ref class CarLightModel sealed : CarBaseModel 
 	{
 	public:
-		CarLightModel(Models::CarModelTypes car_type, Models::CarModelColor color, System::UInt16 speed)
+		CarLightModel(Models::CarModelTypes car_type, Models::CarModelColor color, System::UInt32 speed)
 			: CarBaseModel(car_type, color, speed) { }
 		virtual ~CarLightModel(System::Void) { }
 
@@ -43,7 +43,7 @@ namespace Models
 	public ref class CarHeavyModel sealed : CarBaseModel
 	{
 	public:
-		CarHeavyModel(Models::CarModelTypes car_type, Models::CarModelColor color, System::UInt16 speed)
+		CarHeavyModel(Models::CarModelTypes car_type, Models::CarModelColor color, System::UInt32 speed)
 			: CarBaseModel(car_type, color, speed) { }
 		virtual ~CarHeavyModel(System::Void) { }
 

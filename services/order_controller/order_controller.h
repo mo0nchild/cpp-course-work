@@ -76,6 +76,7 @@ namespace Services
 
 		virtual System::Boolean accept_request(Guid order_id, Guid driver_id) override;
 		virtual System::Boolean cancellation_order(System::Void) override;
+		System::Boolean cancellation_token_push(System::Void);
 	};
 
 }

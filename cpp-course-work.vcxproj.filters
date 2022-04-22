@@ -75,6 +75,12 @@
     <ClCompile Include="views\bank_settings_view\bank_settings_operation.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="views\client_page_view\client_page_view_callbacks.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="views\authorization_view\authorization_view_callbacks.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="manager\manager.h">

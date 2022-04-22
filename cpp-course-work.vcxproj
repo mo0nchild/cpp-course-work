@@ -135,9 +135,11 @@
     <ClCompile Include="services\depot_manager\depot_manager.cpp" />
     <ClCompile Include="views\admin_page_view\admin_page_view.cpp" />
     <ClCompile Include="views\authorization_view\authorization_view.cpp" />
+    <ClCompile Include="views\authorization_view\authorization_view_callbacks.cpp" />
     <ClCompile Include="views\bank_settings_view\bank_settings_view.cpp" />
     <ClCompile Include="views\bank_settings_view\bank_settings_operation.cpp" />
     <ClCompile Include="views\client_page_view\client_page_view.cpp" />
+    <ClCompile Include="views\client_page_view\client_page_view_callbacks.cpp" />
     <ClCompile Include="views\driver_page_view\driver_page_view.cpp" />
   </ItemGroup>
   <ItemGroup>

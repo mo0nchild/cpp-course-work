@@ -35,6 +35,8 @@ namespace Services
 	private:	System::Boolean service_disposed;
 	public:
 		property System::Guid DriverGuid { public: System::Guid get(System::Void); }
+		property System::Boolean IsBuilded 
+		{ public: System::Boolean get(System::Void) { return (this->drive_complex != nullptr); } }
 
 		property DriveComplexToken::DriverStateType DriverState
 			{ public: DriveComplexToken::DriverStateType get(System::Void); }

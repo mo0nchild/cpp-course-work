@@ -87,15 +87,18 @@ System::Boolean OrderController::registration_order(System::String^ request_addr
 System::Boolean OrderController::cancellation_order(System::Void)
 {
 	if (this->order_token == nullptr) return false;
-
-	try { this->cancel_source->Cancel(); }
-	catch (System::Exception^ error) { Console::WriteLine(error->Message); return false; }
-
 	System::Boolean check = this->service_sql_manager->set_scheme_struct<Services::OrderControllerDbScheme^>()
 		->delete_database_data(gcnew IDatabaseManager::KeyValuePair("client_guid", this->order_token->ClientGuid.ToString()));
 
 	this->order_token = nullptr;
 	return check;
+}
+
+System::Boolean OrderController::cancellation_token_push(System::Void)
+{
+	try { this->cancel_source->Cancel(); }
+	catch (System::Exception^ error) { Console::WriteLine(error->Message); return false; }
+	return true;
 }
 
 System::Boolean OrderController::order_process(System::Void)
