@@ -159,6 +159,18 @@ generic <class TCarClass> where TCarClass : Models::CarBaseModel
 	return true;
 }
 
+Models::CarBaseModel^ DepotManager::CarModel::get(System::Void) 
+{
+	if (this->drive_complex == nullptr) return nullptr;
+	return (Models::CarBaseModel^)this->drive_complex->CarModel->Clone();
+}
+
+System::Type^ DepotManager::CarModelType::get(System::Void)
+{
+	if (this->drive_complex == nullptr) return nullptr;
+	return this->drive_complex->CarModelType;
+}
+
 System::Guid DepotManager::DriverGuid::get(System::Void)
 {
 	if (this->drive_complex != nullptr) return this->drive_complex->DriverGuid;
@@ -246,7 +258,7 @@ Services::DriveComplexDbScheme^ DepotManager::get_driver_complexs(System::Guid d
 	request_param->Add(gcnew IDatabaseManager::KeyValuePair("driver_guid", driver_guid.ToString()));
 
 	auto response_param = this->service_sql_manager->set_scheme_struct<Services::DriveComplexDbScheme^>()
-		->get_database_data(request_param, true);
+		->get_database_data(request_param, false);
 
 	if (request_param == nullptr || request_param->Count > 1)
 		throw gcnew Services::DriveComplexTokenException(DepotManager::typeid, "get_driver_complexs");

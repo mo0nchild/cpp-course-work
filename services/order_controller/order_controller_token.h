@@ -44,6 +44,7 @@ namespace Services
 			
 			this->OrderAddress = order_address;
 			this->CarModelClass = car_class;
+			this->CarModelType = car_model;
 		}
 	
 		public: static OrderControllerToken create_from_dbscheme(OrderControllerDbScheme^ scheme) 

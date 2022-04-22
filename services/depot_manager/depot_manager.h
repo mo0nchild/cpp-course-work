@@ -35,11 +35,14 @@ namespace Services
 	private:	System::Boolean service_disposed;
 	public:
 		property System::Guid DriverGuid { public: System::Guid get(System::Void); }
+		property Models::CarBaseModel^ CarModel { public: Models::CarBaseModel^ get(System::Void); }
+		property System::Type^ CarModelType { public: System::Type^ get(System::Void); }
+
 		property System::Boolean IsBuilded 
 		{ public: System::Boolean get(System::Void) { return (this->drive_complex != nullptr); } }
 
 		property DriveComplexToken::DriverStateType DriverState
-			{ public: DriveComplexToken::DriverStateType get(System::Void); }
+		{ public: DriveComplexToken::DriverStateType get(System::Void); }
 	public:
 		DepotManager(Services::SqlDatabaseManager^ db_manager) : Manager::ServiceBase(), service_disposed(false)
 		{ this->service_sql_manager = db_manager; }

@@ -141,6 +141,9 @@
     <ClCompile Include="views\client_page_view\client_page_view.cpp" />
     <ClCompile Include="views\client_page_view\client_page_view_callbacks.cpp" />
     <ClCompile Include="views\driver_page_view\driver_page_view.cpp" />
+    <ClCompile Include="views\driver_page_view\driver_page_view_callbacks.cpp" />
+    <ClCompile Include="views\driver_page_view\driver_dialog_view.cpp" />
+    <ClCompile Include="views\driver_page_view\driver_complex_view.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="manager\manager.h" />
@@ -183,6 +186,12 @@
     <ClInclude Include="views\driver_page_view\driver_page_view.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="views\driver_page_view\driver_dialog_view.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="views\driver_page_view\driver_complex_view.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="services\services_settings.xml" />
@@ -215,6 +224,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="views\client_page_view\client_page_view.resx">
       <DependentUpon>views\client_page_view\client_page_view.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="views\driver_page_view\driver_complex_view.resx">
+      <DependentUpon>views\driver_page_view\driver_complex_view.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="views\driver_page_view\driver_dialog_view.resx">
+      <DependentUpon>views\driver_page_view\driver_dialog_view.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="views\driver_page_view\driver_page_view.resx">
       <DependentUpon>views\driver_page_view\driver_page_view.h</DependentUpon>

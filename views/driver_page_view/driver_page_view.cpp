@@ -6,7 +6,7 @@ void DriverPageView::InitializeComponent(void)
 {
     this->driver_tabcontrol = (gcnew System::Windows::Forms::TabControl());
     this->driver_page_order = (gcnew System::Windows::Forms::TabPage());
-    this->driver_button_orderinfo = (gcnew System::Windows::Forms::Button());
+    this->driver_button_complexinfo = (gcnew System::Windows::Forms::Button());
     this->driver_orders_list = (gcnew System::Windows::Forms::Label());
     this->driver_button_update_orders = (gcnew System::Windows::Forms::Button());
     this->driver_button_accept_order = (gcnew System::Windows::Forms::Button());
@@ -69,7 +69,7 @@ void DriverPageView::InitializeComponent(void)
     // 
     // driver_page_order
     // 
-    this->driver_page_order->Controls->Add(this->driver_button_orderinfo);
+    this->driver_page_order->Controls->Add(this->driver_button_complexinfo);
     this->driver_page_order->Controls->Add(this->driver_orders_list);
     this->driver_page_order->Controls->Add(this->driver_button_update_orders);
     this->driver_page_order->Controls->Add(this->driver_button_accept_order);
@@ -82,16 +82,16 @@ void DriverPageView::InitializeComponent(void)
     this->driver_page_order->Text = L"Поиск заказов";
     this->driver_page_order->UseVisualStyleBackColor = true;
     // 
-    // driver_button_orderinfo
+    // driver_button_complexinfo
     // 
-    this->driver_button_orderinfo->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-    this->driver_button_orderinfo->Location = System::Drawing::Point(25, 323);
-    this->driver_button_orderinfo->Name = L"driver_button_orderinfo";
-    this->driver_button_orderinfo->Size = System::Drawing::Size(598, 31);
-    this->driver_button_orderinfo->TabIndex = 11;
-    this->driver_button_orderinfo->Text = L"Показать информацию о заказе";
-    this->driver_button_orderinfo->UseVisualStyleBackColor = true;
-    this->driver_button_orderinfo->Click += gcnew System::EventHandler(this, &DriverPageView::driver_button_orderinfo_Click);
+    this->driver_button_complexinfo->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+    this->driver_button_complexinfo->Location = System::Drawing::Point(25, 323);
+    this->driver_button_complexinfo->Name = L"driver_button_complexinfo";
+    this->driver_button_complexinfo->Size = System::Drawing::Size(598, 31);
+    this->driver_button_complexinfo->TabIndex = 11;
+    this->driver_button_complexinfo->Text = L"Показать информацию о комплексе";
+    this->driver_button_complexinfo->UseVisualStyleBackColor = true;
+    this->driver_button_complexinfo->Click += gcnew System::EventHandler(this, &DriverPageView::driver_button_complexinfo_Click);
     // 
     // driver_orders_list
     // 

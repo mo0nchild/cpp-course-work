@@ -26,7 +26,7 @@ namespace Models
 		virtual ~CarBaseModel(System::Void) { }
 
 		virtual System::Object^ Clone(System::Void) abstract;
-		virtual System::Void car_drive(System::Void) abstract;
+		virtual System::String^ car_drive(System::Void) abstract;
 	};
 
 	public ref class CarLightModel sealed : CarBaseModel 
@@ -37,7 +37,7 @@ namespace Models
 		virtual ~CarLightModel(System::Void) { }
 
 		virtual System::Object^ Clone(System::Void) override { return gcnew CarLightModel(CarType, CarColor, CarSpeed); }
-		virtual System::Void car_drive(System::Void) override { Console::WriteLine("Идем на легковой машине"); }
+		virtual System::String^ car_drive(System::Void) override { return "Идем на легковой машине"; }
 	};
 
 	public ref class CarHeavyModel sealed : CarBaseModel
@@ -48,7 +48,7 @@ namespace Models
 		virtual ~CarHeavyModel(System::Void) { }
 
 		virtual System::Object^ Clone(System::Void) override { return gcnew CarHeavyModel(CarType, CarColor, CarSpeed); }
-		virtual System::Void car_drive(System::Void) override { Console::WriteLine("Идем на легковой машине"); }
+		virtual System::String^ car_drive(System::Void) override { return "Идем на легковой машине"; }
 	};
 
 }

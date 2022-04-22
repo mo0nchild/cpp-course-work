@@ -9,7 +9,6 @@ System::Void ClientPageView::order_request_callback(System::Boolean value)
 
 	this->order_proccess = false;
 	MessageBox::Show("Состояние заказа: " + value.ToString(), "Готово");
-
 	this->client_label_waiting->Text = "Состояние заказа";
 	this->client_button_cancel->Enabled = false;
 	this->client_button_order->Enabled = true;
@@ -146,7 +145,7 @@ System::Void ClientPageView::client_button_update_Click(System::Object^ sender, 
 	Models::AccountClientModel^ model = gcnew Models::AccountClientModel(
 		username_field, age_field, gender_field, bankcard_field);
 	System::Boolean update_check = this->service_account_manager->update_account(model);
-	if (update_check != true) MessageBox::Show("Не удалось обновить данные аккаунта", "Ошибка");
+	if (update_check != true) { MessageBox::Show("Не удалось обновить данные аккаунта", "Ошибка"); return; }
 	
 	MessageBox::Show("Данные успешно обновлены", "Готово");
 	this->account_list_initialize();
