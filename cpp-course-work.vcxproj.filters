@@ -90,6 +90,9 @@
     <ClCompile Include="views\driver_page_view\driver_complex_view.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="views\client_page_view\client_pricelist_view.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="manager\manager.h">
@@ -179,7 +182,10 @@
     <ClInclude Include="views\driver_page_view\driver_complex_view.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="views\client_page_view\MyForm.h">
+    <ClInclude Include="views\client_page_view\client_page_view.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="views\client_page_view\client_pricelist_view.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
@@ -188,6 +194,5 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="services\database_provider\database_setup.sql" />
-    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

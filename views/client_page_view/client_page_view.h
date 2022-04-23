@@ -4,10 +4,14 @@
 #include "../../models/cars_model/cars_model.h"
 #include "../../models/account_model/account_model.h"
 #include "../bank_settings_view/bank_settings_view.h"
+#include "client_pricelist_view.h"
+
+#define CAR_ECONOM_PRICE 150
+#define CAR_PREMIUM_PRICE 700
+#define CAR_CHILD_PRICE 300
 
 namespace Views
 {
-
 	using namespace System;
 	using namespace System::ComponentModel;
 	using namespace System::Collections;
@@ -65,6 +69,8 @@ namespace Views
 			if (components) delete components;
 		}
 
+	private: System::Windows::Forms::Button^ client_button_money;
+	private: System::Windows::Forms::Button^ client_button_price;
 	private: System::Windows::Forms::TabControl^ client_tabcontrol;
 	private: System::Windows::Forms::TabPage^ client_page_order;
 	private: System::Windows::Forms::Label^ client_label_carlist;
@@ -120,24 +126,28 @@ namespace Views
 		   /// </summary>
 		   void InitializeComponent(void);
 #pragma endregion
+		private: generic <class TEnum> TEnum convert_to_enum(System::String^ value);
 
-	private: System::Void order_request_callback(System::Boolean value);
+		private: System::Void order_request_callback(OrderController::RequestAcceptToken token);
 
-	private: System::Void progressbar_proceed(System::Void);
+		private: System::Void progressbar_proceed(System::Void);
 
-	private: System::Void client_button_order_Click(System::Object^ sender, System::EventArgs^ e);
+		private: System::Void client_button_order_Click(System::Object^ sender, System::EventArgs^ e);
 
-	private: System::Void client_button_cancel_Click(System::Object^ sender, System::EventArgs^ e);
+		private: System::Void client_button_cancel_Click(System::Object^ sender, System::EventArgs^ e);
 
-	private: System::Void client_button_refresh_Click(System::Object^ sender, System::EventArgs^ e);
+		private: System::Void client_button_refresh_Click(System::Object^ sender, System::EventArgs^ e);
 
-	private: System::Void client_button_update_Click(System::Object^ sender, System::EventArgs^ e);
+		private: System::Void client_button_update_Click(System::Object^ sender, System::EventArgs^ e);
 
-	private: System::Void client_button_logout_Click(System::Object^ sender, System::EventArgs^ e);
+		private: System::Void client_button_logout_Click(System::Object^ sender, System::EventArgs^ e);
 
-	private: System::Void account_list_initialize(System::Void);
+		private: System::Void account_list_initialize(System::Void);
 
-	private: System::Void client_button_bank_Click(System::Object^ sender, System::EventArgs^ e);
+		private: System::Void client_button_bank_Click(System::Object^ sender, System::EventArgs^ e);
 
+		private: System::Void client_button_price_Click(System::Object^ sender, System::EventArgs^ e);
+
+		private: System::Void client_button_money_Click(System::Object^ sender, System::EventArgs^ e);
 	};
 }

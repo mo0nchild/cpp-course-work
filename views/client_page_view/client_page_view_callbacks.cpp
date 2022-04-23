@@ -1,4 +1,4 @@
-#include "MyForm.h"
+#include "client_page_view.h"
 
 using namespace Views;
 
@@ -45,7 +45,7 @@ System::Void ClientPageView::order_request_callback(OrderController::RequestAcce
 	this->client_button_order->Enabled = true;
 }
 
-System::Void ClientPageView::client_button_bankmoney_Click(System::Object^ sender, System::EventArgs^ e)
+System::Void ClientPageView::client_button_money_Click(System::Object^ sender, System::EventArgs^ e)
 {
 	try {
 		Models::AccountClientModel^ account_model = safe_cast<Models::AccountClientModel^>(
@@ -226,4 +226,10 @@ System::Void ClientPageView::client_button_refresh_Click(System::Object^ sender,
 		this->client_listview_car->Items->Add(list_item);
 	}
 	MessageBox::Show("Список доступных машин обновлен", "Готово");
+}
+
+System::Void ClientPageView::client_button_price_Click(System::Object^ sender, System::EventArgs^ e)
+{
+	Windows::Forms::Form^ form = gcnew Views::ClientPriceListView();
+	form->ShowDialog();
 }
