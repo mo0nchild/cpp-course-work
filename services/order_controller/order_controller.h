@@ -27,8 +27,9 @@ namespace Services
 	[Manager::ServiceAttribute::ServiceRequireAttribute(Services::DepotManager::typeid)]
 	public ref class OrderController sealed : Manager::ServiceBase, Services::IOrderController
 	{
+	public:		value struct RequestAcceptToken { System::Boolean Status; System::Guid ConnectionGuid; };
 	public:		using OrderPairConnection = System::Tuple<System::Guid, System::Guid>;
-	public:		delegate System::Void RequestCallback(System::Boolean);
+	public:		delegate System::Void RequestCallback(OrderController::RequestAcceptToken);
 	private:	
 		System::UInt32 session_order_count;
 		System::Boolean service_disposed;
@@ -50,9 +51,9 @@ namespace Services
 		{ public: System::UInt32 get(System::Void) { return this->session_order_count; } }
 
 	private:	System::Boolean add_request(System::Void);
-	private:	System::Boolean order_process(System::Void);
+	private:	RequestAcceptToken order_process(System::Void);
 
-		System::Void order_callback(Task<bool>^ task)
+		System::Void order_callback(Task<RequestAcceptToken>^ task)
 		{ this->request_callback(task->Result); this->request_callback = nullptr; }
 
 	public:

@@ -7,8 +7,26 @@ generic <class TEnum> TEnum convert_to_enum_cool(System::String^ value)
 	return safe_cast<TEnum>(System::Enum::Parse(TEnum::typeid, value, true));
 }
 
+generic <class TAccountScheme> where TAccountScheme : Services::AccountClassesDbScheme
+	TAccountScheme AccountManager::get_account_scheme(System::Guid account_guid) 
+{
+	TAccountScheme result_scheme;
+	List<IDatabaseManager::KeyValuePair^>^ request_list = gcnew List<IDatabaseManager::KeyValuePair^>();
+	request_list->Add(gcnew IDatabaseManager::KeyValuePair("account_guid", account_guid.ToString()));
+
+	List<IDatabaseManager::RequestRow^>^ response_list = this->service_sql_manager
+		->set_scheme_struct<TAccountScheme>()->get_database_data(request_list, false);
+	if (response_list == nullptr || response_list->Count <= 0) return result_scheme;
+
+	try { result_scheme = cli::safe_cast<TAccountScheme>(response_list->default[0]); }
+	catch (System::Exception^ error) { Console::WriteLine(error->Message); }
+
+	return result_scheme;
+}
+
 List<AccountManager::AccountInfo>^ AccountManager::AccountList::get(System::Void) 
-{  	List<IDatabaseManager::KeyValuePair^>^ request_list = gcnew List<IDatabaseManager::KeyValuePair^>();
+{
+	List<IDatabaseManager::KeyValuePair^>^ request_list = gcnew List<IDatabaseManager::KeyValuePair^>();
 	request_list->Add(gcnew IDatabaseManager::KeyValuePair("account_state", "True"));
 	request_list->Add(gcnew IDatabaseManager::KeyValuePair("account_state", "False"));
 

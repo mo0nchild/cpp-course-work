@@ -1,17 +1,62 @@
-#include "client_page_view.h"
+#include "MyForm.h"
 
 using namespace Views;
 
-System::Void ClientPageView::order_request_callback(System::Boolean value)
+generic <class TEnum> TEnum ClientPageView::convert_to_enum(System::String^ value)
+{ return safe_cast<TEnum>(System::Enum::Parse(TEnum::typeid, value, true)); }
+
+System::Void ClientPageView::order_request_callback(OrderController::RequestAcceptToken token)
 {
 	if (!this->service_order_controller->cancellation_order())
 		MessageBox::Show("Произошла ошибка при отмене заказа", "Ошибка");
 
+	System::Boolean transfer_checker(true);
+
+	if (token.Status == true)
+	{
+		Services::DriveComplexDbScheme^ complex_scheme = this->service_depot_manager->get_driver_complexs(token.ConnectionGuid);
+		Services::AccountDriversDbScheme^ driver_scheme = this->service_account_manager
+			->get_account_scheme<Services::AccountDriversDbScheme^>(token.ConnectionGuid);
+
+		System::Guid transfer_guid = System::Guid::Empty;
+		System::Int32 transfer_price(0);
+		
+		try {
+			Models::CarModelTypes car_model_type = convert_to_enum<Models::CarModelTypes>(complex_scheme->car_type);
+			switch (car_model_type) 
+			{
+			case Models::CarModelTypes::CarTypeEconom: transfer_price = CAR_ECONOM_PRICE; break;
+			case Models::CarModelTypes::CarTypePremium: transfer_price = CAR_PREMIUM_PRICE; break;
+			case Models::CarModelTypes::CarTypeChild: transfer_price = CAR_CHILD_PRICE; break;
+			}
+			transfer_guid = System::Guid::Parse(driver_scheme->bank_card);
+		}
+		catch (System::Exception^) { MessageBox::Show("Произошла ошибка при обработки подготовке к транзакции", "Ошибка"); }
+		transfer_checker = this->service_bank_controller->transfer_money(transfer_guid, transfer_price);
+	}
+
 	this->order_proccess = false;
-	MessageBox::Show("Состояние заказа: " + value.ToString(), "Готово");
 	this->client_label_waiting->Text = "Состояние заказа";
+
+	if(transfer_checker)MessageBox::Show("Состояние заказа: " + token.Status.ToString(), "Готово");
+	else MessageBox::Show("Произошла ошибка при оплате поездки", "Ошибка");
+
 	this->client_button_cancel->Enabled = false;
 	this->client_button_order->Enabled = true;
+}
+
+System::Void ClientPageView::client_button_bankmoney_Click(System::Object^ sender, System::EventArgs^ e)
+{
+	try {
+		Models::AccountClientModel^ account_model = safe_cast<Models::AccountClientModel^>(
+			this->service_account_manager->AccountToken.AccountModel);
+
+		if (!this->service_bank_controller->load_bank_account(account_model->BankCard))
+			throw gcnew Services::AccountManagerTokenException(ClientPageView::typeid, "cant load bank account");
+	}
+	catch (System::Exception^) { MessageBox::Show("Невозможно подключиться к банковскому аккаунту", "Ошибка"); return; }
+
+	MessageBox::Show(System::String::Concat("Текущий баланс: ", this->service_bank_controller->AccountMoney), "Готово");
 }
 
 System::Void ClientPageView::progressbar_proceed(System::Void)
@@ -29,18 +74,26 @@ System::Void ClientPageView::progressbar_proceed(System::Void)
 System::Void ClientPageView::client_button_order_Click(System::Object^ sender, System::EventArgs^ e)
 {
 	if (this->client_textbox_address->Text == System::String::Empty)
-	{
-		MessageBox::Show("Заполните текстовое поле для адреса", "Требование"); return;
+	{ MessageBox::Show("Заполните текстовое поле для адреса", "Требование"); return; }
+
+	try {
+		Models::AccountClientModel^ account_model = safe_cast<Models::AccountClientModel^>(
+			this->service_account_manager->AccountToken.AccountModel);
+
+		if (!this->service_bank_controller->load_bank_account(account_model->BankCard))
+			throw gcnew Services::AccountManagerTokenException(ClientPageView::typeid, "cant load bank account");
 	}
+	catch (System::Exception^) { MessageBox::Show("Невозможно подключиться к банковскому аккаунту", "Ошибка"); return; }
 
 	System::String^ address_field = this->client_textbox_address->Text;
 	Models::CarModelTypes cartype_field;
+	System::Int32 request_price(0);
 
 	switch (this->client_combobox_cartype->SelectedIndex)
 	{
-	case 0: cartype_field = Models::CarModelTypes::CarTypeEconom; break;
-	case 1: cartype_field = Models::CarModelTypes::CarTypeChild; break;
-	case 2: cartype_field = Models::CarModelTypes::CarTypePremium; break;
+	case 0: cartype_field = Models::CarModelTypes::CarTypeEconom; request_price = CAR_ECONOM_PRICE; break;
+	case 1: cartype_field = Models::CarModelTypes::CarTypeChild; request_price = CAR_CHILD_PRICE; break;
+	case 2: cartype_field = Models::CarModelTypes::CarTypePremium; request_price = CAR_PREMIUM_PRICE; break;
 	}
 
 	this->service_order_controller->OrderRequestCallback += gcnew OrderController::RequestCallback(
@@ -61,6 +114,7 @@ System::Void ClientPageView::client_button_order_Click(System::Object^ sender, S
 	}
 
 	if (registered_order != true) { MessageBox::Show("Невозможно создать заказ", "Ошибка"); return; }
+
 	this->client_button_cancel->Enabled = true;
 	this->client_button_order->Enabled = false;
 

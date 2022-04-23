@@ -7,6 +7,20 @@ generic <class TEnum> TEnum DriverPageView::convert_to_enum(System::String ^ val
 	return safe_cast<TEnum>(System::Enum::Parse(TEnum::typeid, value, true));
 }
 
+System::Void DriverPageView::driver_button_bankmoney_Click(System::Object^ sender, System::EventArgs^ e) 
+{
+	try {
+		Models::AccountDriverModel^ account_model = safe_cast<Models::AccountDriverModel^>(
+			this->service_account_manager->AccountToken.AccountModel);
+
+		if (!this->service_bank_controller->load_bank_account(account_model->BankCard))
+			throw gcnew Services::AccountManagerTokenException(ClientPageView::typeid, "cant load bank account");
+	}
+	catch (System::Exception^) { MessageBox::Show("Невозможно подключиться к банковскому аккаунту", "Ошибка"); return; }
+
+	MessageBox::Show(System::String::Concat("Текущий баланс: ", this->service_bank_controller->AccountMoney), "Готово");
+}
+
 System::Void DriverPageView::driver_button_accept_order_Click(System::Object^ sender, System::EventArgs^ e)
 {
 	if (this->service_depot_manager->IsBuilded != true)
@@ -52,7 +66,6 @@ System::Void DriverPageView::driver_button_update_orders_Click(System::Object^ s
 		list_item->SubItems->Add(item->date_time);
 
 		this->driver_listview_orders->Items->Add(list_item);
-		MessageBox::Show("Список заказов обновлен", "Готово");
 	}
 }
 
@@ -219,6 +232,9 @@ System::Void DriverPageView::driver_button_logout_Click(System::Object^ sender, 
 
 System::Void DriverPageView::driver_button_complexinfo_Click(System::Object^ sender, System::EventArgs^ e)
 {
+	if (!this->service_depot_manager->IsBuilded) 
+	{ MessageBox::Show("Для начала арендуйте машину", "Ошибка"); return; }
+
 	Windows::Forms::Form^ form = gcnew Views::DriverComplexView(this->service_depot_manager->CarModel,
 		this->service_depot_manager->CarModelType);
 	form->ShowDialog();

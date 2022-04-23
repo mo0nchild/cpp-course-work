@@ -8,6 +8,8 @@ namespace Services
 	using namespace System;
 	using namespace System::Collections::Generic;
 
+	public interface class AccountClassesDbScheme {};
+
 	[Services::SqlDatabaseTableAttribute("account_authentication")]
 	public ref class AccountAuthenticationDbScheme sealed : SqlDatabaseManager::ISqlDataBaseSchemeType
 	{
@@ -27,7 +29,7 @@ namespace Services
 	};
 
 	[Services::SqlDatabaseTableAttribute("account_clients")]
-	public ref class AccountClientsDbScheme sealed : SqlDatabaseManager::ISqlDataBaseSchemeType
+	public ref class AccountClientsDbScheme sealed : SqlDatabaseManager::ISqlDataBaseSchemeType, AccountClassesDbScheme
 	{
 	public: [Services::SqlDatabaseFieldAttribute("account_guid")]	property System::String^ account_guid;
 	public: [Services::SqlDatabaseFieldAttribute("username")]		property System::String^ username;
@@ -50,7 +52,7 @@ namespace Services
 	};
 
 	[Services::SqlDatabaseTableAttribute("account_drivers")]
-	public ref class AccountDriversDbScheme sealed : SqlDatabaseManager::ISqlDataBaseSchemeType
+	public ref class AccountDriversDbScheme sealed : SqlDatabaseManager::ISqlDataBaseSchemeType, AccountClassesDbScheme
 	{
 	public: [Services::SqlDatabaseFieldAttribute("account_guid")]		property System::String^ account_guid;
 	public: [Services::SqlDatabaseFieldAttribute("username")]			property System::String^ username;
@@ -77,7 +79,7 @@ namespace Services
 	};
 
 	[Services::SqlDatabaseTableAttribute("account_admins")]
-	public ref class AccountAdminsDbScheme sealed : SqlDatabaseManager::ISqlDataBaseSchemeType
+	public ref class AccountAdminsDbScheme sealed : SqlDatabaseManager::ISqlDataBaseSchemeType, AccountClassesDbScheme
 	{
 	public: [Services::SqlDatabaseFieldAttribute("account_guid")]		property System::String^ account_guid;
 	public: [Services::SqlDatabaseFieldAttribute("username")]			property System::String^ username;

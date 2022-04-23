@@ -5,7 +5,7 @@
 #include "../../models/account_model/account_model.h"
 #include "../bank_settings_view/bank_settings_view.h"
 
-namespace Views 
+namespace Views
 {
 
 	using namespace System;
@@ -37,8 +37,8 @@ namespace Views
 		ClientPageView(System::Void) { InitializeComponent(); }
 
 		ClientPageView(Windows::Forms::Form^ start_page, Manager::ServiceManager^ service_manager) : order_proccess(false)
-		{ 
-			InitializeComponent(); 
+		{
+			InitializeComponent();
 			this->service_manager = service_manager;
 			this->start_page = start_page;
 
@@ -59,9 +59,9 @@ namespace Views
 		/// <summary>
 		/// ќсвободить все используемые ресурсы.
 		/// </summary>
-		~ClientPageView(System::Void) 
+		~ClientPageView(System::Void)
 		{
-			if (this->service_account_manager->IsInitialized) this->service_account_manager->sign_out_account(); 
+			if (this->service_account_manager->IsInitialized) this->service_account_manager->sign_out_account();
 			if (components) delete components;
 		}
 
@@ -108,36 +108,36 @@ namespace Views
 	private: System::Windows::Forms::ColumnHeader^ account_field;
 	private: System::Windows::Forms::ColumnHeader^ account_data;
 
-		/// <summary>
-		/// ќб€зательна€ переменна€ конструктора.
-		/// </summary>
-		System::ComponentModel::Container ^components;
+		   /// <summary>
+		   /// ќб€зательна€ переменна€ конструктора.
+		   /// </summary>
+		   System::ComponentModel::Container^ components;
 
 #pragma region Windows Form Designer generated code
-		/// <summary>
-		/// “ребуемый метод дл€ поддержки конструктора Ч не измен€йте 
-		/// содержимое этого метода с помощью редактора кода.
-		/// </summary>
-		void InitializeComponent(void);
+		   /// <summary>
+		   /// “ребуемый метод дл€ поддержки конструктора Ч не измен€йте 
+		   /// содержимое этого метода с помощью редактора кода.
+		   /// </summary>
+		   void InitializeComponent(void);
 #pragma endregion
 
-		private: System::Void order_request_callback(System::Boolean value);
+	private: System::Void order_request_callback(System::Boolean value);
 
-		private: System::Void progressbar_proceed(System::Void);
-			   
-		private: System::Void client_button_order_Click(System::Object^ sender, System::EventArgs^ e);
+	private: System::Void progressbar_proceed(System::Void);
 
-		private: System::Void client_button_cancel_Click(System::Object^ sender, System::EventArgs^ e);
+	private: System::Void client_button_order_Click(System::Object^ sender, System::EventArgs^ e);
 
-		private: System::Void client_button_refresh_Click(System::Object^ sender, System::EventArgs^ e);
+	private: System::Void client_button_cancel_Click(System::Object^ sender, System::EventArgs^ e);
 
-		private: System::Void client_button_update_Click(System::Object^ sender, System::EventArgs^ e);
+	private: System::Void client_button_refresh_Click(System::Object^ sender, System::EventArgs^ e);
 
-		private: System::Void client_button_logout_Click(System::Object^ sender, System::EventArgs^ e);
+	private: System::Void client_button_update_Click(System::Object^ sender, System::EventArgs^ e);
 
-		private: System::Void account_list_initialize(System::Void);
+	private: System::Void client_button_logout_Click(System::Object^ sender, System::EventArgs^ e);
 
-		private: System::Void client_button_bank_Click(System::Object^ sender, System::EventArgs^ e);
+	private: System::Void account_list_initialize(System::Void);
+
+	private: System::Void client_button_bank_Click(System::Object^ sender, System::EventArgs^ e);
 
 	};
 }

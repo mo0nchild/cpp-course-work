@@ -180,7 +180,7 @@
     <ClInclude Include="views\bank_settings_view\bank_settings_operation.h">
       <FileType>CppForm</FileType>
     </ClInclude>
-    <ClInclude Include="views\client_page_view\client_page_view.h">
+    <ClInclude Include="views\client_page_view\MyForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="views\driver_page_view\driver_page_view.h">
@@ -207,6 +207,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
     <None Include="services\database_provider\database_setup.sql" />
   </ItemGroup>
   <ItemGroup>
@@ -221,9 +222,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="views\bank_settings_view\bank_settings_view.resx">
       <DependentUpon>views\bank_settings_view\bank_settings_view.h</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="views\client_page_view\client_page_view.resx">
-      <DependentUpon>views\client_page_view\client_page_view.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="views\driver_page_view\driver_complex_view.resx">
       <DependentUpon>views\driver_page_view\driver_complex_view.h</DependentUpon>

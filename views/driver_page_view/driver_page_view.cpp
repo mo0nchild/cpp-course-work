@@ -45,6 +45,7 @@ void DriverPageView::InitializeComponent(void)
     this->driver_listview_account = (gcnew System::Windows::Forms::ListView());
     this->account_field = (gcnew System::Windows::Forms::ColumnHeader());
     this->account_data = (gcnew System::Windows::Forms::ColumnHeader());
+    this->driver_button_bankmoney = (gcnew System::Windows::Forms::Button());
     this->driver_tabcontrol->SuspendLayout();
     this->driver_page_order->SuspendLayout();
     this->driver_page_garage->SuspendLayout();
@@ -69,6 +70,7 @@ void DriverPageView::InitializeComponent(void)
     // 
     // driver_page_order
     // 
+    this->driver_page_order->Controls->Add(this->driver_button_bankmoney);
     this->driver_page_order->Controls->Add(this->driver_button_complexinfo);
     this->driver_page_order->Controls->Add(this->driver_orders_list);
     this->driver_page_order->Controls->Add(this->driver_button_update_orders);
@@ -87,7 +89,7 @@ void DriverPageView::InitializeComponent(void)
     this->driver_button_complexinfo->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
     this->driver_button_complexinfo->Location = System::Drawing::Point(25, 323);
     this->driver_button_complexinfo->Name = L"driver_button_complexinfo";
-    this->driver_button_complexinfo->Size = System::Drawing::Size(598, 31);
+    this->driver_button_complexinfo->Size = System::Drawing::Size(549, 31);
     this->driver_button_complexinfo->TabIndex = 11;
     this->driver_button_complexinfo->Text = L"Показать информацию о комплексе";
     this->driver_button_complexinfo->UseVisualStyleBackColor = true;
@@ -455,6 +457,17 @@ void DriverPageView::InitializeComponent(void)
     // 
     this->account_data->Text = L"Установленные данные";
     this->account_data->Width = 400;
+    // 
+    // driver_button_bankmoney
+    // 
+    this->driver_button_bankmoney->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+    this->driver_button_bankmoney->Location = System::Drawing::Point(591, 325);
+    this->driver_button_bankmoney->Name = L"driver_button_bankmoney";
+    this->driver_button_bankmoney->Size = System::Drawing::Size(32, 29);
+    this->driver_button_bankmoney->TabIndex = 19;
+    this->driver_button_bankmoney->Text = L"$";
+    this->driver_button_bankmoney->UseVisualStyleBackColor = true;
+    this->driver_button_bankmoney->Click += gcnew System::EventHandler(this, &DriverPageView::driver_button_bankmoney_Click);
     // 
     // DriverPageView
     // 

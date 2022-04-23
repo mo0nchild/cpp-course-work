@@ -59,6 +59,9 @@ namespace Services
 		generic <class TAccountModel> where TAccountModel : Models::AccountBaseModel
 			System::Boolean update_account(TAccountModel account_model);
 
+		generic <class TAccountScheme> where TAccountScheme : Services:: AccountClassesDbScheme
+			TAccountScheme get_account_scheme(System::Guid account_guid);
+
 		virtual System::Boolean delete_account(System::Void) override;
 		virtual System::Boolean sign_out_account(System::Void) override;
 	};

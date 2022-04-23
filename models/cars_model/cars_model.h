@@ -48,7 +48,7 @@ namespace Models
 		virtual ~CarHeavyModel(System::Void) { }
 
 		virtual System::Object^ Clone(System::Void) override { return gcnew CarHeavyModel(CarType, CarColor, CarSpeed); }
-		virtual System::String^ car_drive(System::Void) override { return "Идем на легковой машине"; }
+		virtual System::String^ car_drive(System::Void) override { return "Идем на грузовой машине"; }
 	};
 
 }

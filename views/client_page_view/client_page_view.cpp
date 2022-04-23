@@ -1,4 +1,4 @@
-#include "client_page_view.h"
+#include "MyForm.h"
 
 using namespace Views;
 
@@ -39,6 +39,7 @@ void ClientPageView::InitializeComponent(void)
     this->client_listview_account = (gcnew System::Windows::Forms::ListView());
     this->account_field = (gcnew System::Windows::Forms::ColumnHeader());
     this->account_data = (gcnew System::Windows::Forms::ColumnHeader());
+    this->label1 = (gcnew System::Windows::Forms::Label());
     this->client_tabcontrol->SuspendLayout();
     this->client_page_order->SuspendLayout();
     this->client_page_account->SuspendLayout();
@@ -61,6 +62,7 @@ void ClientPageView::InitializeComponent(void)
     // 
     // client_page_order
     // 
+    this->client_page_order->Controls->Add(this->label1);
     this->client_page_order->Controls->Add(this->client_button_cancel);
     this->client_page_order->Controls->Add(this->client_label_waiting);
     this->client_page_order->Controls->Add(this->client_label_carclass);
@@ -407,6 +409,15 @@ void ClientPageView::InitializeComponent(void)
     // 
     this->account_data->Text = L"Установленные данные";
     this->account_data->Width = 400;
+    // 
+    // label1
+    // 
+    this->label1->AutoSize = true;
+    this->label1->Location = System::Drawing::Point(365, 181);
+    this->label1->Name = L"label1";
+    this->label1->Size = System::Drawing::Size(46, 17);
+    this->label1->TabIndex = 18;
+    this->label1->Text = L"label1";
     // 
     // ClientPageView
     // 

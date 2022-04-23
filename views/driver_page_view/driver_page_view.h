@@ -70,6 +70,8 @@ namespace Views
 			if (this->service_depot_manager->IsBuilded) this->service_depot_manager->return_car_model();
 			if (components) delete components;
 		}
+
+	private: System::Windows::Forms::Button^ driver_button_bankmoney;
 	private: System::Windows::Forms::Label^ driver_orders_list;
 	private: System::Windows::Forms::Button^ driver_button_update_orders;
 	private: System::Windows::Forms::Button^ driver_button_accept_order;
@@ -155,5 +157,6 @@ namespace Views
 
 		private: System::Void driver_button_complexinfo_Click(System::Object^ sender, System::EventArgs^ e);
 
+		private: System::Void driver_button_bankmoney_Click(System::Object^ sender, System::EventArgs^ e);
 	};
 }

@@ -75,10 +75,10 @@ System::Boolean OrderController::registration_order(System::String^ request_addr
 	this->request_cancel_token = cancel_source->Token;
 
 	if (this->add_request() != true) { this->order_token = nullptr; return false; }
-	Task<System::Boolean>^ order_processing = gcnew Task<System::Boolean>(
-		gcnew System::Func<bool>(this, &Services::OrderController::order_process), this->request_cancel_token);
+	Task<RequestAcceptToken>^ order_processing = gcnew Task<RequestAcceptToken>(
+		gcnew System::Func<RequestAcceptToken>(this, &Services::OrderController::order_process), this->request_cancel_token);
 
-	order_processing->ContinueWith(gcnew System::Action<Task<bool>^>(this, &Services::OrderController::order_callback));
+	order_processing->ContinueWith(gcnew System::Action<Task<RequestAcceptToken>^>(this, &Services::OrderController::order_callback));
 	order_processing->Start();
 
 	return true;
@@ -101,7 +101,7 @@ System::Boolean OrderController::cancellation_token_push(System::Void)
 	return true;
 }
 
-System::Boolean OrderController::order_process(System::Void)
+OrderController::RequestAcceptToken OrderController::order_process(System::Void)
 {
 	for (System::UInt32 seconds = 0; seconds < ORDER_REQUEST_SECOND; seconds++)
 	{
@@ -112,14 +112,24 @@ System::Boolean OrderController::order_process(System::Void)
 		List<IDatabaseManager::RequestRow^>^ request_result = this->service_sql_manager
 			->set_scheme_struct<Services::OrderControllerDbScheme^>()
 			->get_database_data(search_param, false);
-		if (request_result == nullptr) return false;
+		if (request_result == nullptr) return OrderController::RequestAcceptToken{ false, System::Guid::Empty};
 
 		// забираю первое вхождение в выборку (т.к guid уникальный ключ)
 		IDatabaseManager::RequestRow^ request_row = request_result->default[0];
 		Services::OrderControllerDbScheme^ request_obj = safe_cast<Services::OrderControllerDbScheme^>(request_row);
 
-		if(System::Boolean::Parse(request_obj->order_status) == true) return true;
+		if (System::Boolean::Parse(request_obj->order_status) == true) 
+		{
+			System::Guid driver_id = System::Guid::Empty;
+
+			try { driver_id = System::Guid::Parse(request_obj->driver_guid); }
+			catch (System::Exception^) 
+			{ return OrderController::RequestAcceptToken{ false, System::Guid::Empty }; }
+
+			return OrderController::RequestAcceptToken{ true, driver_id };
+		}
+			
 		Thread::Sleep(System::TimeSpan(0, 0, 1));
 	}
-	return false;
+	return OrderController::RequestAcceptToken{ false, System::Guid::Empty };
 }
