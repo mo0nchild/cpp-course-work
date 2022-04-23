@@ -27,10 +27,6 @@ void ClientPageView::InitializeComponent(void)
     this->driver_state = (gcnew System::Windows::Forms::ColumnHeader());
     this->client_page_account = (gcnew System::Windows::Forms::TabPage());
     this->client_button_bank = (gcnew System::Windows::Forms::Button());
-    this->client_label_bankcard = (gcnew System::Windows::Forms::Label());
-    this->client_label_age = (gcnew System::Windows::Forms::Label());
-    this->client_label_gender = (gcnew System::Windows::Forms::Label());
-    this->client_label_username = (gcnew System::Windows::Forms::Label());
     this->client_label_account = (gcnew System::Windows::Forms::Label());
     this->client_numeric_age = (gcnew System::Windows::Forms::NumericUpDown());
     this->client_textbox_bankcard = (gcnew System::Windows::Forms::TextBox());
@@ -41,6 +37,10 @@ void ClientPageView::InitializeComponent(void)
     this->client_listview_account = (gcnew System::Windows::Forms::ListView());
     this->account_field = (gcnew System::Windows::Forms::ColumnHeader());
     this->account_data = (gcnew System::Windows::Forms::ColumnHeader());
+    this->client_checkbox_username = (gcnew System::Windows::Forms::CheckBox());
+    this->client_checkbox_gender = (gcnew System::Windows::Forms::CheckBox());
+    this->client_checkbox_age = (gcnew System::Windows::Forms::CheckBox());
+    this->client_checkbox_bankcard = (gcnew System::Windows::Forms::CheckBox());
     this->client_tabcontrol->SuspendLayout();
     this->client_page_order->SuspendLayout();
     this->client_page_account->SuspendLayout();
@@ -139,6 +139,7 @@ void ClientPageView::InitializeComponent(void)
     // 
     // client_combobox_carclass
     // 
+    this->client_combobox_carclass->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
     this->client_combobox_carclass->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
     this->client_combobox_carclass->FormattingEnabled = true;
     this->client_combobox_carclass->Items->AddRange(gcnew cli::array< System::Object^  >(2) { L"Легковая машина", L"Грузовая машина" });
@@ -206,6 +207,7 @@ void ClientPageView::InitializeComponent(void)
     // 
     // client_combobox_cartype
     // 
+    this->client_combobox_cartype->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
     this->client_combobox_cartype->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
     this->client_combobox_cartype->FormattingEnabled = true;
     this->client_combobox_cartype->Items->AddRange(gcnew cli::array< System::Object^  >(3) {
@@ -265,11 +267,11 @@ void ClientPageView::InitializeComponent(void)
     // 
     // client_page_account
     // 
+    this->client_page_account->Controls->Add(this->client_checkbox_bankcard);
+    this->client_page_account->Controls->Add(this->client_checkbox_age);
+    this->client_page_account->Controls->Add(this->client_checkbox_gender);
+    this->client_page_account->Controls->Add(this->client_checkbox_username);
     this->client_page_account->Controls->Add(this->client_button_bank);
-    this->client_page_account->Controls->Add(this->client_label_bankcard);
-    this->client_page_account->Controls->Add(this->client_label_age);
-    this->client_page_account->Controls->Add(this->client_label_gender);
-    this->client_page_account->Controls->Add(this->client_label_username);
     this->client_page_account->Controls->Add(this->client_label_account);
     this->client_page_account->Controls->Add(this->client_numeric_age);
     this->client_page_account->Controls->Add(this->client_textbox_bankcard);
@@ -296,46 +298,6 @@ void ClientPageView::InitializeComponent(void)
     this->client_button_bank->Text = L"Менеджер банка";
     this->client_button_bank->UseVisualStyleBackColor = true;
     this->client_button_bank->Click += gcnew System::EventHandler(this, &ClientPageView::client_button_bank_Click);
-    // 
-    // client_label_bankcard
-    // 
-    this->client_label_bankcard->AutoSize = true;
-    this->client_label_bankcard->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
-    this->client_label_bankcard->Location = System::Drawing::Point(22, 279);
-    this->client_label_bankcard->Name = L"client_label_bankcard";
-    this->client_label_bankcard->Size = System::Drawing::Size(175, 17);
-    this->client_label_bankcard->TabIndex = 13;
-    this->client_label_bankcard->Text = L"Номер банковской карты";
-    // 
-    // client_label_age
-    // 
-    this->client_label_age->AutoSize = true;
-    this->client_label_age->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
-    this->client_label_age->Location = System::Drawing::Point(501, 222);
-    this->client_label_age->Name = L"client_label_age";
-    this->client_label_age->Size = System::Drawing::Size(62, 17);
-    this->client_label_age->TabIndex = 12;
-    this->client_label_age->Text = L"Возраст";
-    // 
-    // client_label_gender
-    // 
-    this->client_label_gender->AutoSize = true;
-    this->client_label_gender->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
-    this->client_label_gender->Location = System::Drawing::Point(294, 222);
-    this->client_label_gender->Name = L"client_label_gender";
-    this->client_label_gender->Size = System::Drawing::Size(34, 17);
-    this->client_label_gender->TabIndex = 11;
-    this->client_label_gender->Text = L"Пол";
-    // 
-    // client_label_username
-    // 
-    this->client_label_username->AutoSize = true;
-    this->client_label_username->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
-    this->client_label_username->Location = System::Drawing::Point(22, 222);
-    this->client_label_username->Name = L"client_label_username";
-    this->client_label_username->Size = System::Drawing::Size(35, 17);
-    this->client_label_username->TabIndex = 10;
-    this->client_label_username->Text = L"Имя";
     // 
     // client_label_account
     // 
@@ -368,6 +330,7 @@ void ClientPageView::InitializeComponent(void)
     // 
     // client_combobox_gender
     // 
+    this->client_combobox_gender->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
     this->client_combobox_gender->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
     this->client_combobox_gender->FormattingEnabled = true;
     this->client_combobox_gender->Items->AddRange(gcnew cli::array< System::Object^  >(2) { L"Мужчина", L"Женщина" });
@@ -432,6 +395,46 @@ void ClientPageView::InitializeComponent(void)
     // 
     this->account_data->Text = L"Установленные данные";
     this->account_data->Width = 400;
+    // 
+    // client_checkbox_username
+    // 
+    this->client_checkbox_username->AutoSize = true;
+    this->client_checkbox_username->Location = System::Drawing::Point(25, 221);
+    this->client_checkbox_username->Name = L"client_checkbox_username";
+    this->client_checkbox_username->Size = System::Drawing::Size(54, 21);
+    this->client_checkbox_username->TabIndex = 15;
+    this->client_checkbox_username->Text = L"Имя";
+    this->client_checkbox_username->UseVisualStyleBackColor = true;
+    // 
+    // client_checkbox_gender
+    // 
+    this->client_checkbox_gender->AutoSize = true;
+    this->client_checkbox_gender->Location = System::Drawing::Point(297, 221);
+    this->client_checkbox_gender->Name = L"client_checkbox_gender";
+    this->client_checkbox_gender->Size = System::Drawing::Size(53, 21);
+    this->client_checkbox_gender->TabIndex = 16;
+    this->client_checkbox_gender->Text = L"Пол";
+    this->client_checkbox_gender->UseVisualStyleBackColor = true;
+    // 
+    // client_checkbox_age
+    // 
+    this->client_checkbox_age->AutoSize = true;
+    this->client_checkbox_age->Location = System::Drawing::Point(505, 221);
+    this->client_checkbox_age->Name = L"client_checkbox_age";
+    this->client_checkbox_age->Size = System::Drawing::Size(81, 21);
+    this->client_checkbox_age->TabIndex = 17;
+    this->client_checkbox_age->Text = L"Возраст";
+    this->client_checkbox_age->UseVisualStyleBackColor = true;
+    // 
+    // client_checkbox_bankcard
+    // 
+    this->client_checkbox_bankcard->AutoSize = true;
+    this->client_checkbox_bankcard->Location = System::Drawing::Point(23, 280);
+    this->client_checkbox_bankcard->Name = L"client_checkbox_bankcard";
+    this->client_checkbox_bankcard->Size = System::Drawing::Size(194, 21);
+    this->client_checkbox_bankcard->TabIndex = 18;
+    this->client_checkbox_bankcard->Text = L"Номер банковской карты";
+    this->client_checkbox_bankcard->UseVisualStyleBackColor = true;
     // 
     // ClientPageView
     // 

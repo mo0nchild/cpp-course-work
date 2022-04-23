@@ -56,8 +56,7 @@ namespace Views
 			this->service_bank_controller = (Services::BankController^)provider_bank_controller->Service;
 
 			this->account_list_initialize();
-			this->driver_button_rent->Enabled = true;
-			this->driver_button_return->Enabled = false;
+			this->driver_complex_close();
 		}
 
 	protected:
@@ -71,6 +70,11 @@ namespace Views
 			if (components) delete components;
 		}
 
+	private: System::Windows::Forms::Label^ driver_label_currentstatus;
+	private: System::Windows::Forms::Label^ driver_statuslist;
+	private: System::Windows::Forms::TextBox^ driver_textbox_status;
+	private: System::Windows::Forms::Button^ driver_button_status;
+	private: System::Windows::Forms::ComboBox^ driver_combobox_status;
 	private: System::Windows::Forms::Button^ driver_button_bankmoney;
 	private: System::Windows::Forms::Label^ driver_orders_list;
 	private: System::Windows::Forms::Button^ driver_button_update_orders;
@@ -137,6 +141,10 @@ namespace Views
 
 		private: generic <class TEnum> TEnum convert_to_enum(System::String^ value);
 
+		private: System::Void driver_complex_open(System::Void);
+
+		private: System::Void driver_complex_close(System::Void);
+
 		private: System::Void driver_button_accept_order_Click(System::Object^ sender, System::EventArgs^ e);
 
 		private: System::Void driver_button_update_orders_Click(System::Object^ sender, System::EventArgs^ e);
@@ -158,5 +166,7 @@ namespace Views
 		private: System::Void driver_button_complexinfo_Click(System::Object^ sender, System::EventArgs^ e);
 
 		private: System::Void driver_button_bankmoney_Click(System::Object^ sender, System::EventArgs^ e);
+
+		private: System::Void driver_button_status_Click(System::Object^ sender, System::EventArgs^ e);
 	};
 }

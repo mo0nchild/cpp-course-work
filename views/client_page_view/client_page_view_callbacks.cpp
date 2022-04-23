@@ -73,6 +73,15 @@ System::Void ClientPageView::progressbar_proceed(System::Void)
 
 System::Void ClientPageView::client_button_order_Click(System::Object^ sender, System::EventArgs^ e)
 {
+	Models::AccountClientModel^ client_model = nullptr;
+	try { client_model = cli::safe_cast<Models::AccountClientModel^>(this->service_account_manager->AccountToken.AccountModel); }
+	catch (System::Exception^) { MessageBox::Show("Невозможно загрузить данные аккаунта"); return; }
+
+	if (!this->service_bank_controller->load_bank_account(client_model->BankCard)) 
+	{ MessageBox::Show("Невозможно загрузить банковские данные"); return; }
+
+	System::Int32 balance = this->service_bank_controller->AccountMoney;
+
 	if (this->client_textbox_address->Text == System::String::Empty)
 	{ MessageBox::Show("Заполните текстовое поле для адреса", "Требование"); return; }
 
@@ -95,6 +104,8 @@ System::Void ClientPageView::client_button_order_Click(System::Object^ sender, S
 	case 1: cartype_field = Models::CarModelTypes::CarTypeChild; request_price = CAR_CHILD_PRICE; break;
 	case 2: cartype_field = Models::CarModelTypes::CarTypePremium; request_price = CAR_PREMIUM_PRICE; break;
 	}
+
+	if (balance < request_price) { MessageBox::Show("Недостаточно средств"); return; }
 
 	this->service_order_controller->OrderRequestCallback += gcnew OrderController::RequestCallback(
 		this, &ClientPageView::order_request_callback);
@@ -181,20 +192,37 @@ System::Void ClientPageView::account_list_initialize(System::Void)
 
 System::Void ClientPageView::client_button_update_Click(System::Object^ sender, System::EventArgs^ e)
 {
-	System::String^ username_field = this->client_textbox_username->Text;
-	System::Int32 age_field = System::Decimal::ToInt32(this->client_numeric_age->Value);
-	Models::AccountModelGender gender_field;
-	System::Guid bankcard_field = System::Guid::Empty;
+	Models::AccountClientModel^ current_model = safe_cast<Models::AccountClientModel^>(
+		this->service_account_manager->AccountToken.AccountModel);
 
-	switch (this->client_combobox_gender->SelectedIndex)
-	{
-	case 0: gender_field = Models::AccountModelGender::MaleGender; break;
-	case 1: gender_field = Models::AccountModelGender::FemaleGender; break;
-	}
-	
-	try { bankcard_field = System::Guid::Parse(this->client_textbox_bankcard->Text); }
-	catch (System::Exception^) { MessageBox::Show("Неверный формат банковской карты", "Ошибка"); return; }
+	System::Int32 age_field = this->client_checkbox_age->Checked ? Decimal::ToInt32(this->client_numeric_age->Value)
+		: current_model->Age;
+
+	System::String^ username_field = this->client_checkbox_username->Checked ? 
+		this->client_textbox_username->Text : current_model->Username;
 	if (username_field == System::String::Empty) { MessageBox::Show("Неверный формат имени", "Ошибка"); return; }
+
+	Models::AccountModelGender gender_field;
+	if (this->client_checkbox_gender->Checked)
+	{
+		switch (this->client_combobox_gender->SelectedIndex)
+		{
+		case 0: gender_field = Models::AccountModelGender::MaleGender; break;
+		case 1: gender_field = Models::AccountModelGender::FemaleGender; break;
+		}
+	}
+	else gender_field = current_model->Gender;
+	
+	System::Guid bankcard_field = System::Guid::Empty;
+	if (this->client_checkbox_bankcard->Checked)
+	{
+		try { bankcard_field = System::Guid::Parse(this->client_textbox_bankcard->Text); }
+		catch (System::Exception^) { MessageBox::Show("Неверный формат банковской карты", "Ошибка"); return; }
+
+		if (!this->service_bank_controller->load_bank_account(bankcard_field))
+		{ MessageBox::Show("Банковский аккаунт не найден", "Ошибка"); return; }
+	}
+	else bankcard_field = current_model->BankCard;
 	
 	Models::AccountClientModel^ model = gcnew Models::AccountClientModel(
 		username_field, age_field, gender_field, bankcard_field);

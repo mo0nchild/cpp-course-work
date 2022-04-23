@@ -303,6 +303,7 @@ void AuthorizationView::InitializeComponent(void)
     // 
     // pageadmin_combobox_permissions
     // 
+    this->pageadmin_combobox_permissions->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
     this->pageadmin_combobox_permissions->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
     this->pageadmin_combobox_permissions->FormattingEnabled = true;
     this->pageadmin_combobox_permissions->Items->AddRange(gcnew cli::array< System::Object^  >(4) {
@@ -344,6 +345,7 @@ void AuthorizationView::InitializeComponent(void)
     // 
     // page2_combobox_gender
     // 
+    this->page2_combobox_gender->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
     this->page2_combobox_gender->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
     this->page2_combobox_gender->FormattingEnabled = true;
     this->page2_combobox_gender->Items->AddRange(gcnew cli::array< System::Object^  >(2) { L"Мужчина", L"Женщина" });

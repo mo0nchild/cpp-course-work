@@ -69,6 +69,11 @@ namespace Views
 			if (components) delete components;
 		}
 
+	private: System::Windows::Forms::CheckBox^ client_checkbox_bankcard;
+	private: System::Windows::Forms::CheckBox^ client_checkbox_age;
+	private: System::Windows::Forms::CheckBox^ client_checkbox_gender;
+	private: System::Windows::Forms::CheckBox^ client_checkbox_username;
+
 	private: System::Windows::Forms::Button^ client_button_money;
 	private: System::Windows::Forms::Button^ client_button_price;
 	private: System::Windows::Forms::TabControl^ client_tabcontrol;
@@ -102,11 +107,11 @@ namespace Views
 	private: System::Windows::Forms::Button^ client_button_update;
 	private: System::Windows::Forms::Button^ client_button_logout;
 	private: System::Windows::Forms::ListView^ client_listview_account;
-	private: System::Windows::Forms::Label^ client_label_bankcard;
 
-	private: System::Windows::Forms::Label^ client_label_age;
-	private: System::Windows::Forms::Label^ client_label_gender;
-	private: System::Windows::Forms::Label^ client_label_username;
+
+
+
+
 	private: System::Windows::Forms::Label^ client_label_account;
 	private: System::Windows::Forms::NumericUpDown^ client_numeric_age;
 	private: System::Windows::Forms::TextBox^ client_textbox_bankcard;

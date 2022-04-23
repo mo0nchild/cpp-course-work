@@ -7,6 +7,44 @@ generic <class TEnum> TEnum DriverPageView::convert_to_enum(System::String ^ val
 	return safe_cast<TEnum>(System::Enum::Parse(TEnum::typeid, value, true));
 }
 
+System::Void DriverPageView::driver_complex_close(System::Void)
+{
+	this->driver_textbox_status->Text = "";
+	this->driver_button_status->Enabled = false;
+	this->driver_button_rent->Enabled = true;
+	this->driver_button_return->Enabled = false;
+}
+
+System::Void DriverPageView::driver_complex_open(System::Void)
+{
+	this->driver_textbox_status->Text = "В ожидании";
+	this->driver_button_status->Enabled = true;
+	this->driver_button_rent->Enabled = false;
+	this->driver_button_return->Enabled = true;
+}
+
+System::Void DriverPageView::driver_button_status_Click(System::Object^ sender, System::EventArgs^ e)
+{
+	Services::DriveComplexToken::DriverStateType new_driver_status;
+	System::String^ new_driver_status_text = nullptr;
+
+	switch (this->driver_combobox_status->SelectedIndex) 
+	{
+	case 0: 
+		new_driver_status = Services::DriveComplexToken::DriverStateType::Ready; 
+		new_driver_status_text = "Готов"; break;
+	case 1: new_driver_status = Services::DriveComplexToken::DriverStateType::Busy; 
+		new_driver_status_text = "Занят"; break;
+	case 2: new_driver_status = Services::DriveComplexToken::DriverStateType::Idle; 
+		new_driver_status_text = "В ожидании"; break;
+	}
+
+	if (!this->service_depot_manager->update_drive_state(new_driver_status)) 
+	{ MessageBox::Show("Не удалось изменить статус", "Ошибка"); return; }
+
+	this->driver_textbox_status->Text = new_driver_status_text;
+}
+
 System::Void DriverPageView::driver_button_bankmoney_Click(System::Object^ sender, System::EventArgs^ e) 
 {
 	try {
@@ -133,8 +171,7 @@ System::Void DriverPageView::driver_button_rent_Click(System::Object^ sender, Sy
 	else
 	{
 		MessageBox::Show("Машина успешно арендована", "Готово");
-		this->driver_button_rent->Enabled = false;
-		this->driver_button_return->Enabled = true;
+		this->driver_complex_open();
 	}
 }
 
@@ -147,8 +184,7 @@ System::Void DriverPageView::driver_button_return_Click(System::Object^ sender, 
 	else
 	{
 		MessageBox::Show("Машина возвращена в гараж", "Готово");
-		this->driver_button_rent->Enabled = true;
-		this->driver_button_return->Enabled = false;
+		this->driver_complex_close();
 	}
 }
 
@@ -207,6 +243,11 @@ System::Void DriverPageView::driver_button_update_Click(System::Object^ sender, 
 	}
 	catch (System::Exception^) { MessageBox::Show("Неверный формат банковской карты", "Ошибка"); return; }
 	if (username_field == System::String::Empty) { MessageBox::Show("Неверный формат имени", "Ошибка"); return; }
+
+	if (!this->service_bank_controller->load_bank_account(bankcard_field))
+	{
+		MessageBox::Show("Банковский аккаунт не найден", "Ошибка"); return;
+	}
 
 	Models::AccountDriverModel^ model = gcnew Models::AccountDriverModel(
 		username_field, age_field, gender_field, bankcard_field, licence_field);

@@ -68,6 +68,9 @@ System::Void AuthorizationView::page2_button_registration_Click(System::Object^ 
 		try { bank_card_number = System::Guid::Parse(this->pageclient_textbox_bankcard->Text); }
 		catch (System::Exception^ error) { MessageBox::Show("Номер банковской карты невалиден", "Ошибка заполнения"); return; }
 
+		if (!this->bank_controller->load_bank_account(bank_card_number))
+		{ MessageBox::Show("Банковский аккаунт не найден", "Ошибка"); return; }
+
 		Models::AccountClientModel^ model = gcnew Models::AccountClientModel(
 			username_field, age_field, gender_field, bank_card_number);
 
@@ -85,6 +88,9 @@ System::Void AuthorizationView::page2_button_registration_Click(System::Object^ 
 		catch (System::Exception^ error) {
 			MessageBox::Show("Номер банковской карты или лицензии невалиден", "Ошибка заполнения"); return;
 		}
+
+		if (!this->bank_controller->load_bank_account(bank_card_number))
+		{ MessageBox::Show("Банковский аккаунт не найден", "Ошибка"); return; }
 
 		Models::AccountDriverModel^ model = gcnew Models::AccountDriverModel(
 			username_field, age_field, gender_field, licence_number, bank_card_number);
