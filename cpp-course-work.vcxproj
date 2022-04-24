@@ -157,6 +157,7 @@
     <ClInclude Include="manager\service_manager_builder\service_manager_builder.h" />
     <ClInclude Include="models\account_model\account_model.h" />
     <ClInclude Include="models\cars_model\cars_model.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="services\account_manager\account_manager_token.h" />
     <ClInclude Include="services\account_manager\account_manager.h" />
     <ClInclude Include="services\account_manager\account_manager_scheme.h" />
@@ -249,6 +250,9 @@
     <EmbeddedResource Include="views\driver_page_view\driver_page_view.resx">
       <DependentUpon>views\driver_page_view\driver_page_view.h</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="cpp-course-work.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

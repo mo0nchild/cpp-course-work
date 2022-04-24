@@ -4,6 +4,7 @@ using namespace Views;
 
 void DriverPageView::InitializeComponent(void)
 {
+    System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(DriverPageView::typeid));
     this->driver_tabcontrol = (gcnew System::Windows::Forms::TabControl());
     this->driver_page_order = (gcnew System::Windows::Forms::TabPage());
     this->driver_label_currentstatus = (gcnew System::Windows::Forms::Label());

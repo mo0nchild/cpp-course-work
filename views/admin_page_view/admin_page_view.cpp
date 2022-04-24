@@ -4,6 +4,7 @@ using namespace Views;
 
 void AdminPageView::InitializeComponent(void)
 {
+    System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(AdminPageView::typeid));
     this->admin_tabcontrol = (gcnew System::Windows::Forms::TabControl());
     this->admin_page_garage = (gcnew System::Windows::Forms::TabPage());
     this->admin_label_carspeed = (gcnew System::Windows::Forms::Label());

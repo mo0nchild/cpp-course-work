@@ -4,6 +4,7 @@ using namespace Views;
 
 void AdminDetailsView::InitializeComponent(void)
 {
+    System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(AdminDetailsView::typeid));
     this->account_listview = (gcnew System::Windows::Forms::ListView());
     this->param_name = (gcnew System::Windows::Forms::ColumnHeader());
     this->param_value = (gcnew System::Windows::Forms::ColumnHeader());

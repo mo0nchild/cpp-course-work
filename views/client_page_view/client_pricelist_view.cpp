@@ -5,6 +5,7 @@ using namespace Views;
 void ClientPriceListView::InitializeComponent(void)
 {
     System::Windows::Forms::ListViewItem^ listViewItem1 = (gcnew System::Windows::Forms::ListViewItem(L""));
+    System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(ClientPriceListView::typeid));
     this->list_view = (gcnew System::Windows::Forms::ListView());
     this->car_type = (gcnew System::Windows::Forms::ColumnHeader());
     this->car_price = (gcnew System::Windows::Forms::ColumnHeader());

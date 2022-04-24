@@ -4,6 +4,7 @@ using namespace Views;
 
 void ClientPageView::InitializeComponent(void)
 {
+    System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(ClientPageView::typeid));
     this->client_tabcontrol = (gcnew System::Windows::Forms::TabControl());
     this->client_page_order = (gcnew System::Windows::Forms::TabPage());
     this->client_button_price = (gcnew System::Windows::Forms::Button());
@@ -26,6 +27,10 @@ void ClientPageView::InitializeComponent(void)
     this->car_type = (gcnew System::Windows::Forms::ColumnHeader());
     this->driver_state = (gcnew System::Windows::Forms::ColumnHeader());
     this->client_page_account = (gcnew System::Windows::Forms::TabPage());
+    this->client_checkbox_bankcard = (gcnew System::Windows::Forms::CheckBox());
+    this->client_checkbox_age = (gcnew System::Windows::Forms::CheckBox());
+    this->client_checkbox_gender = (gcnew System::Windows::Forms::CheckBox());
+    this->client_checkbox_username = (gcnew System::Windows::Forms::CheckBox());
     this->client_button_bank = (gcnew System::Windows::Forms::Button());
     this->client_label_account = (gcnew System::Windows::Forms::Label());
     this->client_numeric_age = (gcnew System::Windows::Forms::NumericUpDown());
@@ -37,10 +42,6 @@ void ClientPageView::InitializeComponent(void)
     this->client_listview_account = (gcnew System::Windows::Forms::ListView());
     this->account_field = (gcnew System::Windows::Forms::ColumnHeader());
     this->account_data = (gcnew System::Windows::Forms::ColumnHeader());
-    this->client_checkbox_username = (gcnew System::Windows::Forms::CheckBox());
-    this->client_checkbox_gender = (gcnew System::Windows::Forms::CheckBox());
-    this->client_checkbox_age = (gcnew System::Windows::Forms::CheckBox());
-    this->client_checkbox_bankcard = (gcnew System::Windows::Forms::CheckBox());
     this->client_tabcontrol->SuspendLayout();
     this->client_page_order->SuspendLayout();
     this->client_page_account->SuspendLayout();
@@ -288,6 +289,46 @@ void ClientPageView::InitializeComponent(void)
     this->client_page_account->Text = L"Аккаунт";
     this->client_page_account->UseVisualStyleBackColor = true;
     // 
+    // client_checkbox_bankcard
+    // 
+    this->client_checkbox_bankcard->AutoSize = true;
+    this->client_checkbox_bankcard->Location = System::Drawing::Point(23, 280);
+    this->client_checkbox_bankcard->Name = L"client_checkbox_bankcard";
+    this->client_checkbox_bankcard->Size = System::Drawing::Size(194, 21);
+    this->client_checkbox_bankcard->TabIndex = 18;
+    this->client_checkbox_bankcard->Text = L"Номер банковской карты";
+    this->client_checkbox_bankcard->UseVisualStyleBackColor = true;
+    // 
+    // client_checkbox_age
+    // 
+    this->client_checkbox_age->AutoSize = true;
+    this->client_checkbox_age->Location = System::Drawing::Point(505, 221);
+    this->client_checkbox_age->Name = L"client_checkbox_age";
+    this->client_checkbox_age->Size = System::Drawing::Size(81, 21);
+    this->client_checkbox_age->TabIndex = 17;
+    this->client_checkbox_age->Text = L"Возраст";
+    this->client_checkbox_age->UseVisualStyleBackColor = true;
+    // 
+    // client_checkbox_gender
+    // 
+    this->client_checkbox_gender->AutoSize = true;
+    this->client_checkbox_gender->Location = System::Drawing::Point(297, 221);
+    this->client_checkbox_gender->Name = L"client_checkbox_gender";
+    this->client_checkbox_gender->Size = System::Drawing::Size(53, 21);
+    this->client_checkbox_gender->TabIndex = 16;
+    this->client_checkbox_gender->Text = L"Пол";
+    this->client_checkbox_gender->UseVisualStyleBackColor = true;
+    // 
+    // client_checkbox_username
+    // 
+    this->client_checkbox_username->AutoSize = true;
+    this->client_checkbox_username->Location = System::Drawing::Point(25, 221);
+    this->client_checkbox_username->Name = L"client_checkbox_username";
+    this->client_checkbox_username->Size = System::Drawing::Size(54, 21);
+    this->client_checkbox_username->TabIndex = 15;
+    this->client_checkbox_username->Text = L"Имя";
+    this->client_checkbox_username->UseVisualStyleBackColor = true;
+    // 
     // client_button_bank
     // 
     this->client_button_bank->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
@@ -395,46 +436,6 @@ void ClientPageView::InitializeComponent(void)
     // 
     this->account_data->Text = L"Установленные данные";
     this->account_data->Width = 400;
-    // 
-    // client_checkbox_username
-    // 
-    this->client_checkbox_username->AutoSize = true;
-    this->client_checkbox_username->Location = System::Drawing::Point(25, 221);
-    this->client_checkbox_username->Name = L"client_checkbox_username";
-    this->client_checkbox_username->Size = System::Drawing::Size(54, 21);
-    this->client_checkbox_username->TabIndex = 15;
-    this->client_checkbox_username->Text = L"Имя";
-    this->client_checkbox_username->UseVisualStyleBackColor = true;
-    // 
-    // client_checkbox_gender
-    // 
-    this->client_checkbox_gender->AutoSize = true;
-    this->client_checkbox_gender->Location = System::Drawing::Point(297, 221);
-    this->client_checkbox_gender->Name = L"client_checkbox_gender";
-    this->client_checkbox_gender->Size = System::Drawing::Size(53, 21);
-    this->client_checkbox_gender->TabIndex = 16;
-    this->client_checkbox_gender->Text = L"Пол";
-    this->client_checkbox_gender->UseVisualStyleBackColor = true;
-    // 
-    // client_checkbox_age
-    // 
-    this->client_checkbox_age->AutoSize = true;
-    this->client_checkbox_age->Location = System::Drawing::Point(505, 221);
-    this->client_checkbox_age->Name = L"client_checkbox_age";
-    this->client_checkbox_age->Size = System::Drawing::Size(81, 21);
-    this->client_checkbox_age->TabIndex = 17;
-    this->client_checkbox_age->Text = L"Возраст";
-    this->client_checkbox_age->UseVisualStyleBackColor = true;
-    // 
-    // client_checkbox_bankcard
-    // 
-    this->client_checkbox_bankcard->AutoSize = true;
-    this->client_checkbox_bankcard->Location = System::Drawing::Point(23, 280);
-    this->client_checkbox_bankcard->Name = L"client_checkbox_bankcard";
-    this->client_checkbox_bankcard->Size = System::Drawing::Size(194, 21);
-    this->client_checkbox_bankcard->TabIndex = 18;
-    this->client_checkbox_bankcard->Text = L"Номер банковской карты";
-    this->client_checkbox_bankcard->UseVisualStyleBackColor = true;
     // 
     // ClientPageView
     // 

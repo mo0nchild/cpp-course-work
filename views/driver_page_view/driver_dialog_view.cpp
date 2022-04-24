@@ -4,6 +4,7 @@ using namespace Views;
 
 void DriverDialogView::InitializeComponent(void)
 {
+    System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(DriverDialogView::typeid));
     this->progress_bar = (gcnew System::Windows::Forms::ProgressBar());
     this->button = (gcnew System::Windows::Forms::Button());
     this->list_view = (gcnew System::Windows::Forms::ListView());

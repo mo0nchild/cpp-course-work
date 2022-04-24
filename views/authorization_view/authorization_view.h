@@ -26,7 +26,8 @@ namespace Views
 		Manager::ServiceManager^ service_manager = nullptr;
 
 		Services::BankController^ bank_controller = nullptr;
-		Services::AccountManager^ account_manager = nullptr;
+	private: System::Windows::Forms::Label^ label1;
+		   Services::AccountManager^ account_manager = nullptr;
 	public:
 		AuthorizationView(System::Void) { InitializeComponent(); }
 

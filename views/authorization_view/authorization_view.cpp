@@ -6,6 +6,7 @@ void AuthorizationView::InitializeComponent(void)
 {
     this->page_list = (gcnew System::Windows::Forms::TabControl());
     this->page_authorization = (gcnew System::Windows::Forms::TabPage());
+    this->label1 = (gcnew System::Windows::Forms::Label());
     this->page1_button_authorize = (gcnew System::Windows::Forms::Button());
     this->page1_label_password = (gcnew System::Windows::Forms::Label());
     this->page1_textbox_password = (gcnew System::Windows::Forms::TextBox());
@@ -66,6 +67,7 @@ void AuthorizationView::InitializeComponent(void)
     // page_authorization
     // 
     this->page_authorization->BackColor = System::Drawing::Color::Transparent;
+    this->page_authorization->Controls->Add(this->label1);
     this->page_authorization->Controls->Add(this->page1_button_authorize);
     this->page_authorization->Controls->Add(this->page1_label_password);
     this->page_authorization->Controls->Add(this->page1_textbox_password);
@@ -79,11 +81,21 @@ void AuthorizationView::InitializeComponent(void)
     this->page_authorization->TabIndex = 0;
     this->page_authorization->Text = L"Авторизация";
     // 
+    // label1
+    // 
+    this->label1->AutoSize = true;
+    this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26));
+    this->label1->Location = System::Drawing::Point(84, 46);
+    this->label1->Name = L"label1";
+    this->label1->Size = System::Drawing::Size(267, 39);
+    this->label1->TabIndex = 5;
+    this->label1->Text = L"Дешевое такси";
+    // 
     // page1_button_authorize
     // 
     this->page1_button_authorize->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14, System::Drawing::FontStyle::Regular,
         System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(204)));
-    this->page1_button_authorize->Location = System::Drawing::Point(90, 260);
+    this->page1_button_authorize->Location = System::Drawing::Point(91, 279);
     this->page1_button_authorize->Name = L"page1_button_authorize";
     this->page1_button_authorize->Size = System::Drawing::Size(252, 42);
     this->page1_button_authorize->TabIndex = 4;
@@ -94,7 +106,7 @@ void AuthorizationView::InitializeComponent(void)
     // page1_label_password
     // 
     this->page1_label_password->AutoSize = true;
-    this->page1_label_password->Location = System::Drawing::Point(55, 150);
+    this->page1_label_password->Location = System::Drawing::Point(53, 195);
     this->page1_label_password->Name = L"page1_label_password";
     this->page1_label_password->Size = System::Drawing::Size(57, 17);
     this->page1_label_password->TabIndex = 3;
@@ -105,7 +117,7 @@ void AuthorizationView::InitializeComponent(void)
     this->page1_textbox_password->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
     this->page1_textbox_password->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular,
         System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(204)));
-    this->page1_textbox_password->Location = System::Drawing::Point(58, 170);
+    this->page1_textbox_password->Location = System::Drawing::Point(56, 215);
     this->page1_textbox_password->MaxLength = 40;
     this->page1_textbox_password->Name = L"page1_textbox_password";
     this->page1_textbox_password->Size = System::Drawing::Size(322, 26);
@@ -115,7 +127,7 @@ void AuthorizationView::InitializeComponent(void)
     // page1_label_login
     // 
     this->page1_label_login->AutoSize = true;
-    this->page1_label_login->Location = System::Drawing::Point(55, 63);
+    this->page1_label_login->Location = System::Drawing::Point(53, 120);
     this->page1_label_login->Name = L"page1_label_login";
     this->page1_label_login->Size = System::Drawing::Size(47, 17);
     this->page1_label_login->TabIndex = 1;
@@ -126,7 +138,7 @@ void AuthorizationView::InitializeComponent(void)
     this->page1_textbox_login->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
     this->page1_textbox_login->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular,
         System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(204)));
-    this->page1_textbox_login->Location = System::Drawing::Point(58, 83);
+    this->page1_textbox_login->Location = System::Drawing::Point(56, 140);
     this->page1_textbox_login->MaxLength = 40;
     this->page1_textbox_login->Name = L"page1_textbox_login";
     this->page1_textbox_login->Size = System::Drawing::Size(322, 26);

@@ -4,6 +4,7 @@ using namespace Views;
 
 void BankSettingsOperationView::InitializeComponent(void)
 {
+    System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(BankSettingsOperationView::typeid));
     this->combobox_operation_type = (gcnew System::Windows::Forms::ComboBox());
     this->numeric_money_value = (gcnew System::Windows::Forms::NumericUpDown());
     this->button_operation = (gcnew System::Windows::Forms::Button());

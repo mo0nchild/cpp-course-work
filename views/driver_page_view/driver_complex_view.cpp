@@ -4,6 +4,7 @@ using namespace Views;
 
 void DriverComplexView::InitializeComponent(void)
 {
+    System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(DriverComplexView::typeid));
     this->listview = (gcnew System::Windows::Forms::ListView());
     this->listview_name = (gcnew System::Windows::Forms::ColumnHeader());
     this->listview_value = (gcnew System::Windows::Forms::ColumnHeader());
