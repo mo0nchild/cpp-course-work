@@ -541,6 +541,7 @@ void DriverPageView::InitializeComponent(void)
     this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
     this->ClientSize = System::Drawing::Size(655, 500);
     this->Controls->Add(this->driver_tabcontrol);
+    this->Icon = gcnew Drawing::Icon("assets/my_app_icon.ico");
     this->MaximizeBox = false;
     this->MaximumSize = System::Drawing::Size(671, 539);
     this->MinimumSize = System::Drawing::Size(671, 539);
