@@ -16,6 +16,55 @@ List<IDatabaseManager::KeyValuePair^>^ create_car_request(Models::CarBaseModel^ 
 	return key_pair;
 }
 
+System::Boolean DepotManager::delete_car_process(Services::CarModelDbScheme^ item)
+{
+	System::Int32 garage_car_count(0);
+	try { garage_car_count = System::Int32::Parse(item->car_count); }
+	catch (System::Exception^ error) { Console::WriteLine(error->Message); return false; }
+
+	System::Boolean delete_check(true);
+	if (garage_car_count <= 1)
+	{
+		delete_check = this->service_sql_manager->set_scheme_struct<Services::CarModelDbScheme^>()
+			->delete_database_data(gcnew IDatabaseManager::KeyValuePair("group_guid", item->group_guid));
+	}
+	else
+	{
+		item->car_count = System::Int32(garage_car_count - 1).ToString();
+		delete_check = this->service_sql_manager->set_scheme_struct<Services::CarModelDbScheme^>()
+			->update_database_date(item, gcnew IDatabaseManager::KeyValuePair("group_guid", item->group_guid));
+	}
+
+	return delete_check;
+}
+
+System::Boolean DepotManager::delete_car_model_by_guid(System::Guid group_id)
+{
+	List<IDatabaseManager::KeyValuePair^>^ key_pair = gcnew List<IDatabaseManager::KeyValuePair^>();
+	key_pair->Add(gcnew IDatabaseManager::KeyValuePair("group_guid", group_id.ToString()));
+
+	auto request_items = this->service_sql_manager->set_scheme_struct<Services::CarModelDbScheme^>()
+		->get_database_data(key_pair, false);
+
+	if (request_items == nullptr || request_items->Count <= 0) return false;
+	Services::CarModelDbScheme^ item = safe_cast<Services::CarModelDbScheme^>(request_items[0]);
+
+	return this->delete_car_process(item);
+}
+
+generic <class TCarClass> where TCarClass : Models::CarBaseModel
+	System::Boolean DepotManager::delete_car_model(TCarClass car_model) 
+{
+	List<IDatabaseManager::KeyValuePair^>^ key_pair = create_car_request(car_model, TCarClass::typeid);
+	auto request_items = service_sql_manager->set_scheme_struct<Services::CarModelDbScheme^>()
+		->get_database_data(key_pair, false);
+
+	if (request_items == nullptr || request_items->Count <= 0) return false;
+	Services::CarModelDbScheme^ item = safe_cast<Services::CarModelDbScheme^>(request_items[0]);
+
+	return this->delete_car_process(item);
+}
+
 generic <class TCarClass> where TCarClass : Models::CarBaseModel
 	System::Boolean DepotManager::rent_car_model(TCarClass car_model, System::Guid driver_guid)
 {
@@ -227,6 +276,7 @@ Generic::List<DepotManager::CarGarageItems>^ DepotManager::get_all_cars(System::
 
 		try {
 			car_model = safe_cast<Services::CarModelDbScheme^>(item);
+			garage_item.Guid = System::Guid::Parse(car_model->group_guid);
 			garage_item_type = convert_to_enum<Models::CarModelTypes>(car_model->car_type);
 			garage_item_color = convert_to_enum<Models::CarModelColor>(car_model->car_color);
 			garage_item_speed = System::UInt32::Parse(car_model->car_speed);

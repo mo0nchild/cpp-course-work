@@ -134,6 +134,8 @@
     <ClCompile Include="manager\service_manager_builder\service_manager_builder.cpp" />
     <ClCompile Include="services\depot_manager\depot_manager.cpp" />
     <ClCompile Include="views\admin_page_view\admin_page_view.cpp" />
+    <ClCompile Include="views\admin_page_view\admin_page_view_callbacks.cpp" />
+    <ClCompile Include="views\admin_page_view\admin_details_view.cpp" />
     <ClCompile Include="views\authorization_view\authorization_view.cpp" />
     <ClCompile Include="views\authorization_view\authorization_view_callbacks.cpp" />
     <ClCompile Include="views\bank_settings_view\bank_settings_view.cpp" />
@@ -170,6 +172,9 @@
     <ClInclude Include="services\services.h" />
     <ClInclude Include="services\depot_manager\depot_manager.h" />
     <ClInclude Include="views\admin_page_view\admin_page_view.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="views\admin_page_view\admin_details_view.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="views\authorization_view\authorization_view.h">
@@ -214,6 +219,9 @@
     <None Include="services\database_provider\database_setup.sql" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="views\admin_page_view\admin_details_view.resx">
+      <DependentUpon>views\admin_page_view\admin_details_view.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="views\admin_page_view\admin_page_view.resx">
       <DependentUpon>views\admin_page_view\admin_page_view.h</DependentUpon>
     </EmbeddedResource>

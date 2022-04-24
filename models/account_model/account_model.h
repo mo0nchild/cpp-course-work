@@ -8,7 +8,7 @@ namespace Models
 	public enum class AccountModelGender : System::UInt16 { MaleGender, FemaleGender };
 
 	public enum class AccountModelPermissions : System::UInt16 
-	{ FullPermission = 0b00000111, CarGarage = 0b00000001, AccountList = 0b00000010, OrderList = 0b00000100 };
+	{ FullPermission = 0b00000011, CarGarage = 0b00000001, AccountList = 0b00000010 };
 
 	public ref class AccountBaseModel abstract : System::ICloneable
 	{

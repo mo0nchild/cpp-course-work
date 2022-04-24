@@ -7,6 +7,25 @@ generic <class TEnum> TEnum convert_to_enum_cool(System::String^ value)
 	return safe_cast<TEnum>(System::Enum::Parse(TEnum::typeid, value, true));
 }
 
+System::Nullable<System::Boolean> AccountManager::get_account_status(System::Guid account_guid)
+{
+	List<IDatabaseManager::KeyValuePair^>^ request_list = gcnew List<IDatabaseManager::KeyValuePair^>();
+	request_list->Add(gcnew IDatabaseManager::KeyValuePair("account_guid", account_guid.ToString()));
+
+	List<IDatabaseManager::RequestRow^>^ response_list = this->service_sql_manager
+		->set_scheme_struct<AccountAuthenticationDbScheme^>()->get_database_data(request_list, false);
+
+	if (response_list == nullptr || response_list->Count <= 0) return System::Nullable<System::Boolean>();
+	AccountAuthenticationDbScheme^ scheme = cli::safe_cast<AccountAuthenticationDbScheme^>(response_list[0]);
+
+	System::Boolean account_status(false);
+	try { account_status = System::Boolean::Parse(scheme->state); }
+	catch (System::Exception^ error) 
+	{ Console::WriteLine(error->Message); return System::Nullable<System::Boolean>(); }
+
+	return System::Nullable<System::Boolean>(account_status);
+}
+
 generic <class TAccountScheme> where TAccountScheme : Services::AccountClassesDbScheme
 	TAccountScheme AccountManager::get_account_scheme(System::Guid account_guid) 
 {
@@ -40,7 +59,7 @@ List<AccountManager::AccountInfo>^ AccountManager::AccountList::get(System::Void
 	{
 		AccountAuthenticationDbScheme^ account_scheme = (AccountAuthenticationDbScheme^)item;
 		try {
-			result->Add(AccountManager::AccountInfo{ System::Guid::Parse(account_scheme->account_guid),
+			result->Add(AccountManager::AccountInfo { System::Guid::Parse(account_scheme->account_guid),
 				account_scheme->login, convert_to_enum_cool<AccountManagerToken::AccountManagerType>(account_scheme->type),
 				System::Boolean::Parse(account_scheme->state)});
 		}
@@ -54,6 +73,8 @@ generic <class TAccountModel> where TAccountModel : Models::AccountBaseModel
 	System::Boolean AccountManager::registration_account(System::String^ login, System::String^ password,
 	TAccountModel account_model)
 {
+	if (this->account_initialized == true) return false;
+
 	List<IDatabaseManager::KeyValuePair^>^ request_list = gcnew List<IDatabaseManager::KeyValuePair^>();
 	request_list->Add(gcnew IDatabaseManager::KeyValuePair("account_login", login));
 
@@ -116,6 +137,7 @@ generic <class TAccountModel> where TAccountModel : Models::AccountBaseModel
 
 System::Boolean AccountManager::authorization_account(System::String^ login, System::String^ password)
 {
+	if (this->account_initialized == true) return false;
 	List<IDatabaseManager::KeyValuePair^>^ request_list = gcnew List<IDatabaseManager::KeyValuePair^>();
 	request_list->Add(gcnew IDatabaseManager::KeyValuePair("account_login", login));
 	request_list->Add(gcnew IDatabaseManager::KeyValuePair("account_password", password));
@@ -245,14 +267,17 @@ generic <class TAccountModel> where TAccountModel : Models::AccountBaseModel
 	return true;
 }
 
-System::Boolean AccountManager::delete_account(System::Void) 
+System::Boolean AccountManager::delete_account(System::Guid guid)
 {
-	if (this->IsInitialized != true) return false;
-	IDatabaseManager::KeyValuePair^ request_key = gcnew IDatabaseManager::KeyValuePair("account_guid", 
-		this->AccountToken.AccountGuid.ToString());
-
+	if (guid == this->AccountToken.AccountGuid && this->IsInitialized != true) return false;
+	else {
+		System::Nullable<System::Boolean> check = this->get_account_status(guid);
+		if (check.HasValue != true || check.Value == true) return false;
+	}
+	IDatabaseManager::KeyValuePair^ request_key = gcnew IDatabaseManager::KeyValuePair("account_guid", guid.ToString());
 	List<IDatabaseManager::KeyValuePair^>^ request_list = gcnew List<IDatabaseManager::KeyValuePair^>();
 	request_list->Add(request_key);
+
 	List<IDatabaseManager::RequestRow^>^ response_list = this->service_sql_manager
 		->set_scheme_struct<AccountAuthenticationDbScheme^>()->get_database_data(request_list, false);
 
@@ -282,9 +307,11 @@ System::Boolean AccountManager::delete_account(System::Void)
 
 	this->service_sql_manager->set_scheme_struct<AccountAuthenticationDbScheme^>()
 		->delete_database_data(request_key);
-	
-	this->account_initialized = false;
-	this->AccountToken = AccountManagerToken(account_enum_type, nullptr, System::Guid::Empty);
+	if (guid == this->AccountToken.AccountGuid) 
+	{
+		this->account_initialized = false;
+		this->AccountToken = AccountManagerToken(account_enum_type, nullptr, System::Guid::Empty);
+	}
 	
 	return true;
 }

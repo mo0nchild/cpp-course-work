@@ -110,7 +110,7 @@ System::Void DriverPageView::driver_button_update_orders_Click(System::Object^ s
 System::Void DriverPageView::driver_button_update_garage_Click(System::Object^ sender, System::EventArgs^ e)
 {
 	List<DepotManager::CarGarageItems>^ car_list = this->service_depot_manager->get_all_cars();
-	if (car_list == nullptr) MessageBox::Show("Невозможно получить список машин", "Ошибка");
+	if (car_list == nullptr) { MessageBox::Show("Невозможно получить список машин", "Ошибка"); return; }
 
 	this->driver_listview_garage->FullRowSelect = true;
 	this->driver_listview_garage->Items->Clear();
@@ -212,6 +212,10 @@ System::Void DriverPageView::account_list_initialize(System::Void)
 	list_item->SubItems->Add(account_model->BankCard.ToString());
 	this->driver_listview_account->Items->Add(list_item);
 
+	list_item = gcnew ListViewItem("Номер лицензии");
+	list_item->SubItems->Add(account_model->Licence.ToString());
+	this->driver_listview_account->Items->Add(list_item);
+
 	list_item = gcnew ListViewItem("Возраст");
 	list_item->SubItems->Add(account_model->Age.ToString());
 	this->driver_listview_account->Items->Add(list_item);
@@ -227,30 +231,48 @@ System::Void DriverPageView::account_list_initialize(System::Void)
 
 System::Void DriverPageView::driver_button_update_Click(System::Object^ sender, System::EventArgs^ e)
 {
-	System::String^ username_field = this->driver_textbox_username->Text;
-	System::Int32 age_field = System::Decimal::ToInt32(this->driver_numeric_age->Value);
-	Models::AccountModelGender gender_field;
-	System::Guid bankcard_field, licence_field;
+	Models::AccountDriverModel^ current_model = safe_cast<Models::AccountDriverModel^>(
+		this->service_account_manager->AccountToken.AccountModel);
 
-	switch (this->driver_combobox_gender->SelectedIndex)
-	{
-	case 0: gender_field = Models::AccountModelGender::MaleGender; break;
-	case 1: gender_field = Models::AccountModelGender::FemaleGender; break;
-	}
-	try {
-		bankcard_field = System::Guid::Parse(this->driver_textbox_bankcard->Text);
-		licence_field = System::Guid::Parse(this->driver_textbox_licence->Text);
-	}
-	catch (System::Exception^) { MessageBox::Show("Неверный формат банковской карты", "Ошибка"); return; }
+	System::Int32 age_field = this->driver_checkbox_age->Checked ? Decimal::ToInt32(this->driver_numeric_age->Value)
+		: current_model->Age;
+
+	System::String^ username_field = this->driver_checkbox_username->Checked ?
+		this->driver_textbox_username->Text : current_model->Username;
 	if (username_field == System::String::Empty) { MessageBox::Show("Неверный формат имени", "Ошибка"); return; }
 
-	if (!this->service_bank_controller->load_bank_account(bankcard_field))
+	Models::AccountModelGender gender_field;
+	if (this->driver_checkbox_gender->Checked)
 	{
-		MessageBox::Show("Банковский аккаунт не найден", "Ошибка"); return;
+		switch (this->driver_combobox_gender->SelectedIndex)
+		{
+		case 0: gender_field = Models::AccountModelGender::MaleGender; break;
+		case 1: gender_field = Models::AccountModelGender::FemaleGender; break;
+		}
 	}
+	else gender_field = current_model->Gender;
+
+	System::Guid bankcard_field, licence_field;
+	if (this->driver_checkbox_bankcard->Checked)
+	{
+		try { bankcard_field = System::Guid::Parse(this->driver_textbox_bankcard->Text); }
+		catch (System::Exception^) { MessageBox::Show("Неверный формат банковской карты", "Ошибка"); return; }
+
+		if (!this->service_bank_controller->load_bank_account(bankcard_field))
+		{ MessageBox::Show("Банковский аккаунт не найден", "Ошибка"); return; }
+	}
+	else bankcard_field = current_model->BankCard;
+
+	if (this->driver_checkbox_licence->Checked)
+	{
+		try { licence_field = System::Guid::Parse(this->driver_textbox_licence->Text); }
+		catch (System::Exception^) { MessageBox::Show("Неверный формат лицензии", "Ошибка"); return; }
+	}
+	else licence_field = current_model->Licence;
 
 	Models::AccountDriverModel^ model = gcnew Models::AccountDriverModel(
-		username_field, age_field, gender_field, bankcard_field, licence_field);
+		username_field, age_field, gender_field, licence_field, bankcard_field);
+
 	System::Boolean update_check = this->service_account_manager->update_account(model);
 	if (update_check != true) MessageBox::Show("Не удалось обновить данные аккаунта", "Ошибка");
 

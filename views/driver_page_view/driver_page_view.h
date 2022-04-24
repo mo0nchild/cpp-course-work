@@ -34,7 +34,12 @@ namespace Views
 		Services::AccountManager^ service_account_manager = nullptr;
 		Services::DepotManager^ service_depot_manager = nullptr;
 		Services::OrderController^ service_order_controller = nullptr;
-		Services::BankController^ service_bank_controller = nullptr;
+	private: System::Windows::Forms::CheckBox^ driver_checkbox_licence;
+	private: System::Windows::Forms::CheckBox^ driver_checkbox_bankcard;
+	private: System::Windows::Forms::CheckBox^ driver_checkbox_age;
+	private: System::Windows::Forms::CheckBox^ driver_checkbox_gender;
+	private: System::Windows::Forms::CheckBox^ driver_checkbox_username;
+		   Services::BankController^ service_bank_controller = nullptr;
 
 	public:
 		DriverPageView(System::Void) { InitializeComponent(); }
@@ -101,13 +106,13 @@ namespace Views
 	private: System::Windows::Forms::TabControl^ driver_tabcontrol;
 	private: System::Windows::Forms::TabPage^ driver_page_order;
 	private: System::Windows::Forms::TabPage^ driver_page_account;
-	private: System::Windows::Forms::Label^ driver_label_licence;
+
 	private: System::Windows::Forms::TextBox^ driver_textbox_licence;
 	private: System::Windows::Forms::Button^ driver_button_bank;
-	private: System::Windows::Forms::Label^ driver_label_bankcard;
-	private: System::Windows::Forms::Label^ driver_label_age;
-	private: System::Windows::Forms::Label^ driver_label_gender;
-	private: System::Windows::Forms::Label^ driver_label_username;
+
+
+
+
 	private: System::Windows::Forms::Label^ driver_label_account;
 	private: System::Windows::Forms::NumericUpDown^ driver_numeric_age;
 	private: System::Windows::Forms::TextBox^ driver_textbox_bankcard;

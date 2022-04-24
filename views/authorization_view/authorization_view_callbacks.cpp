@@ -76,7 +76,7 @@ System::Void AuthorizationView::page2_button_registration_Click(System::Object^ 
 
 		registration_check = this->account_manager->registration_account<Models::AccountClientModel^>(
 			login_field, password_field, model);
-		view_preparation = gcnew Views::ClientPageView();
+		if (registration_check) view_preparation = gcnew Views::ClientPageView(this, this->service_manager);
 	}	break;
 	case 1: {
 		System::Guid bank_card_number = System::Guid::Empty;
@@ -97,7 +97,7 @@ System::Void AuthorizationView::page2_button_registration_Click(System::Object^ 
 
 		registration_check = this->account_manager->registration_account<Models::AccountDriverModel^>(
 			login_field, password_field, model);
-		view_preparation = gcnew Views::DriverPageView();
+		if(registration_check) view_preparation = gcnew Views::DriverPageView(this, this->service_manager);
 	}	break;
 	case 2: {
 		Models::AccountModelPermissions model_permission;
@@ -105,19 +105,20 @@ System::Void AuthorizationView::page2_button_registration_Click(System::Object^ 
 		{
 		case 0: model_permission = Models::AccountModelPermissions::FullPermission; break;
 		case 1: model_permission = Models::AccountModelPermissions::CarGarage; break;
-		case 2: model_permission = Models::AccountModelPermissions::OrderList; break;
-		case 3: model_permission = Models::AccountModelPermissions::AccountList; break;
+		case 2: model_permission = Models::AccountModelPermissions::AccountList; break;
 		}
 		Models::AccountAdminModel^ model = gcnew Models::AccountAdminModel(
 			username_field, age_field, gender_field, model_permission);
 
 		registration_check = this->account_manager->registration_account<Models::AccountAdminModel^>(
 			login_field, password_field, model);
-		view_preparation = gcnew Views::AdminPageView();
+		if (registration_check) view_preparation = gcnew Views::AdminPageView(this, this->service_manager);
 	}	break;
 	}
 
 	if (registration_check != true) { MessageBox::Show("Невозможно зарегистрироваться", "Ошибка"); return; }
+
 	this->clear_all_textboxes();
+	view_preparation->FormClosed += gcnew FormClosedEventHandler(this, &AuthorizationView::form_closed);
 	this->Hide();	view_preparation->Show();
 }

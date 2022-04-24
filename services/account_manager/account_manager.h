@@ -6,6 +6,9 @@
 
 namespace Services 
 {
+	using namespace System;
+	using namespace System::Collections::Generic;
+
 	public interface class IAccountManager 
 	{
 	public:
@@ -14,7 +17,7 @@ namespace Services
 			TAccountModel account_model);
 		System::Boolean authorization_account(System::String^ login, System::String^ password);
 
-		System::Boolean delete_account(System::Void);
+		System::Boolean delete_account(System::Guid guid);
 		System::Boolean sign_out_account(System::Void);
 	};
 
@@ -26,7 +29,7 @@ namespace Services
 		System::Boolean State;
 	};
 	private:	Services::SqlDatabaseManager^ service_sql_manager = nullptr;
-		   System::Boolean service_disposed = false;
+				System::Boolean service_disposed = false;
 
 	private:	System::Boolean account_initialized;
 	private:	Services::AccountManagerToken account_token;
@@ -62,7 +65,9 @@ namespace Services
 		generic <class TAccountScheme> where TAccountScheme : Services:: AccountClassesDbScheme
 			TAccountScheme get_account_scheme(System::Guid account_guid);
 
-		virtual System::Boolean delete_account(System::Void) override;
+		System::Nullable<System::Boolean> get_account_status(System::Guid account_guid);
+
+		virtual System::Boolean delete_account(System::Guid guid) override;
 		virtual System::Boolean sign_out_account(System::Void) override;
 	};
 }

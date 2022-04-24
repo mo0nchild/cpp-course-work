@@ -41,6 +41,7 @@ void ClientPriceListView::InitializeComponent(void)
     this->ClientSize = System::Drawing::Size(376, 257);
     this->Controls->Add(this->list_view);
     this->Name = L"ClientPriceListView";
+    this->StartPosition = System::Windows::Forms::FormStartPosition::CenterParent;
     this->Text = L"Цены на машиины";
     this->ResumeLayout(false);
 

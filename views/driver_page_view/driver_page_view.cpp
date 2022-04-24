@@ -34,13 +34,13 @@ void DriverPageView::InitializeComponent(void)
     this->garage_car_speed = (gcnew System::Windows::Forms::ColumnHeader());
     this->garage_car_count = (gcnew System::Windows::Forms::ColumnHeader());
     this->driver_page_account = (gcnew System::Windows::Forms::TabPage());
-    this->driver_label_licence = (gcnew System::Windows::Forms::Label());
+    this->driver_checkbox_licence = (gcnew System::Windows::Forms::CheckBox());
+    this->driver_checkbox_bankcard = (gcnew System::Windows::Forms::CheckBox());
+    this->driver_checkbox_age = (gcnew System::Windows::Forms::CheckBox());
+    this->driver_checkbox_gender = (gcnew System::Windows::Forms::CheckBox());
+    this->driver_checkbox_username = (gcnew System::Windows::Forms::CheckBox());
     this->driver_textbox_licence = (gcnew System::Windows::Forms::TextBox());
     this->driver_button_bank = (gcnew System::Windows::Forms::Button());
-    this->driver_label_bankcard = (gcnew System::Windows::Forms::Label());
-    this->driver_label_age = (gcnew System::Windows::Forms::Label());
-    this->driver_label_gender = (gcnew System::Windows::Forms::Label());
-    this->driver_label_username = (gcnew System::Windows::Forms::Label());
     this->driver_label_account = (gcnew System::Windows::Forms::Label());
     this->driver_numeric_age = (gcnew System::Windows::Forms::NumericUpDown());
     this->driver_textbox_bankcard = (gcnew System::Windows::Forms::TextBox());
@@ -210,6 +210,8 @@ void DriverPageView::InitializeComponent(void)
     this->driver_listview_orders->HeaderStyle = System::Windows::Forms::ColumnHeaderStyle::Nonclickable;
     this->driver_listview_orders->HideSelection = false;
     this->driver_listview_orders->Location = System::Drawing::Point(25, 40);
+    this->driver_listview_orders->MaximumSize = System::Drawing::Size(598, 254);
+    this->driver_listview_orders->MinimumSize = System::Drawing::Size(598, 254);
     this->driver_listview_orders->MultiSelect = false;
     this->driver_listview_orders->Name = L"driver_listview_orders";
     this->driver_listview_orders->Size = System::Drawing::Size(598, 254);
@@ -343,13 +345,13 @@ void DriverPageView::InitializeComponent(void)
     // 
     // driver_page_account
     // 
-    this->driver_page_account->Controls->Add(this->driver_label_licence);
+    this->driver_page_account->Controls->Add(this->driver_checkbox_licence);
+    this->driver_page_account->Controls->Add(this->driver_checkbox_bankcard);
+    this->driver_page_account->Controls->Add(this->driver_checkbox_age);
+    this->driver_page_account->Controls->Add(this->driver_checkbox_gender);
+    this->driver_page_account->Controls->Add(this->driver_checkbox_username);
     this->driver_page_account->Controls->Add(this->driver_textbox_licence);
     this->driver_page_account->Controls->Add(this->driver_button_bank);
-    this->driver_page_account->Controls->Add(this->driver_label_bankcard);
-    this->driver_page_account->Controls->Add(this->driver_label_age);
-    this->driver_page_account->Controls->Add(this->driver_label_gender);
-    this->driver_page_account->Controls->Add(this->driver_label_username);
     this->driver_page_account->Controls->Add(this->driver_label_account);
     this->driver_page_account->Controls->Add(this->driver_numeric_age);
     this->driver_page_account->Controls->Add(this->driver_textbox_bankcard);
@@ -366,15 +368,55 @@ void DriverPageView::InitializeComponent(void)
     this->driver_page_account->Text = L"Аккаунт";
     this->driver_page_account->UseVisualStyleBackColor = true;
     // 
-    // driver_label_licence
+    // driver_checkbox_licence
     // 
-    this->driver_label_licence->AutoSize = true;
-    this->driver_label_licence->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
-    this->driver_label_licence->Location = System::Drawing::Point(22, 334);
-    this->driver_label_licence->Name = L"driver_label_licence";
-    this->driver_label_licence->Size = System::Drawing::Size(118, 17);
-    this->driver_label_licence->TabIndex = 16;
-    this->driver_label_licence->Text = L"Номер лицензии";
+    this->driver_checkbox_licence->AutoSize = true;
+    this->driver_checkbox_licence->Location = System::Drawing::Point(25, 335);
+    this->driver_checkbox_licence->Name = L"driver_checkbox_licence";
+    this->driver_checkbox_licence->Size = System::Drawing::Size(232, 21);
+    this->driver_checkbox_licence->TabIndex = 23;
+    this->driver_checkbox_licence->Text = L"Номер водительской лицензии";
+    this->driver_checkbox_licence->UseVisualStyleBackColor = true;
+    // 
+    // driver_checkbox_bankcard
+    // 
+    this->driver_checkbox_bankcard->AutoSize = true;
+    this->driver_checkbox_bankcard->Location = System::Drawing::Point(23, 279);
+    this->driver_checkbox_bankcard->Name = L"driver_checkbox_bankcard";
+    this->driver_checkbox_bankcard->Size = System::Drawing::Size(194, 21);
+    this->driver_checkbox_bankcard->TabIndex = 22;
+    this->driver_checkbox_bankcard->Text = L"Номер банковской карты";
+    this->driver_checkbox_bankcard->UseVisualStyleBackColor = true;
+    // 
+    // driver_checkbox_age
+    // 
+    this->driver_checkbox_age->AutoSize = true;
+    this->driver_checkbox_age->Location = System::Drawing::Point(505, 220);
+    this->driver_checkbox_age->Name = L"driver_checkbox_age";
+    this->driver_checkbox_age->Size = System::Drawing::Size(81, 21);
+    this->driver_checkbox_age->TabIndex = 21;
+    this->driver_checkbox_age->Text = L"Возраст";
+    this->driver_checkbox_age->UseVisualStyleBackColor = true;
+    // 
+    // driver_checkbox_gender
+    // 
+    this->driver_checkbox_gender->AutoSize = true;
+    this->driver_checkbox_gender->Location = System::Drawing::Point(297, 220);
+    this->driver_checkbox_gender->Name = L"driver_checkbox_gender";
+    this->driver_checkbox_gender->Size = System::Drawing::Size(53, 21);
+    this->driver_checkbox_gender->TabIndex = 20;
+    this->driver_checkbox_gender->Text = L"Пол";
+    this->driver_checkbox_gender->UseVisualStyleBackColor = true;
+    // 
+    // driver_checkbox_username
+    // 
+    this->driver_checkbox_username->AutoSize = true;
+    this->driver_checkbox_username->Location = System::Drawing::Point(25, 220);
+    this->driver_checkbox_username->Name = L"driver_checkbox_username";
+    this->driver_checkbox_username->Size = System::Drawing::Size(54, 21);
+    this->driver_checkbox_username->TabIndex = 19;
+    this->driver_checkbox_username->Text = L"Имя";
+    this->driver_checkbox_username->UseVisualStyleBackColor = true;
     // 
     // driver_textbox_licence
     // 
@@ -395,46 +437,6 @@ void DriverPageView::InitializeComponent(void)
     this->driver_button_bank->Text = L"Менеджер банка";
     this->driver_button_bank->UseVisualStyleBackColor = true;
     this->driver_button_bank->Click += gcnew System::EventHandler(this, &DriverPageView::driver_button_bank_Click);
-    // 
-    // driver_label_bankcard
-    // 
-    this->driver_label_bankcard->AutoSize = true;
-    this->driver_label_bankcard->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
-    this->driver_label_bankcard->Location = System::Drawing::Point(22, 279);
-    this->driver_label_bankcard->Name = L"driver_label_bankcard";
-    this->driver_label_bankcard->Size = System::Drawing::Size(175, 17);
-    this->driver_label_bankcard->TabIndex = 13;
-    this->driver_label_bankcard->Text = L"Номер банковской карты";
-    // 
-    // driver_label_age
-    // 
-    this->driver_label_age->AutoSize = true;
-    this->driver_label_age->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
-    this->driver_label_age->Location = System::Drawing::Point(501, 222);
-    this->driver_label_age->Name = L"driver_label_age";
-    this->driver_label_age->Size = System::Drawing::Size(62, 17);
-    this->driver_label_age->TabIndex = 12;
-    this->driver_label_age->Text = L"Возраст";
-    // 
-    // driver_label_gender
-    // 
-    this->driver_label_gender->AutoSize = true;
-    this->driver_label_gender->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
-    this->driver_label_gender->Location = System::Drawing::Point(294, 222);
-    this->driver_label_gender->Name = L"driver_label_gender";
-    this->driver_label_gender->Size = System::Drawing::Size(34, 17);
-    this->driver_label_gender->TabIndex = 11;
-    this->driver_label_gender->Text = L"Пол";
-    // 
-    // driver_label_username
-    // 
-    this->driver_label_username->AutoSize = true;
-    this->driver_label_username->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
-    this->driver_label_username->Location = System::Drawing::Point(22, 222);
-    this->driver_label_username->Name = L"driver_label_username";
-    this->driver_label_username->Size = System::Drawing::Size(35, 17);
-    this->driver_label_username->TabIndex = 10;
-    this->driver_label_username->Text = L"Имя";
     // 
     // driver_label_account
     // 

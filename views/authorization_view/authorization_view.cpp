@@ -306,9 +306,9 @@ void AuthorizationView::InitializeComponent(void)
     this->pageadmin_combobox_permissions->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
     this->pageadmin_combobox_permissions->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
     this->pageadmin_combobox_permissions->FormattingEnabled = true;
-    this->pageadmin_combobox_permissions->Items->AddRange(gcnew cli::array< System::Object^  >(4) {
+    this->pageadmin_combobox_permissions->Items->AddRange(gcnew cli::array< System::Object^  >(3) {
         L"Полный доступ", L"Доступ к гаражу",
-            L"Доступ к списку заказов", L"Доступ к списку водителей"
+            L"Доступ к аккаунтам"
     });
     this->pageadmin_combobox_permissions->Location = System::Drawing::Point(16, 25);
     this->pageadmin_combobox_permissions->Name = L"pageadmin_combobox_permissions";

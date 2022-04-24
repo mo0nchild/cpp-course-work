@@ -41,6 +41,7 @@ void DriverComplexView::InitializeComponent(void)
     this->ClientSize = System::Drawing::Size(424, 289);
     this->Controls->Add(this->listview);
     this->Name = L"DriverComplexView";
+    this->StartPosition = System::Windows::Forms::FormStartPosition::CenterParent;
     this->Text = L"Машиный комлекс";
     this->ResumeLayout(false);
 

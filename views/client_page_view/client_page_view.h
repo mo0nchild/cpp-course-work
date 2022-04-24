@@ -103,14 +103,9 @@ namespace Views
 	private: System::Windows::Forms::ColumnHeader^ car_type;
 	private: System::Windows::Forms::Label^ client_label_waiting;
 	private: System::Windows::Forms::TextBox^ client_textbox_username;
-
 	private: System::Windows::Forms::Button^ client_button_update;
 	private: System::Windows::Forms::Button^ client_button_logout;
 	private: System::Windows::Forms::ListView^ client_listview_account;
-
-
-
-
 
 	private: System::Windows::Forms::Label^ client_label_account;
 	private: System::Windows::Forms::NumericUpDown^ client_numeric_age;

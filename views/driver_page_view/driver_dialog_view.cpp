@@ -58,6 +58,7 @@ void DriverDialogView::InitializeComponent(void)
     this->Controls->Add(this->button);
     this->Controls->Add(this->progress_bar);
     this->Name = L"DriverDialogView";
+    this->StartPosition = System::Windows::Forms::FormStartPosition::CenterParent;
     this->Text = L"Процесс вождения";
     this->ResumeLayout(false);
 
