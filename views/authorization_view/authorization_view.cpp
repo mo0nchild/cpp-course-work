@@ -4,7 +4,6 @@ using namespace Views;
 
 void AuthorizationView::InitializeComponent(void)
 {
-    System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(AuthorizationView::typeid));
     this->page_list = (gcnew System::Windows::Forms::TabControl());
     this->page_authorization = (gcnew System::Windows::Forms::TabPage());
     this->label1 = (gcnew System::Windows::Forms::Label());
@@ -372,9 +371,9 @@ void AuthorizationView::InitializeComponent(void)
     this->page2_label_username->AutoSize = true;
     this->page2_label_username->Location = System::Drawing::Point(29, 61);
     this->page2_label_username->Name = L"page2_label_username";
-    this->page2_label_username->Size = System::Drawing::Size(35, 17);
+    this->page2_label_username->Size = System::Drawing::Size(87, 17);
     this->page2_label_username->TabIndex = 7;
-    this->page2_label_username->Text = L"Имя";
+    this->page2_label_username->Text = L"Имя (min=8)";
     // 
     // page2_textbox_username
     // 
@@ -391,9 +390,9 @@ void AuthorizationView::InitializeComponent(void)
     this->page2_label_password->AutoSize = true;
     this->page2_label_password->Location = System::Drawing::Point(229, 12);
     this->page2_label_password->Name = L"page2_label_password";
-    this->page2_label_password->Size = System::Drawing::Size(57, 17);
+    this->page2_label_password->Size = System::Drawing::Size(109, 17);
     this->page2_label_password->TabIndex = 5;
-    this->page2_label_password->Text = L"Пароль";
+    this->page2_label_password->Text = L"Пароль (min=4)";
     // 
     // page2_textbox_password
     // 
@@ -411,9 +410,9 @@ void AuthorizationView::InitializeComponent(void)
     this->page2_label_login->AutoSize = true;
     this->page2_label_login->Location = System::Drawing::Point(29, 12);
     this->page2_label_login->Name = L"page2_label_login";
-    this->page2_label_login->Size = System::Drawing::Size(47, 17);
+    this->page2_label_login->Size = System::Drawing::Size(99, 17);
     this->page2_label_login->TabIndex = 3;
-    this->page2_label_login->Text = L"Логин";
+    this->page2_label_login->Text = L"Логин (min=4)";
     // 
     // page2_textbox_login
     // 
@@ -427,6 +426,7 @@ void AuthorizationView::InitializeComponent(void)
     // 
     // AuthorizationView
     // 
+    this->Icon = gcnew Drawing::Icon("assets/my_app_icon.ico");
     this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
     this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
     this->ClientSize = System::Drawing::Size(452, 403);
@@ -438,7 +438,6 @@ void AuthorizationView::InitializeComponent(void)
     this->Name = L"AuthorizationView";
     this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
     this->Text = L"Авторизация";
-    this->Icon = gcnew Drawing::Icon("assets/my_app_icon.ico");
     this->page_list->ResumeLayout(false);
     this->page_authorization->ResumeLayout(false);
     this->page_authorization->PerformLayout();

@@ -52,6 +52,9 @@ System::Void AuthorizationView::page2_button_registration_Click(System::Object^ 
 	System::String^ password_field = this->page2_textbox_password->Text;
 	System::String^ username_field = this->page2_textbox_username->Text;
 
+	if (login_field->Length < 4 || password_field->Length < 4 || username_field->Length < 8) 
+	{ MessageBox::Show("Неверно заполнены текстовые поля", "Ошибка"); return; }
+
 	System::UInt32 age_field = System::Decimal::ToUInt32(this->page2_numeric_age->Value);
 	Models::AccountModelGender gender_field;
 

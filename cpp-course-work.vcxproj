@@ -226,6 +226,9 @@
     <EmbeddedResource Include="views\admin_page_view\admin_page_view.resx">
       <DependentUpon>views\admin_page_view\admin_page_view.h</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="views\authorization_view\authorization_view.resx">
+      <DependentUpon>views\authorization_view\authorization_view.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="views\bank_settings_view\bank_settings_operation.resx">
       <DependentUpon>views\bank_settings_view\bank_settings_operation.h</DependentUpon>
     </EmbeddedResource>
