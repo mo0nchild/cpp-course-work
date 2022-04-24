@@ -217,7 +217,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="services\database_provider\database_setup.sql" />
+    <None Include="assets\database_setup.sql" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="views\admin_page_view\admin_details_view.resx">

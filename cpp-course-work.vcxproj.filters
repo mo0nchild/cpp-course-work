@@ -205,7 +205,7 @@
     <Xml Include="services\services_settings.xml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="services\database_provider\database_setup.sql" />
+    <None Include="assets\database_setup.sql" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="cpp-course-work.rc">
