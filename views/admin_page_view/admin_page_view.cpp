@@ -4,7 +4,6 @@ using namespace Views;
 
 void AdminPageView::InitializeComponent(void)
 {
-    System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(AdminPageView::typeid));
     this->admin_tabcontrol = (gcnew System::Windows::Forms::TabControl());
     this->admin_page_garage = (gcnew System::Windows::Forms::TabPage());
     this->admin_label_carspeed = (gcnew System::Windows::Forms::Label());
@@ -528,11 +527,11 @@ void AdminPageView::InitializeComponent(void)
     // 
     // AdminPageView
     // 
-    this->Icon = gcnew Drawing::Icon("assets/my_app_icon.ico");
     this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
     this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
     this->ClientSize = System::Drawing::Size(655, 500);
     this->Controls->Add(this->admin_tabcontrol);
+    this->MaximizeBox = false;
     this->MaximumSize = System::Drawing::Size(671, 539);
     this->MinimumSize = System::Drawing::Size(671, 539);
     this->Name = L"AdminPageView";

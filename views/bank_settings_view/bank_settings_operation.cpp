@@ -4,7 +4,6 @@ using namespace Views;
 
 void BankSettingsOperationView::InitializeComponent(void)
 {
-    System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(BankSettingsOperationView::typeid));
     this->combobox_operation_type = (gcnew System::Windows::Forms::ComboBox());
     this->numeric_money_value = (gcnew System::Windows::Forms::NumericUpDown());
     this->button_operation = (gcnew System::Windows::Forms::Button());
@@ -68,7 +67,6 @@ void BankSettingsOperationView::InitializeComponent(void)
     // 
     // BankSettingsOperationView
     // 
-    this->Icon = gcnew Drawing::Icon("assets/my_app_icon.ico");
     this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
     this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
     this->ClientSize = System::Drawing::Size(284, 193);
@@ -77,6 +75,10 @@ void BankSettingsOperationView::InitializeComponent(void)
     this->Controls->Add(this->button_operation);
     this->Controls->Add(this->numeric_money_value);
     this->Controls->Add(this->combobox_operation_type);
+    this->MaximizeBox = false;
+    this->MaximumSize = System::Drawing::Size(300, 232);
+    this->MinimizeBox = false;
+    this->MinimumSize = System::Drawing::Size(300, 232);
     this->Name = L"BankSettingsOperationView";
     this->StartPosition = System::Windows::Forms::FormStartPosition::CenterParent;
     this->Text = L"Банковская операция";

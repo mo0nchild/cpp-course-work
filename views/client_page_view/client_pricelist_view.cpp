@@ -5,7 +5,6 @@ using namespace Views;
 void ClientPriceListView::InitializeComponent(void)
 {
     System::Windows::Forms::ListViewItem^ listViewItem1 = (gcnew System::Windows::Forms::ListViewItem(L""));
-    System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(ClientPriceListView::typeid));
     this->list_view = (gcnew System::Windows::Forms::ListView());
     this->car_type = (gcnew System::Windows::Forms::ColumnHeader());
     this->car_price = (gcnew System::Windows::Forms::ColumnHeader());
@@ -37,11 +36,14 @@ void ClientPriceListView::InitializeComponent(void)
     // 
     // ClientPriceListView
     // 
-    this->Icon = gcnew Drawing::Icon("assets/my_app_icon.ico");
     this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
     this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
     this->ClientSize = System::Drawing::Size(376, 257);
     this->Controls->Add(this->list_view);
+    this->MaximizeBox = false;
+    this->MaximumSize = System::Drawing::Size(392, 296);
+    this->MinimizeBox = false;
+    this->MinimumSize = System::Drawing::Size(392, 296);
     this->Name = L"ClientPriceListView";
     this->StartPosition = System::Windows::Forms::FormStartPosition::CenterParent;
     this->Text = L"Цены на машиины";

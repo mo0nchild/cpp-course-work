@@ -4,7 +4,6 @@ using namespace Views;
 
 void AdminDetailsView::InitializeComponent(void)
 {
-    System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(AdminDetailsView::typeid));
     this->account_listview = (gcnew System::Windows::Forms::ListView());
     this->param_name = (gcnew System::Windows::Forms::ColumnHeader());
     this->param_value = (gcnew System::Windows::Forms::ColumnHeader());
@@ -38,11 +37,14 @@ void AdminDetailsView::InitializeComponent(void)
     // 
     // AdminDetailsView
     // 
-    this->Icon = gcnew Drawing::Icon("assets/my_app_icon.ico");
     this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
     this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
     this->ClientSize = System::Drawing::Size(448, 336);
     this->Controls->Add(this->account_listview);
+    this->MaximizeBox = false;
+    this->MaximumSize = System::Drawing::Size(464, 375);
+    this->MinimizeBox = false;
+    this->MinimumSize = System::Drawing::Size(464, 375);
     this->Name = L"AdminDetailsView";
     this->StartPosition = System::Windows::Forms::FormStartPosition::CenterParent;
     this->Text = L"Подробная информация аккаунта";

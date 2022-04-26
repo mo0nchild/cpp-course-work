@@ -4,7 +4,6 @@ using namespace Views;
 
 void DriverDialogView::InitializeComponent(void)
 {
-    System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(DriverDialogView::typeid));
     this->progress_bar = (gcnew System::Windows::Forms::ProgressBar());
     this->button = (gcnew System::Windows::Forms::Button());
     this->list_view = (gcnew System::Windows::Forms::ListView());
@@ -52,13 +51,16 @@ void DriverDialogView::InitializeComponent(void)
     // 
     // DriverDialogView
     // 
-    this->Icon = gcnew Drawing::Icon("assets/my_app_icon.ico");
     this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
     this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
     this->ClientSize = System::Drawing::Size(338, 202);
     this->Controls->Add(this->list_view);
     this->Controls->Add(this->button);
     this->Controls->Add(this->progress_bar);
+    this->MaximizeBox = false;
+    this->MaximumSize = System::Drawing::Size(354, 241);
+    this->MinimizeBox = false;
+    this->MinimumSize = System::Drawing::Size(354, 241);
     this->Name = L"DriverDialogView";
     this->StartPosition = System::Windows::Forms::FormStartPosition::CenterParent;
     this->Text = L"Процесс вождения";

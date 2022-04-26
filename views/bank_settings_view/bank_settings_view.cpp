@@ -4,7 +4,6 @@ using namespace Views;
 
 void BankSettingsView::InitializeComponent(void)
 {
-    System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(BankSettingsView::typeid));
     this->button_create_bank = (gcnew System::Windows::Forms::Button());
     this->button_reload = (gcnew System::Windows::Forms::Button());
     this->label_bank = (gcnew System::Windows::Forms::Label());
@@ -101,7 +100,6 @@ void BankSettingsView::InitializeComponent(void)
     // 
     // BankSettingsView
     // 
-    this->Icon = gcnew Drawing::Icon("assets/my_app_icon.ico");
     this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
     this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
     this->ClientSize = System::Drawing::Size(564, 388);
@@ -112,6 +110,10 @@ void BankSettingsView::InitializeComponent(void)
     this->Controls->Add(this->button_reload);
     this->Controls->Add(this->button_create_bank);
     this->ForeColor = System::Drawing::Color::Black;
+    this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedDialog;
+    this->MaximizeBox = false;
+    this->MaximumSize = System::Drawing::Size(580, 427);
+    this->MinimumSize = System::Drawing::Size(580, 427);
     this->Name = L"BankSettingsView";
     this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
     this->Text = L"Менеджер банка";

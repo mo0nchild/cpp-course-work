@@ -4,7 +4,6 @@ using namespace Views;
 
 void DriverComplexView::InitializeComponent(void)
 {
-    System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(DriverComplexView::typeid));
     this->listview = (gcnew System::Windows::Forms::ListView());
     this->listview_name = (gcnew System::Windows::Forms::ColumnHeader());
     this->listview_value = (gcnew System::Windows::Forms::ColumnHeader());
@@ -37,11 +36,14 @@ void DriverComplexView::InitializeComponent(void)
     // 
     // DriverComplexView
     // 
-    this->Icon = gcnew Drawing::Icon("assets/my_app_icon.ico");
     this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
     this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
     this->ClientSize = System::Drawing::Size(424, 289);
     this->Controls->Add(this->listview);
+    this->MaximizeBox = false;
+    this->MaximumSize = System::Drawing::Size(440, 328);
+    this->MinimizeBox = false;
+    this->MinimumSize = System::Drawing::Size(440, 328);
     this->Name = L"DriverComplexView";
     this->StartPosition = System::Windows::Forms::FormStartPosition::CenterParent;
     this->Text = L"Машиный комлекс";
