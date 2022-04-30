@@ -8,6 +8,7 @@ namespace Services
 {
 	using namespace System;
 	using namespace System::Collections::Generic;
+	using namespace Manager;
 
 	public interface class IAccountManager 
 	{
@@ -24,10 +25,9 @@ namespace Services
 	[Manager::ServiceAttribute::ServiceRequireAttribute(Services::SqlDatabaseManager::typeid)]
 	public ref class AccountManager sealed : Manager::ServiceBase, Services::IAccountManager
 	{
-	public:		value struct AccountInfo { 
-		System::Guid Guid; System::String^ Name; AccountManagerToken::AccountManagerType Type; 
-		System::Boolean State;
-	};
+	public:	value struct AccountInfo { System::Boolean State;
+		System::Guid Guid; System::String^ Name; AccountManagerToken::AccountManagerType Type; };
+
 	private:	Services::SqlDatabaseManager^ service_sql_manager = nullptr;
 				System::Boolean service_disposed = false;
 
@@ -47,7 +47,9 @@ namespace Services
 		protected: System::Void set(Services::AccountManagerToken value) { this->account_token = value; }
 		}
 	public:
-		AccountManager(SqlDatabaseManager^ sql_manager) : Manager::ServiceBase(), account_initialized(false)
+		[Manager::ServiceConfigurationAttribute("none")]
+		AccountManager(IServiceBase::ServiceCtorConfiguration^ configuration, SqlDatabaseManager^ sql_manager) 
+			: Manager::ServiceBase(configuration), account_initialized(false)
 		{ this->service_sql_manager = sql_manager; }
 
 		virtual ~AccountManager(System::Void) { AccountManager::!AccountManager(); }
@@ -64,6 +66,8 @@ namespace Services
 
 		generic <class TAccountScheme> where TAccountScheme : Services:: AccountClassesDbScheme
 			TAccountScheme get_account_scheme(System::Guid account_guid);
+
+		virtual IServiceBase::ServiceQuery^ service_query_handler(System::TimeSpan work_time) override;
 
 		System::Nullable<System::Boolean> get_account_status(System::Guid account_guid);
 

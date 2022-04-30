@@ -208,13 +208,13 @@
     <None Include="assets\database_setup.sql" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="cpp-course-work.rc">
-      <Filter>Файлы ресурсов</Filter>
-    </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
     <Image Include="assets\my_app_icon.ico">
       <Filter>Файлы ресурсов</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="cpp-course-work.rc">
+      <Filter>Файлы ресурсов</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

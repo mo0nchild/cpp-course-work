@@ -5,13 +5,12 @@
 #include "depot_manager_token.h"
 #include "depot_manager_scheme.h"
 
-#define GARAGE_COLLECTION_SIZE 100
-
 namespace Services 
 {
 	using namespace System;
 	using namespace System::Collections::Generic;
 	using namespace System::Collections;
+	using namespace Manager;
 
 	public interface class IDepotManager 
 	{
@@ -35,11 +34,16 @@ namespace Services
 
 	private:	Services::DriveComplexToken^ drive_complex = nullptr;
 	private:	Services::SqlDatabaseManager^ service_sql_manager = nullptr;
+	
 	private:	System::Boolean service_disposed;
+				System::UInt32 garage_collection_size;
 	public:
 		property System::Guid DriverGuid { public: System::Guid get(System::Void); }
 		property Models::CarBaseModel^ CarModel { public: Models::CarBaseModel^ get(System::Void); }
+		
 		property System::Type^ CarModelType { public: System::Type^ get(System::Void); }
+		property System::UInt32 CarTypePrice[Models::CarModelTypes]
+		{ public: System::UInt32 get(Models::CarModelTypes value); }
 
 		property System::Boolean IsBuilded 
 		{ public: System::Boolean get(System::Void) { return (this->drive_complex != nullptr); } }
@@ -49,9 +53,16 @@ namespace Services
 	
 	private: System::Boolean delete_car_process(Services::CarModelDbScheme^ item);
 	public:
-		DepotManager(Services::SqlDatabaseManager^ db_manager) : Manager::ServiceBase(), service_disposed(false)
-		{ this->service_sql_manager = db_manager; }
+		[Manager::ServiceConfigurationAttribute("depot_manager")]
+		DepotManager(IServiceBase::ServiceCtorConfiguration^ configuration, Services::SqlDatabaseManager^ db_manager) 
+			: Manager::ServiceBase(configuration), service_disposed(false)
+		{ 
+			if (!configuration->ContainsKey("car_child_type_price") || !configuration->ContainsKey("car_econom_type_price")
+				|| !configuration->ContainsKey("car_premium_type_price")) throw gcnew System::Exception("Parameter Error");
 
+			this->garage_collection_size = System::UInt32::Parse((String^)configuration["garage_collection_size"]);
+			this->service_sql_manager = db_manager; 
+		}
 		virtual ~DepotManager(System::Void) { delete this->drive_complex; ServiceBase::~ServiceBase(); }
 		!DepotManager(System::Void)
 		{ if(!service_disposed && drive_complex != nullptr) { return_car_model(); service_disposed = true; } }
@@ -70,9 +81,10 @@ namespace Services
 
 		generic <class TCarClass> where TCarClass : Models::CarBaseModel
 			virtual System::Boolean delete_car_model(TCarClass car_model) override;
+		virtual System::Boolean return_car_model(System::Void) override;
 
+		virtual IServiceBase::ServiceQuery^ service_query_handler(System::TimeSpan work_time) override;
 		System::Boolean delete_car_model_by_guid(System::Guid group_id);
 
-		virtual System::Boolean return_car_model(System::Void) override;
 	};
 }

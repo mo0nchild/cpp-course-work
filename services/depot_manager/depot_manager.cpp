@@ -16,6 +16,30 @@ List<IDatabaseManager::KeyValuePair^>^ create_car_request(Models::CarBaseModel^ 
 	return key_pair;
 }
 
+System::UInt32 DepotManager::CarTypePrice::get(Models::CarModelTypes car_type_value)
+{
+	switch (car_type_value)
+	{
+	case Models::CarModelTypes::CarTypeChild:
+		return System::UInt32::Parse((System::String^)this->configuration["car_child_type_price"]);
+	case Models::CarModelTypes::CarTypeEconom:
+		return System::UInt32::Parse((System::String^)this->configuration["car_econom_type_price"]);
+	case Models::CarModelTypes::CarTypePremium:
+		return System::UInt32::Parse((System::String^)this->configuration["car_premium_type_price"]);
+	}
+}
+
+Manager::IServiceBase::ServiceQuery^ DepotManager::service_query_handler(System::TimeSpan work_time)
+{
+	Manager::IServiceBase::ServiceQuery^ service_query = gcnew Manager::IServiceBase::ServiceQuery();
+
+	service_query->Message = "Message from Depot Manager";
+	service_query->ServiceType = this->GetType();
+	service_query->State = this->ServiceState;
+
+	return service_query;
+}
+
 System::Boolean DepotManager::delete_car_process(Services::CarModelDbScheme^ item)
 {
 	System::Int32 garage_car_count(0);

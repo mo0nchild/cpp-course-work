@@ -1,8 +1,7 @@
 #pragma once
 #include "../../manager/manager.h"
 #include "database_provider_attribute.h"
-
-#define DATABASE_CONNECTION_STRING "server=localhost;user=root;database=test;password=prolodgy778"
+//#define DATABASE_CONNECTION_STRING "server=localhost;user=root;database=test;password=prolodgy778"
 
 namespace Services 
 {
@@ -10,6 +9,7 @@ namespace Services
 	using namespace System::Reflection;
 	using namespace System::Collections::Generic;
 	using namespace MySql::Data;
+	using namespace Manager;
 
 	public interface class IDatabaseManager 
 	{
@@ -49,33 +49,34 @@ namespace Services
 		MySqlClient::MySqlConnection^ db_connection = nullptr;
 		List<SqlDatabaseFieldKey>^ db_keys_name = nullptr;
 
-		Threading::Mutex^ connection_mutex = nullptr;
-		System::String^ db_table_name = nullptr;
-		System::Type^ db_scheme_type = nullptr;
-
+	private:	Threading::Mutex^ connection_mutex = nullptr;
+	private:	System::String^ db_table_name = nullptr;
+	private:	System::Type^ db_scheme_type = nullptr;
 	public:
-		SqlDatabaseManager(System::Void) : Manager::ServiceBase()
-		{ 
-			this->db_connection = gcnew MySqlClient::MySqlConnection(DATABASE_CONNECTION_STRING); 
-			this->db_keys_name = gcnew List<SqlDatabaseFieldKey>();
-			this->connection_mutex = gcnew Threading::Mutex();
-		}
-		virtual ~SqlDatabaseManager(System::Void) 
-		{ 
-			delete this->db_connection, this->db_table_name, this->db_keys_name; 
-			Manager::ServiceBase::~ServiceBase();
-		}
-
-		property System::String^ TableName 
+		property System::String^ TableName
 		{
 		public: System::String^ get(System::Void) { return this->db_table_name; }
 		public: System::Void set(System::String^ value) { this->db_table_name = value; }
 		}
 
-		property System::String^ SchemeName 
+		property System::String^ SchemeName
 		{ public: System::String^ get(System::Void) { return this->db_scheme_type->ToString(); } }
 
 		property List<System::String^>^ CurrentScheme { List<System::String^>^ get(System::Void); }
+	private:	System::Void db_build_connection(System::Void);
+	public:
+		[Manager::ServiceConfigurationAttribute("database_provider")]
+		SqlDatabaseManager(IServiceBase::ServiceCtorConfiguration^ conf) : Manager::ServiceBase(conf)
+		{
+			this->db_keys_name = gcnew List<SqlDatabaseFieldKey>();
+			this->connection_mutex = gcnew Threading::Mutex();
+			this->db_build_connection();
+		}
+		virtual ~SqlDatabaseManager(System::Void) 
+		{
+			delete this->db_connection, this->db_table_name, this->db_keys_name; 
+			Manager::ServiceBase::~ServiceBase();
+		}
 		generic <class TSchemeStruct> Services::SqlDatabaseManager^ set_scheme_struct(System::Void);
 
 		virtual System::Boolean update_database_date(IDatabaseManager::RequestRow^ request_param,
@@ -86,5 +87,7 @@ namespace Services
 
 		virtual List<IDatabaseManager::RequestRow^>^ get_database_data(
 			List<IDatabaseManager::KeyValuePair^>^ searching_param, System::Boolean mergering) override;
+
+		virtual IServiceBase::ServiceQuery^ service_query_handler(System::TimeSpan work_time) override;
 	};
 }

@@ -252,10 +252,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="cpp-course-work.rc" />
+    <Image Include="assets\my_app_icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="assets\my_app_icon.ico" />
+    <ResourceCompile Include="cpp-course-work.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

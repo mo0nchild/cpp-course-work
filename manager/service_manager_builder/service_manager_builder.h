@@ -31,40 +31,49 @@ namespace Manager
 
 	public interface class IServiceManagerBuilder
 	{
-		generic<class TProvider, class TService> where TService: Manager::IServiceBase
-			System::Boolean service_registration(System::Void);
+	public: value struct ServiceCtorConfigurationItem { System::String^ Key;
+		IServiceBase::ServiceCtorConfiguration^ Configuration; };
+	
+	public:	Manager::ServiceManager^ create_manager(System::Void);
+	public:	generic<class TProvider, class TService> where TService: Manager::IServiceBase
+		System::Boolean service_registration(System::Void);
 
-		Manager::ServiceManager^ create_manager(Generic::Dictionary<System::String^, 
-			System::Object^>^ manager_parameter);
+		System::Boolean service_configuration_load(ServiceCtorConfigurationItem^ configuration_item);
+		System::Boolean service_configuration_load(System::String^ configuration_filename);
 	};
 
 	public ref class ServiceManagerBuilder sealed : Manager::IServiceManagerBuilder
 	{
 	public:	using ServiceRequire = ServiceAttribute::ServiceRequireAttribute;
+		value struct ServiceConstructor { ConstructorInfo^ Ctor; String^ Configuration; };
 
+		Dictionary<String^, IServiceBase::ServiceCtorConfiguration^>^ configurations = nullptr;
 	private:	System::Boolean manager_is_created;
 	private:	System::UInt16 registration_count;
 	private:	Manager::ServiceCollection^ collection = nullptr;
 	public:
 		virtual property System::UInt16 ServiceCount
 		{
-		public: System::UInt16 get(void) override { return registration_count; }
-		private: void set(System::UInt16 value) override { registration_count = value; }
+		public: System::UInt16 get(System::Void) override { return registration_count; }
+		private: System::Void set(System::UInt16 value) override { registration_count = value; }
 		}
-
 	private: generic <class TService> where TService: Manager::IServiceBase
 		System::Tuple<TService, List<System::Type^>^>^ dependency_injection(System::Void);
 
+		ServiceManagerBuilder::ServiceConstructor^ get_service_configuration(System::Type^ obj);
+		System::Void service_configuration_setup(System::Void);
 	public:
-		ServiceManagerBuilder(System::Void): manager_is_created(false), registration_count(0)
-		{ this->collection = gcnew ServiceCollection(); }
-
+		explicit ServiceManagerBuilder(System::Void) : manager_is_created(false), registration_count(0)
+		{ this->collection = gcnew ServiceCollection(); this->service_configuration_setup(); }
 		virtual ~ServiceManagerBuilder(System::Void) { }
 
-		virtual Manager::ServiceManager^ create_manager(Generic::Dictionary<System::String^,
-			System::Object^>^ manager_parameter) override;
+		virtual Manager::ServiceManager^ create_manager(System::Void) override;
 
 		generic<class TProvider, class TService> where TService: Manager::IServiceBase
 			virtual System::Boolean service_registration(System::Void) override;
+
+		virtual System::Boolean service_configuration_load(System::String^ configuration_filename);
+		virtual System::Boolean service_configuration_load(
+			IServiceManagerBuilder::ServiceCtorConfigurationItem^ configuration_item) override;
 	};
 }

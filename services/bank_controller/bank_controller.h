@@ -7,6 +7,7 @@ namespace Services
 {
 	using namespace System;
 	using namespace System::Collections;
+	using namespace Manager;
 
 	public interface class IBankController
 	{
@@ -28,11 +29,14 @@ namespace Services
 		property System::Guid AccountGuid { public: System::Guid get(System::Void); }
 		property System::Int32 AccountMoney { public: System::Int32 get(System::Void); }
 	public:
-		BankController(SqlDatabaseManager^ sql_manager) : Manager::ServiceBase()
-		{ this->service_sql_manager = sql_manager; }
+		[Manager::ServiceConfigurationAttribute("none")]
+		BankController(IServiceBase::ServiceCtorConfiguration^ configuration, SqlDatabaseManager^ sql_manager) 
+			: Manager::ServiceBase(configuration) { this->service_sql_manager = sql_manager; }
 
 		virtual ~BankController(System::Void) { ServiceBase::~ServiceBase(); }
 		virtual System::Boolean transfer_money(System::Guid payee_guid, System::Int32 money) override;
+
+		virtual IServiceBase::ServiceQuery^ service_query_handler(System::TimeSpan work_time) override;
 
 		System::Boolean load_bank_account(System::Guid account_guid);
 		System::Boolean create_bank_account(System::Guid account_guid);

@@ -1,4 +1,6 @@
 #pragma once
+#include "../../services/services.h"
+#include "../../models/cars_model/cars_model.h"
 
 namespace Views 
 {
@@ -14,8 +16,10 @@ namespace Views
 	/// </summary>
 	public ref class ClientPriceListView : public System::Windows::Forms::Form
 	{
+		Services::DepotManager^ service_depot_manager = nullptr;
 	public:
-		ClientPriceListView(System::Void) { InitializeComponent(); this->listview_initialize(); }
+		ClientPriceListView(Services::DepotManager^ depot_manager) 
+		{ InitializeComponent(); this->service_depot_manager = depot_manager; this->listview_initialize(); }
 
 	protected:
 		/// <summary>
@@ -46,15 +50,18 @@ namespace Views
 			this->list_view->Items->Clear();
 
 			ListViewItem^ list_item = gcnew ListViewItem("CarTypeEconom");
-			list_item->SubItems->Add("150");
+			list_item->SubItems->Add(this->service_depot_manager
+				->CarTypePrice[Models::CarModelTypes::CarTypeEconom].ToString());
 			this->list_view->Items->Add(list_item);
 
 			list_item = gcnew ListViewItem("CarTypePremium");
-			list_item->SubItems->Add("700");
+			list_item->SubItems->Add(this->service_depot_manager
+				->CarTypePrice[Models::CarModelTypes::CarTypePremium].ToString());
 			this->list_view->Items->Add(list_item);
 
 			list_item = gcnew ListViewItem("CarTypeChild ");
-			list_item->SubItems->Add("300");
+			list_item->SubItems->Add(this->service_depot_manager
+				->CarTypePrice[Models::CarModelTypes::CarTypeChild].ToString());
 			this->list_view->Items->Add(list_item);
 		}
 	};

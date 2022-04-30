@@ -7,6 +7,17 @@ generic <class TEnum> TEnum convert_to_enum_cool(System::String^ value)
 	return safe_cast<TEnum>(System::Enum::Parse(TEnum::typeid, value, true));
 }
 
+Manager::IServiceBase::ServiceQuery^ AccountManager::service_query_handler(System::TimeSpan work_time) 
+{
+	Manager::IServiceBase::ServiceQuery^ service_query = gcnew Manager::IServiceBase::ServiceQuery();
+
+	service_query->Message = "Message from Account Manager";
+	service_query->ServiceType = this->GetType();
+	service_query->State = this->ServiceState;
+
+	return service_query;
+}
+
 System::Nullable<System::Boolean> AccountManager::get_account_status(System::Guid account_guid)
 {
 	List<IDatabaseManager::KeyValuePair^>^ request_list = gcnew List<IDatabaseManager::KeyValuePair^>();
@@ -59,9 +70,14 @@ List<AccountManager::AccountInfo>^ AccountManager::AccountList::get(System::Void
 	{
 		AccountAuthenticationDbScheme^ account_scheme = (AccountAuthenticationDbScheme^)item;
 		try {
-			result->Add(AccountManager::AccountInfo { System::Guid::Parse(account_scheme->account_guid),
-				account_scheme->login, convert_to_enum_cool<AccountManagerToken::AccountManagerType>(account_scheme->type),
-				System::Boolean::Parse(account_scheme->state)});
+			AccountManager::AccountInfo account_info_item {};
+			account_info_item.Guid = System::Guid::Parse(account_scheme->account_guid);
+			account_info_item.Type = convert_to_enum_cool
+				<AccountManagerToken::AccountManagerType>(account_scheme->type);
+			
+			account_info_item.State = System::Boolean::Parse(account_scheme->state);
+			account_info_item.Name = account_scheme->login;
+			result->Add(account_info_item);
 		}
 		catch (System::Exception^ error) { Console::WriteLine(error->Message); }
 	}

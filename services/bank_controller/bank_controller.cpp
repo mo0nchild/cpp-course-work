@@ -14,6 +14,17 @@ System::Int32 BankController::AccountMoney::get(System::Void)
 	return System::Int32(0);
 }
 
+Manager::IServiceBase::ServiceQuery^ BankController::service_query_handler(System::TimeSpan work_time)
+{
+	Manager::IServiceBase::ServiceQuery^ service_query = gcnew Manager::IServiceBase::ServiceQuery();
+
+	service_query->Message = "Message from Bank Controller";
+	service_query->ServiceType = this->GetType();
+	service_query->State = this->ServiceState;
+
+	return service_query;
+}
+
 System::Boolean BankController::transfer_money(System::Guid payee_guid, System::Int32 money)
 {
 	if (this->bank_account == nullptr || money <= 0) return false;

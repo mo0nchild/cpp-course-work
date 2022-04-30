@@ -6,32 +6,40 @@ namespace Manager
 	using namespace System::Reflection;
 	using namespace System::Collections;
 
+	public enum class ServiceState : System::UInt32 { Idle, Running, Killed };
+
 	public interface class IServiceBase
 	{
-	public:
-		property System::Boolean ServiceState { System::Boolean get(System::Void) abstract; }
+	public: using ServiceCtorConfiguration = Generic::Dictionary<System::String^, System::Object^>;
+	public: value struct ServiceQuery { Type^ ServiceType; String^ Message; ServiceState State; };
+	public: virtual ServiceQuery^ service_query_handler(System::TimeSpan work_time) abstract;
+
+		property Manager::ServiceState ServiceState { Manager::ServiceState get(System::Void) abstract; }
 		property System::Guid ServiceGuid { System::Guid get(System::Void) abstract; }
 	};
 
 	public ref class ServiceBase abstract : Manager::IServiceBase
 	{
-	private:	System::Boolean service_state;
+	private:	Manager::ServiceState service_state;
 				System::Guid service_guid = System::Guid::Empty;
 
+	protected: IServiceBase::ServiceCtorConfiguration^ configuration = nullptr;
 	private: static System::UInt32 service_number = 0;
 	public:
-		virtual property System::Boolean ServiceState
+		virtual property Manager::ServiceState ServiceState
 		{
-		public: System::Boolean get(System::Void) override { return this->service_state; }
-		protected: System::Void set(System::Boolean value) override { this->service_state = value; }
+		public: Manager::ServiceState get(System::Void) override { return this->service_state; }
+		public: System::Void set(Manager::ServiceState value) override { this->service_state = value; }
 		};
-
 		virtual property System::Guid ServiceGuid
 		{ public: System::Guid get(System::Void) override { return this->service_guid; } }
 	public:
-		ServiceBase(System::Void) : service_guid(System::Guid::NewGuid()), service_state(true) 
-		{ service_number++; }
-		virtual ~ServiceBase(System::Void) { }	
+		explicit ServiceBase(IServiceBase::ServiceCtorConfiguration^ configuration)
+			: service_guid(System::Guid::NewGuid()), service_state(Manager::ServiceState::Idle) 
+		{ this->service_number++; this->configuration = configuration; }
+
+		virtual ~ServiceBase(System::Void) { }
+		virtual IServiceBase::ServiceQuery^ service_query_handler(System::TimeSpan work_time) abstract;
 	};
 
 	public interface class IServiceProvider
@@ -60,7 +68,7 @@ namespace Manager
 		{ public: System::DateTime get(System::Void) override { return this->registration_time; } }
 
 	public:
-		ServiceProvider(Manager::ServiceBase^ service, Generic::List<System::Type^>^ dependencies)
+		explicit ServiceProvider(Manager::ServiceBase^ service, Generic::List<System::Type^>^ dependencies)
 			: registration_time(System::DateTime::Now)
 		{ this->service_dependencies = dependencies; this->service_instance = service; }
 

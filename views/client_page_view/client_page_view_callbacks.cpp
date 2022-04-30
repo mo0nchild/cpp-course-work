@@ -23,12 +23,7 @@ System::Void ClientPageView::order_request_callback(OrderController::RequestAcce
 		
 		try {
 			Models::CarModelTypes car_model_type = convert_to_enum<Models::CarModelTypes>(complex_scheme->car_type);
-			switch (car_model_type) 
-			{
-			case Models::CarModelTypes::CarTypeEconom: transfer_price = CAR_ECONOM_PRICE; break;
-			case Models::CarModelTypes::CarTypePremium: transfer_price = CAR_PREMIUM_PRICE; break;
-			case Models::CarModelTypes::CarTypeChild: transfer_price = CAR_CHILD_PRICE; break;
-			}
+			transfer_price = this->service_depot_manager->CarTypePrice[car_model_type];
 			transfer_guid = System::Guid::Parse(driver_scheme->bank_card);
 		}
 		catch (System::Exception^) { MessageBox::Show("Произошла ошибка при обработки подготовке к транзакции", "Ошибка"); }
@@ -64,9 +59,9 @@ System::Void ClientPageView::progressbar_proceed(System::Void)
 	this->client_progressbar_waiting->Value = 100;
 	for (System::Int32 time_index = 0; time_index < 100; time_index++)
 	{
-		if (!this->order_proccess) break;
+		if (this->order_proccess != true) break;
 		this->client_progressbar_waiting->Value -= 1;
-		Thread::Sleep(150);
+		Thread::Sleep(this->service_order_controller->OrderRequestSecond * 10);
 	}
 	this->client_progressbar_waiting->Value = 0;
 }
@@ -100,11 +95,11 @@ System::Void ClientPageView::client_button_order_Click(System::Object^ sender, S
 
 	switch (this->client_combobox_cartype->SelectedIndex)
 	{
-	case 0: cartype_field = Models::CarModelTypes::CarTypeEconom; request_price = CAR_ECONOM_PRICE; break;
-	case 1: cartype_field = Models::CarModelTypes::CarTypeChild; request_price = CAR_CHILD_PRICE; break;
-	case 2: cartype_field = Models::CarModelTypes::CarTypePremium; request_price = CAR_PREMIUM_PRICE; break;
+	case 0: cartype_field = Models::CarModelTypes::CarTypeEconom; break;
+	case 1: cartype_field = Models::CarModelTypes::CarTypeChild; break;
+	case 2: cartype_field = Models::CarModelTypes::CarTypePremium; break;
 	}
-
+	request_price = this->service_depot_manager->CarTypePrice[cartype_field];
 	if (balance < request_price) { MessageBox::Show("Недостаточно средств"); return; }
 
 	this->service_order_controller->OrderRequestCallback += gcnew OrderController::RequestCallback(
@@ -258,6 +253,6 @@ System::Void ClientPageView::client_button_refresh_Click(System::Object^ sender,
 
 System::Void ClientPageView::client_button_price_Click(System::Object^ sender, System::EventArgs^ e)
 {
-	Windows::Forms::Form^ form = gcnew Views::ClientPriceListView();
+	Windows::Forms::Form^ form = gcnew Views::ClientPriceListView(this->service_depot_manager);
 	form->ShowDialog();
 }

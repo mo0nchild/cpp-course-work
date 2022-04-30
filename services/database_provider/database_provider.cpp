@@ -11,6 +11,28 @@ List<System::String^>^ SqlDatabaseManager::CurrentScheme::get(System::Void)
 	return copy_list;
 }
 
+System::Void SqlDatabaseManager::db_build_connection(System::Void)
+{
+	// "server=localhost;user=root;database=test;password=prolodgy778"
+	System::String^ database_connection_string = "server=" + this->configuration["sql_connection_server"]
+		+ ";user=" + this->configuration["sql_connection_user"]
+		+ ";database=" + this->configuration["sql_connection_database"]
+		+ ";password=" + this->configuration["sql_connection_password"];
+
+	this->db_connection = gcnew MySqlClient::MySqlConnection(database_connection_string);
+}
+
+IServiceBase::ServiceQuery^ SqlDatabaseManager::service_query_handler(System::TimeSpan work_time)
+{
+	Manager::IServiceBase::ServiceQuery^ service_query = gcnew Manager::IServiceBase::ServiceQuery();
+
+	service_query->Message = "Message from Sql Database Manager";
+	service_query->ServiceType = this->GetType();
+	service_query->State = this->ServiceState;
+
+	return service_query;
+}
+
 generic <class TSchemeStruct> Services::SqlDatabaseManager^ SqlDatabaseManager::set_scheme_struct(System::Void)
 {
 	System::Type^ scheme_deconstruct = TSchemeStruct::typeid;
@@ -54,14 +76,14 @@ System::Boolean SqlDatabaseManager::update_database_date(IDatabaseManager::Reque
 	this->db_connection->Open();
 	try 
 	{
-		System::String^ request_string = "update " + this->db_table_name + " set ";
+		System::String^ request_string = "UPDATE " + this->db_table_name + " SET ";
 		for(int i = 0; i < db_keys_name->Count; i++)
 		{
 			request_string = String::Concat(request_string, db_keys_name[i].Attribute, " = \"",
 				build_request_string(request_param, db_keys_name[i].ClassField), "\" ");
 			if (i != db_keys_name->Count - 1) request_string += ", ";
 		}
-		request_string = String::Concat(request_string, " where ", searching_param->Item1, " = \"", searching_param->Item2, "\"");
+		request_string = String::Concat(request_string, " WHERE ", searching_param->Item1, " = \"", searching_param->Item2, "\"");
 
 		MySqlClient::MySqlCommand^ sql_command = gcnew MySqlClient::MySqlCommand(request_string, this->db_connection);
 		sql_command->ExecuteNonQuery();
@@ -81,9 +103,9 @@ List<IDatabaseManager::RequestRow^>^ SqlDatabaseManager::get_database_data(
 	this->connection_mutex->WaitOne();
 	this->db_connection->Open();
 	try {
-		System::String^ request = "select * from " + this->db_table_name + " where 1";
+		System::String^ request = "SELECT * FROM " + this->db_table_name + " WHERE 1";
 		for each (auto item in searching_param)
-		{ request = System::String::Concat(request, mergering ? " or " : " and ", item->Item1, " = \"", item->Item2, "\""); }
+		{ request = System::String::Concat(request, mergering ? " OR " : " AND ", item->Item1, " = \"", item->Item2, "\""); }
 
 		MySqlClient::MySqlCommand^ sql_command = gcnew MySqlClient::MySqlCommand(request, this->db_connection);
 		MySqlClient::MySqlDataReader^ sql_reader = sql_command->ExecuteReader();
@@ -118,12 +140,12 @@ System::Boolean SqlDatabaseManager::send_database_data(IDatabaseManager::Request
 	this->db_connection->Open();
 	try {
 		MySqlClient::MySqlCommand^ sql_command = this->db_connection->CreateCommand();
-		sql_command->CommandText = "insert into " + this->db_table_name + " (" + db_keys_name[0].Attribute;
+		sql_command->CommandText = "INSERT INTO " + this->db_table_name + " (" + db_keys_name[0].Attribute;
 		for (int i = 1; i < db_keys_name->Count; i++)
 		{
 			sql_command->CommandText += System::String::Concat(",", db_keys_name[i].Attribute);
 		}
-		sql_command->CommandText += System::String::Concat(") values (\"",
+		sql_command->CommandText += System::String::Concat(") VALUES (\"",
 			build_request_string(request_param, db_keys_name[0].ClassField), "\"");
 
 		for(int i = 1; i < db_keys_name->Count; i++)
@@ -149,7 +171,7 @@ System::Boolean SqlDatabaseManager::delete_database_data(IDatabaseManager::KeyVa
 	this->connection_mutex->WaitOne();
 	this->db_connection->Open();
 	try {
-		System::String^ request = System::String::Concat( "delete from " + this->db_table_name + " where ",
+		System::String^ request = System::String::Concat( "DELETE FROM " + this->db_table_name + " WHERE ",
 			searching_param->Item1, " = \"", searching_param->Item2, "\"");
 
 		MySqlClient::MySqlCommand^ sql_command = gcnew MySqlClient::MySqlCommand(request, this->db_connection);

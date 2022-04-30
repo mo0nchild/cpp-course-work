@@ -6,10 +6,6 @@
 #include "../bank_settings_view/bank_settings_view.h"
 #include "client_pricelist_view.h"
 
-#define CAR_ECONOM_PRICE 150
-#define CAR_PREMIUM_PRICE 700
-#define CAR_CHILD_PRICE 300
-
 namespace Views
 {
 	using namespace System;

@@ -103,7 +103,7 @@ System::Boolean OrderController::cancellation_token_push(System::Void)
 
 OrderController::RequestAcceptToken OrderController::order_process(System::Void)
 {
-	for (System::UInt32 seconds = 0; seconds < ORDER_REQUEST_SECOND; seconds++)
+	for (System::UInt32 seconds = 0; seconds < this->order_request_second; seconds++)
 	{
 		if (this->request_cancel_token.IsCancellationRequested) { break; }
 		List<IDatabaseManager::KeyValuePair^>^ search_param = gcnew List<IDatabaseManager::KeyValuePair^>();
@@ -132,4 +132,15 @@ OrderController::RequestAcceptToken OrderController::order_process(System::Void)
 		Thread::Sleep(System::TimeSpan(0, 0, 1));
 	}
 	return OrderController::RequestAcceptToken{ false, System::Guid::Empty };
+}
+
+Manager::IServiceBase::ServiceQuery^ OrderController::service_query_handler(System::TimeSpan work_time)
+{
+	Manager::IServiceBase::ServiceQuery^ service_query = gcnew Manager::IServiceBase::ServiceQuery();
+
+	service_query->Message = "Message from Order Controller";
+	service_query->ServiceType = this->GetType();
+	service_query->State = this->ServiceState;
+
+	return service_query;
 }
