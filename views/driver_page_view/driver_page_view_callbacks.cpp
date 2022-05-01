@@ -288,9 +288,13 @@ System::Void DriverPageView::driver_button_bank_Click(System::Object^ sender, Sy
 
 System::Void DriverPageView::driver_button_logout_Click(System::Object^ sender, System::EventArgs^ e)
 {
-	System::Boolean logout_check = this->service_account_manager->sign_out_account();
-	if (this->service_depot_manager->IsBuilded) this->service_depot_manager->return_car_model();
-	this->Close();
+	if (MessageBox::Show("Вы уверены?", "Подтверждение", MessageBoxButtons::YesNo, MessageBoxIcon::Question)
+		== ::DialogResult::Yes)
+	{
+		System::Boolean logout_check = this->service_account_manager->sign_out_account();
+		if (this->service_depot_manager->IsBuilded) this->service_depot_manager->return_car_model();
+		this->Close();
+	}
 }
 
 System::Void DriverPageView::driver_button_complexinfo_Click(System::Object^ sender, System::EventArgs^ e)

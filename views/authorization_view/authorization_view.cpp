@@ -58,7 +58,7 @@ void AuthorizationView::InitializeComponent(void)
     this->page_list->HotTrack = true;
     this->page_list->ItemSize = System::Drawing::Size(223, 20);
     this->page_list->Location = System::Drawing::Point(0, 0);
-    this->page_list->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
+    this->page_list->Margin = System::Windows::Forms::Padding(4);
     this->page_list->Multiline = true;
     this->page_list->Name = L"page_list";
     this->page_list->SelectedIndex = 0;
@@ -68,7 +68,7 @@ void AuthorizationView::InitializeComponent(void)
     // 
     // page_authorization
     // 
-    this->page_authorization->BackColor = System::Drawing::Color::Transparent;
+    this->page_authorization->BackColor = System::Drawing::Color::White;
     this->page_authorization->Controls->Add(this->label1);
     this->page_authorization->Controls->Add(this->page1_button_authorize);
     this->page_authorization->Controls->Add(this->page1_label_password);
@@ -77,9 +77,9 @@ void AuthorizationView::InitializeComponent(void)
     this->page_authorization->Controls->Add(this->page1_textbox_login);
     this->page_authorization->ForeColor = System::Drawing::Color::CornflowerBlue;
     this->page_authorization->Location = System::Drawing::Point(4, 24);
-    this->page_authorization->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
+    this->page_authorization->Margin = System::Windows::Forms::Padding(4);
     this->page_authorization->Name = L"page_authorization";
-    this->page_authorization->Padding = System::Windows::Forms::Padding(4, 4, 4, 4);
+    this->page_authorization->Padding = System::Windows::Forms::Padding(4);
     this->page_authorization->Size = System::Drawing::Size(592, 458);
     this->page_authorization->TabIndex = 0;
     this->page_authorization->Text = L"Авторизация";
@@ -100,7 +100,7 @@ void AuthorizationView::InitializeComponent(void)
     this->page1_button_authorize->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14, System::Drawing::FontStyle::Regular,
         System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(204)));
     this->page1_button_authorize->Location = System::Drawing::Point(121, 343);
-    this->page1_button_authorize->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
+    this->page1_button_authorize->Margin = System::Windows::Forms::Padding(4);
     this->page1_button_authorize->Name = L"page1_button_authorize";
     this->page1_button_authorize->Size = System::Drawing::Size(336, 52);
     this->page1_button_authorize->TabIndex = 4;
@@ -124,7 +124,7 @@ void AuthorizationView::InitializeComponent(void)
     this->page1_textbox_password->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular,
         System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(204)));
     this->page1_textbox_password->Location = System::Drawing::Point(75, 265);
-    this->page1_textbox_password->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
+    this->page1_textbox_password->Margin = System::Windows::Forms::Padding(4);
     this->page1_textbox_password->MaxLength = 40;
     this->page1_textbox_password->Name = L"page1_textbox_password";
     this->page1_textbox_password->Size = System::Drawing::Size(429, 30);
@@ -147,7 +147,7 @@ void AuthorizationView::InitializeComponent(void)
     this->page1_textbox_login->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular,
         System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(204)));
     this->page1_textbox_login->Location = System::Drawing::Point(75, 172);
-    this->page1_textbox_login->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
+    this->page1_textbox_login->Margin = System::Windows::Forms::Padding(4);
     this->page1_textbox_login->MaxLength = 40;
     this->page1_textbox_login->Name = L"page1_textbox_login";
     this->page1_textbox_login->Size = System::Drawing::Size(429, 30);
@@ -170,10 +170,10 @@ void AuthorizationView::InitializeComponent(void)
     this->page_registration->Controls->Add(this->page2_textbox_login);
     this->page_registration->ForeColor = System::Drawing::Color::Coral;
     this->page_registration->Location = System::Drawing::Point(4, 24);
-    this->page_registration->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
+    this->page_registration->Margin = System::Windows::Forms::Padding(4);
     this->page_registration->Name = L"page_registration";
-    this->page_registration->Padding = System::Windows::Forms::Padding(4, 4, 4, 4);
-    this->page_registration->Size = System::Drawing::Size(595, 468);
+    this->page_registration->Padding = System::Windows::Forms::Padding(4);
+    this->page_registration->Size = System::Drawing::Size(592, 458);
     this->page_registration->TabIndex = 1;
     this->page_registration->Text = L"Регистрация";
     this->page_registration->UseVisualStyleBackColor = true;
@@ -183,7 +183,7 @@ void AuthorizationView::InitializeComponent(void)
     this->page2_button_banksettings->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14, System::Drawing::FontStyle::Regular,
         System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(204)));
     this->page2_button_banksettings->Location = System::Drawing::Point(381, 389);
-    this->page2_button_banksettings->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
+    this->page2_button_banksettings->Margin = System::Windows::Forms::Padding(4);
     this->page2_button_banksettings->Name = L"page2_button_banksettings";
     this->page2_button_banksettings->Size = System::Drawing::Size(139, 52);
     this->page2_button_banksettings->TabIndex = 14;
@@ -196,7 +196,7 @@ void AuthorizationView::InitializeComponent(void)
     this->page2_button_registration->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14, System::Drawing::FontStyle::Regular,
         System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(204)));
     this->page2_button_registration->Location = System::Drawing::Point(69, 389);
-    this->page2_button_registration->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
+    this->page2_button_registration->Margin = System::Windows::Forms::Padding(4);
     this->page2_button_registration->Name = L"page2_button_registration";
     this->page2_button_registration->Size = System::Drawing::Size(279, 52);
     this->page2_button_registration->TabIndex = 13;
@@ -212,7 +212,7 @@ void AuthorizationView::InitializeComponent(void)
     this->page2_tabcontrol_info->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8));
     this->page2_tabcontrol_info->ItemSize = System::Drawing::Size(105, 18);
     this->page2_tabcontrol_info->Location = System::Drawing::Point(43, 202);
-    this->page2_tabcontrol_info->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
+    this->page2_tabcontrol_info->Margin = System::Windows::Forms::Padding(4);
     this->page2_tabcontrol_info->Name = L"page2_tabcontrol_info";
     this->page2_tabcontrol_info->SelectedIndex = 0;
     this->page2_tabcontrol_info->Size = System::Drawing::Size(513, 180);
@@ -224,9 +224,9 @@ void AuthorizationView::InitializeComponent(void)
     this->page2_tabpage_client->Controls->Add(this->pageclient_label_bankcard);
     this->page2_tabpage_client->Controls->Add(this->pageclient_textbox_bankcard);
     this->page2_tabpage_client->Location = System::Drawing::Point(4, 22);
-    this->page2_tabpage_client->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
+    this->page2_tabpage_client->Margin = System::Windows::Forms::Padding(4);
     this->page2_tabpage_client->Name = L"page2_tabpage_client";
-    this->page2_tabpage_client->Padding = System::Windows::Forms::Padding(4, 4, 4, 4);
+    this->page2_tabpage_client->Padding = System::Windows::Forms::Padding(4);
     this->page2_tabpage_client->Size = System::Drawing::Size(505, 154);
     this->page2_tabpage_client->TabIndex = 0;
     this->page2_tabpage_client->Text = L"Клиент";
@@ -248,7 +248,7 @@ void AuthorizationView::InitializeComponent(void)
     this->pageclient_textbox_bankcard->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular,
         System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(204)));
     this->pageclient_textbox_bankcard->Location = System::Drawing::Point(21, 28);
-    this->pageclient_textbox_bankcard->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
+    this->pageclient_textbox_bankcard->Margin = System::Windows::Forms::Padding(4);
     this->pageclient_textbox_bankcard->MaxLength = 36;
     this->pageclient_textbox_bankcard->Name = L"pageclient_textbox_bankcard";
     this->pageclient_textbox_bankcard->Size = System::Drawing::Size(449, 30);
@@ -261,9 +261,9 @@ void AuthorizationView::InitializeComponent(void)
     this->page2_tabpage_driver->Controls->Add(this->pagedriver_label_licence);
     this->page2_tabpage_driver->Controls->Add(this->pagedriver_textbox_licence);
     this->page2_tabpage_driver->Location = System::Drawing::Point(4, 22);
-    this->page2_tabpage_driver->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
+    this->page2_tabpage_driver->Margin = System::Windows::Forms::Padding(4);
     this->page2_tabpage_driver->Name = L"page2_tabpage_driver";
-    this->page2_tabpage_driver->Padding = System::Windows::Forms::Padding(4, 4, 4, 4);
+    this->page2_tabpage_driver->Padding = System::Windows::Forms::Padding(4);
     this->page2_tabpage_driver->Size = System::Drawing::Size(505, 154);
     this->page2_tabpage_driver->TabIndex = 1;
     this->page2_tabpage_driver->Text = L"Водитель";
@@ -285,7 +285,7 @@ void AuthorizationView::InitializeComponent(void)
     this->pagedriver_textbox_bankcard->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular,
         System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(204)));
     this->pagedriver_textbox_bankcard->Location = System::Drawing::Point(21, 91);
-    this->pagedriver_textbox_bankcard->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
+    this->pagedriver_textbox_bankcard->Margin = System::Windows::Forms::Padding(4);
     this->pagedriver_textbox_bankcard->MaxLength = 36;
     this->pagedriver_textbox_bankcard->Name = L"pagedriver_textbox_bankcard";
     this->pagedriver_textbox_bankcard->Size = System::Drawing::Size(449, 30);
@@ -307,7 +307,7 @@ void AuthorizationView::InitializeComponent(void)
     this->pagedriver_textbox_licence->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular,
         System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(204)));
     this->pagedriver_textbox_licence->Location = System::Drawing::Point(21, 30);
-    this->pagedriver_textbox_licence->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
+    this->pagedriver_textbox_licence->Margin = System::Windows::Forms::Padding(4);
     this->pagedriver_textbox_licence->MaxLength = 36;
     this->pagedriver_textbox_licence->Name = L"pagedriver_textbox_licence";
     this->pagedriver_textbox_licence->Size = System::Drawing::Size(449, 30);
@@ -318,7 +318,7 @@ void AuthorizationView::InitializeComponent(void)
     this->page2_tabpage_admin->Controls->Add(this->pageadmin_label_permissions);
     this->page2_tabpage_admin->Controls->Add(this->pageadmin_combobox_permissions);
     this->page2_tabpage_admin->Location = System::Drawing::Point(4, 22);
-    this->page2_tabpage_admin->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
+    this->page2_tabpage_admin->Margin = System::Windows::Forms::Padding(4);
     this->page2_tabpage_admin->Name = L"page2_tabpage_admin";
     this->page2_tabpage_admin->Size = System::Drawing::Size(505, 154);
     this->page2_tabpage_admin->TabIndex = 2;
@@ -346,7 +346,7 @@ void AuthorizationView::InitializeComponent(void)
             L"Доступ к аккаунтам"
     });
     this->pageadmin_combobox_permissions->Location = System::Drawing::Point(21, 31);
-    this->pageadmin_combobox_permissions->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
+    this->pageadmin_combobox_permissions->Margin = System::Windows::Forms::Padding(4);
     this->pageadmin_combobox_permissions->Name = L"pageadmin_combobox_permissions";
     this->pageadmin_combobox_permissions->Size = System::Drawing::Size(449, 33);
     this->pageadmin_combobox_permissions->TabIndex = 15;
@@ -365,7 +365,7 @@ void AuthorizationView::InitializeComponent(void)
     // 
     this->page2_numeric_age->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
     this->page2_numeric_age->Location = System::Drawing::Point(381, 162);
-    this->page2_numeric_age->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
+    this->page2_numeric_age->Margin = System::Windows::Forms::Padding(4);
     this->page2_numeric_age->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 0 });
     this->page2_numeric_age->Name = L"page2_numeric_age";
     this->page2_numeric_age->Size = System::Drawing::Size(139, 30);
@@ -389,7 +389,7 @@ void AuthorizationView::InitializeComponent(void)
     this->page2_combobox_gender->FormattingEnabled = true;
     this->page2_combobox_gender->Items->AddRange(gcnew cli::array< System::Object^  >(2) { L"Мужчина", L"Женщина" });
     this->page2_combobox_gender->Location = System::Drawing::Point(69, 160);
-    this->page2_combobox_gender->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
+    this->page2_combobox_gender->Margin = System::Windows::Forms::Padding(4);
     this->page2_combobox_gender->Name = L"page2_combobox_gender";
     this->page2_combobox_gender->Size = System::Drawing::Size(277, 33);
     this->page2_combobox_gender->TabIndex = 8;
@@ -409,7 +409,7 @@ void AuthorizationView::InitializeComponent(void)
     this->page2_textbox_username->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular,
         System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(204)));
     this->page2_textbox_username->Location = System::Drawing::Point(43, 100);
-    this->page2_textbox_username->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
+    this->page2_textbox_username->Margin = System::Windows::Forms::Padding(4);
     this->page2_textbox_username->MaxLength = 40;
     this->page2_textbox_username->Name = L"page2_textbox_username";
     this->page2_textbox_username->Size = System::Drawing::Size(504, 30);
@@ -430,7 +430,7 @@ void AuthorizationView::InitializeComponent(void)
     this->page2_textbox_password->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular,
         System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(204)));
     this->page2_textbox_password->Location = System::Drawing::Point(309, 39);
-    this->page2_textbox_password->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
+    this->page2_textbox_password->Margin = System::Windows::Forms::Padding(4);
     this->page2_textbox_password->MaxLength = 40;
     this->page2_textbox_password->Name = L"page2_textbox_password";
     this->page2_textbox_password->Size = System::Drawing::Size(237, 30);
@@ -452,7 +452,7 @@ void AuthorizationView::InitializeComponent(void)
     this->page2_textbox_login->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular,
         System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(204)));
     this->page2_textbox_login->Location = System::Drawing::Point(43, 39);
-    this->page2_textbox_login->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
+    this->page2_textbox_login->Margin = System::Windows::Forms::Padding(4);
     this->page2_textbox_login->MaxLength = 40;
     this->page2_textbox_login->Name = L"page2_textbox_login";
     this->page2_textbox_login->Size = System::Drawing::Size(237, 30);
@@ -464,8 +464,7 @@ void AuthorizationView::InitializeComponent(void)
     this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
     this->ClientSize = System::Drawing::Size(600, 486);
     this->Controls->Add(this->page_list);
-    this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
-    this->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
+    this->Margin = System::Windows::Forms::Padding(4);
     this->MaximizeBox = false;
     this->MaximumSize = System::Drawing::Size(618, 533);
     this->MinimizeBox = false;

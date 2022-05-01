@@ -26,7 +26,7 @@ Generic::List<System::Type^>^ ServiceManager::get_all_services(System::Void)
 	Generic::List<System::Type^>^ result_collection = gcnew Generic::List<System::Type^>();
 
 	for each (Manager::ServiceRecord ^ item in this->service_collection->ServiceList)
-	{ result_collection->Add(item->GetType()); }
+	{ result_collection->Add(item->ServiceInstance->GetType()); }
 
 	return result_collection;
 }

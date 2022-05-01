@@ -19,7 +19,11 @@ namespace Views
 		Services::DepotManager^ service_depot_manager = nullptr;
 	public:
 		ClientPriceListView(Services::DepotManager^ depot_manager) 
-		{ InitializeComponent(); this->service_depot_manager = depot_manager; this->listview_initialize(); }
+		{ 
+			InitializeComponent(); 
+			this->Icon = gcnew System::Drawing::Icon(L"./assets/my_app_icon.ico");
+			this->service_depot_manager = depot_manager; this->listview_initialize(); 
+		}
 
 	protected:
 		/// <summary>

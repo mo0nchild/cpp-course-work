@@ -39,6 +39,7 @@ namespace Views
 		ClientPageView(Windows::Forms::Form^ start_page, Manager::ServiceManager^ service_manager) : order_proccess(false)
 		{
 			InitializeComponent();
+			this->Icon = gcnew System::Drawing::Icon(L"./assets/my_app_icon.ico");
 			this->service_manager = service_manager;
 			this->start_page = start_page;
 

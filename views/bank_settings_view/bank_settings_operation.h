@@ -24,6 +24,7 @@ namespace Views
 		BankSettingsOperationView(Services::BankController^ bank_controller)
 		{
 			InitializeComponent();
+			this->Icon = gcnew System::Drawing::Icon(L"./assets/my_app_icon.ico");
 			this->bank_controller = bank_controller;
 		}
 

@@ -260,6 +260,10 @@ System::Void AdminPageView::admin_button_update_Click(System::Object^ sender, Sy
 
 System::Void AdminPageView::admin_button_logout_Click(System::Object^ sender, System::EventArgs^ e)
 {
-	System::Boolean logout_check = this->service_account_manager->sign_out_account();
-	this->Close();
+	if (MessageBox::Show("Вы уверены?", "Подтверждение", MessageBoxButtons::YesNo, MessageBoxIcon::Question) 
+		== ::DialogResult::Yes)
+	{
+		System::Boolean logout_check = this->service_account_manager->sign_out_account();
+		this->Close();
+	}
 }

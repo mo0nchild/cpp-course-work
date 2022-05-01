@@ -27,7 +27,7 @@ namespace Views
 		DriverDialogView(Models::CarBaseModel^ car_model)
 		{
 			InitializeComponent();
-			
+			this->Icon = gcnew System::Drawing::Icon(L"./assets/my_app_icon.ico");
 			this->list_view->Items->Add(gcnew ListViewItem(car_model->car_drive()));
 			this->car_model = car_model;
 		}

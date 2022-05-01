@@ -34,6 +34,7 @@ namespace Views
 		AuthorizationView(Manager::ServiceManager^ service_manager)
 		{
 			InitializeComponent();
+			this->Icon = gcnew System::Drawing::Icon(L"./assets/my_app_icon.ico");
 			this->service_manager = service_manager;
 
 			Manager::IServiceProvider^ bank_controller_provider = this->service_manager->get_service<Services::BankController^>();

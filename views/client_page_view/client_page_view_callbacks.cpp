@@ -253,6 +253,10 @@ System::Void ClientPageView::client_button_refresh_Click(System::Object^ sender,
 
 System::Void ClientPageView::client_button_price_Click(System::Object^ sender, System::EventArgs^ e)
 {
-	Windows::Forms::Form^ form = gcnew Views::ClientPriceListView(this->service_depot_manager);
-	form->ShowDialog();
+	if (MessageBox::Show("Вы уверены?", "Подтверждение", MessageBoxButtons::YesNo, MessageBoxIcon::Question)
+		== ::DialogResult::Yes)
+	{
+		Windows::Forms::Form^ form = gcnew Views::ClientPriceListView(this->service_depot_manager);
+		form->ShowDialog();
+	}
 }

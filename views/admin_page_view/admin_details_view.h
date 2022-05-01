@@ -27,6 +27,7 @@ namespace Views
 			Services::AccountManagerToken::AccountManagerType type) : guid(guid), type(type)
 		{ 
 			InitializeComponent(); 
+			this->Icon = gcnew System::Drawing::Icon(L"./assets/my_app_icon.ico");
 			this->model = (Models::AccountBaseModel^)model->Clone();
 			this->account_data_load();
 		}

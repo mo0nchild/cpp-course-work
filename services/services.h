@@ -14,9 +14,8 @@ namespace Services
 	public ref class MyServicesProvider sealed : Manager::ServiceProvider
 	{
 	public:
-		MyServicesProvider(Manager::ServiceBase^ service, List<Type^>^ dependencies)
-			: Manager::ServiceProvider(service, dependencies)
-		{ }
+		explicit MyServicesProvider(Manager::ServiceBase^ service, List<Type^>^ dependencies)
+			: Manager::ServiceProvider(service, dependencies) { }
 		virtual ~MyServicesProvider(System::Void) { }
 	};
 }

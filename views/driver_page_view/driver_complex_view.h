@@ -27,6 +27,7 @@ namespace Views
 		DriverComplexView(Models::CarBaseModel^ car_model, System::Type^ car_model_class)
 		{
 			InitializeComponent();
+			this->Icon = gcnew System::Drawing::Icon(L"./assets/my_app_icon.ico");
 			this->car_model_class = car_model_class;
 			this->car_model = car_model;
 			this->update_listview();

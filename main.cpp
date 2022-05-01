@@ -11,15 +11,6 @@ using namespace Services;
 using namespace Manager;
 using namespace Models;
 
-public ref class ServiceManagerCli sealed
-{
-public:
-	static System::Void manager_process(System::Void) 
-	{
-		// сделать отдельный поток для менеждера
-	}
-};
-
 public ref class Program sealed
 {
 public:
@@ -27,8 +18,8 @@ public:
 	{
 		System::Windows::Forms::Application::EnableVisualStyles();
 		System::Windows::Forms::Application::SetCompatibleTextRenderingDefault(false);
+		
 		Manager::ServiceManagerBuilder^ service_builder = Manager::ManagerBooking::create_builder();
-
 		service_builder->service_configuration_load("./services/services_settings.xml");
 
 		service_builder->service_registration<MyServicesProvider^, SqlDatabaseManager^>();
@@ -39,15 +30,12 @@ public:
 		service_builder->service_registration<MyServicesProvider^, AccountManager^>();
 
 		Manager::ServiceManager^ services_manager = service_builder->create_manager();
+		Manager::ServiceManagerCli^ service_manager_cli = gcnew Manager::ServiceManagerCli(
+			services_manager, System::TimeSpan::FromSeconds(5));
+		service_manager_cli->service_manager_run();
 
-		/*services_manager->start_service_handler(System::TimeSpan(0, 0, 3));*/
-
-		System::Windows::Forms::Application::EnableVisualStyles();
-		System::Windows::Forms::Application::SetCompatibleTextRenderingDefault(false);
 		Views::AuthorizationView^ form = gcnew Views::AuthorizationView(services_manager);
 		System::Windows::Forms::Application::Run(form);
-		
-		Console::ReadKey();
 
 		return System::Int32(0);
 	}
