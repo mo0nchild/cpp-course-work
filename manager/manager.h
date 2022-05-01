@@ -35,7 +35,7 @@ namespace Manager
 		}
 		System::Void service_manager_process(System::Void)
 		{
-			Console::BackgroundColor = ConsoleColor::Magenta;
+			Console::BackgroundColor = ConsoleColor::DarkYellow;
 			Console::WriteLine("|=================| SERVICE MANAGER CLIENT |=================|");
 			Console::BackgroundColor = ConsoleColor::Black;	this->service_manager_help();
 			while (true)
@@ -56,7 +56,7 @@ namespace Manager
 					for each (auto item in this->service_manager->get_all_services())
 					{ Console::WriteLine("[$] - [" + item->FullName + "]"); }
 				}
-				else if (command_arg_list[0] == "manager_exit") break;
+				else if (command_arg_list[0] == "manager_exit") { Console::Clear(); break; }
 				else Console::WriteLine("[$] - [Комманда была не распознана]");
 			}
 		}
