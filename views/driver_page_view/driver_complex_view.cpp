@@ -14,6 +14,7 @@ void DriverComplexView::InitializeComponent(void)
     this->listview->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
     this->listview->Columns->AddRange(gcnew cli::array< System::Windows::Forms::ColumnHeader^  >(2) { this->listview_name, this->listview_value });
     this->listview->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
+    this->listview->GridLines = true;
     this->listview->HeaderStyle = System::Windows::Forms::ColumnHeaderStyle::Nonclickable;
     this->listview->HideSelection = false;
     this->listview->Location = System::Drawing::Point(3, 1);

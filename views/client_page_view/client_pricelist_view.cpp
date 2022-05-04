@@ -14,6 +14,7 @@ void ClientPriceListView::InitializeComponent(void)
     // 
     this->list_view->Columns->AddRange(gcnew cli::array< System::Windows::Forms::ColumnHeader^  >(2) { this->car_type, this->car_price });
     this->list_view->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 11));
+    this->list_view->GridLines = true;
     this->list_view->HeaderStyle = System::Windows::Forms::ColumnHeaderStyle::Nonclickable;
     this->list_view->HideSelection = false;
     this->list_view->Items->AddRange(gcnew cli::array< System::Windows::Forms::ListViewItem^  >(1) { listViewItem1 });

@@ -253,6 +253,7 @@ void AdminPageView::InitializeComponent(void)
         this->garage_car_groupguid,
             this->garage_car_class, this->garage_car_type, this->garage_car_color, this->garage_car_speed, this->garage_car_count
     });
+    this->admin_listview_carlist->GridLines = true;
     this->admin_listview_carlist->HeaderStyle = System::Windows::Forms::ColumnHeaderStyle::Nonclickable;
     this->admin_listview_carlist->HideSelection = false;
     this->admin_listview_carlist->Location = System::Drawing::Point(25, 29);
@@ -362,6 +363,7 @@ void AdminPageView::InitializeComponent(void)
         this->account_guid,
             this->account_type, this->account_state
     });
+    this->admin_listview_accounts->GridLines = true;
     this->admin_listview_accounts->HeaderStyle = System::Windows::Forms::ColumnHeaderStyle::Nonclickable;
     this->admin_listview_accounts->HideSelection = false;
     this->admin_listview_accounts->Location = System::Drawing::Point(27, 29);
@@ -506,6 +508,7 @@ void AdminPageView::InitializeComponent(void)
         this->account_field,
             this->account_data
     });
+    this->admin_listview_account->GridLines = true;
     this->admin_listview_account->HideSelection = false;
     this->admin_listview_account->Location = System::Drawing::Point(23, 35);
     this->admin_listview_account->MultiSelect = false;

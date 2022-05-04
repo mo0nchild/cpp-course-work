@@ -7,8 +7,8 @@
 namespace Services 
 {
 	using namespace System;
-	using namespace System::Collections::Generic;
 	using namespace Manager;
+	using namespace System::Collections::Generic;
 
 	public interface class IAccountManager 
 	{

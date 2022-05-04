@@ -11,7 +11,7 @@
 		<garage_collection_size>100</garage_collection_size>
 		<car_child_type_price>300</car_child_type_price>
 		<car_premium_type_price>500</car_premium_type_price>
-		<car_econom_type_price>150</car_econom_type_price>
+		<car_econom_type_price>200</car_econom_type_price>
 	</service_parameters>
 	
 	<service_parameters service_name="order_controller">

@@ -4,7 +4,6 @@ using namespace Views;
 
 void AuthorizationView::InitializeComponent(void)
 {
-    System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(AuthorizationView::typeid));
     this->page_list = (gcnew System::Windows::Forms::TabControl());
     this->page_authorization = (gcnew System::Windows::Forms::TabPage());
     this->label1 = (gcnew System::Windows::Forms::Label());

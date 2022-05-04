@@ -144,8 +144,12 @@ System::Void ClientPageView::client_button_bank_Click(System::Object^ sender, Sy
 
 System::Void ClientPageView::client_button_logout_Click(System::Object^ sender, System::EventArgs^ e)
 {
-	System::Boolean logout_check = this->service_account_manager->sign_out_account();
-	this->Close();
+	if (MessageBox::Show("Вы уверены?", "Подтверждение", MessageBoxButtons::YesNo, MessageBoxIcon::Question)
+		== ::DialogResult::Yes)
+	{
+		System::Boolean logout_check = this->service_account_manager->sign_out_account();
+		this->Close();
+	}
 }
 
 System::Void ClientPageView::account_list_initialize(System::Void)
@@ -253,10 +257,6 @@ System::Void ClientPageView::client_button_refresh_Click(System::Object^ sender,
 
 System::Void ClientPageView::client_button_price_Click(System::Object^ sender, System::EventArgs^ e)
 {
-	if (MessageBox::Show("Вы уверены?", "Подтверждение", MessageBoxButtons::YesNo, MessageBoxIcon::Question)
-		== ::DialogResult::Yes)
-	{
-		Windows::Forms::Form^ form = gcnew Views::ClientPriceListView(this->service_depot_manager);
-		form->ShowDialog();
-	}
+	Windows::Forms::Form^ form = gcnew Views::ClientPriceListView(this->service_depot_manager);
+	form->ShowDialog();
 }

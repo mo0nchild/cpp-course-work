@@ -54,6 +54,7 @@ void BankSettingsView::InitializeComponent(void)
     });
     this->listview_bank->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
     this->listview_bank->ForeColor = System::Drawing::Color::Black;
+    this->listview_bank->GridLines = true;
     this->listview_bank->HeaderStyle = System::Windows::Forms::ColumnHeaderStyle::Nonclickable;
     this->listview_bank->HideSelection = false;
     this->listview_bank->Location = System::Drawing::Point(21, 43);

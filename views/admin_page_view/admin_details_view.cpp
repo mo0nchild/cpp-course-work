@@ -16,6 +16,7 @@ void AdminDetailsView::InitializeComponent(void)
             this->param_value
     });
     this->account_listview->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
+    this->account_listview->GridLines = true;
     this->account_listview->HeaderStyle = System::Windows::Forms::ColumnHeaderStyle::Nonclickable;
     this->account_listview->HideSelection = false;
     this->account_listview->Location = System::Drawing::Point(1, 1);

@@ -4,7 +4,6 @@ using namespace Views;
 
 void ClientPageView::InitializeComponent(void)
 {
-    System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(ClientPageView::typeid));
     this->client_tabcontrol = (gcnew System::Windows::Forms::TabControl());
     this->client_page_order = (gcnew System::Windows::Forms::TabPage());
     this->client_button_price = (gcnew System::Windows::Forms::Button());
@@ -58,12 +57,13 @@ void ClientPageView::InitializeComponent(void)
     this->client_tabcontrol->Location = System::Drawing::Point(0, 0);
     this->client_tabcontrol->Name = L"client_tabcontrol";
     this->client_tabcontrol->SelectedIndex = 0;
-    this->client_tabcontrol->Size = System::Drawing::Size(655, 500);
+    this->client_tabcontrol->Size = System::Drawing::Size(655, 499);
     this->client_tabcontrol->SizeMode = System::Windows::Forms::TabSizeMode::Fixed;
     this->client_tabcontrol->TabIndex = 0;
     // 
     // client_page_order
     // 
+    this->client_page_order->BackColor = System::Drawing::Color::Transparent;
     this->client_page_order->Controls->Add(this->client_button_price);
     this->client_page_order->Controls->Add(this->client_button_money);
     this->client_page_order->Controls->Add(this->client_button_cancel);
@@ -82,10 +82,9 @@ void ClientPageView::InitializeComponent(void)
     this->client_page_order->Location = System::Drawing::Point(4, 29);
     this->client_page_order->Name = L"client_page_order";
     this->client_page_order->Padding = System::Windows::Forms::Padding(3);
-    this->client_page_order->Size = System::Drawing::Size(647, 467);
+    this->client_page_order->Size = System::Drawing::Size(647, 466);
     this->client_page_order->TabIndex = 0;
     this->client_page_order->Text = L"Заказать машину";
-    this->client_page_order->UseVisualStyleBackColor = true;
     // 
     // client_button_price
     // 
@@ -234,6 +233,7 @@ void ClientPageView::InitializeComponent(void)
         this->driver_guid,
             this->car_class, this->car_type, this->driver_state
     });
+    this->client_listview_car->GridLines = true;
     this->client_listview_car->HeaderStyle = System::Windows::Forms::ColumnHeaderStyle::Nonclickable;
     this->client_listview_car->HideSelection = false;
     this->client_listview_car->Location = System::Drawing::Point(28, 201);
@@ -284,7 +284,7 @@ void ClientPageView::InitializeComponent(void)
     this->client_page_account->Location = System::Drawing::Point(4, 29);
     this->client_page_account->Name = L"client_page_account";
     this->client_page_account->Padding = System::Windows::Forms::Padding(3);
-    this->client_page_account->Size = System::Drawing::Size(647, 467);
+    this->client_page_account->Size = System::Drawing::Size(647, 466);
     this->client_page_account->TabIndex = 1;
     this->client_page_account->Text = L"Аккаунт";
     this->client_page_account->UseVisualStyleBackColor = true;
@@ -352,6 +352,7 @@ void ClientPageView::InitializeComponent(void)
     // 
     // client_numeric_age
     // 
+    this->client_numeric_age->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
     this->client_numeric_age->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 13));
     this->client_numeric_age->Location = System::Drawing::Point(505, 248);
     this->client_numeric_age->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 0 });
@@ -418,6 +419,7 @@ void ClientPageView::InitializeComponent(void)
         this->account_field,
             this->account_data
     });
+    this->client_listview_account->GridLines = true;
     this->client_listview_account->HideSelection = false;
     this->client_listview_account->Location = System::Drawing::Point(23, 35);
     this->client_listview_account->MultiSelect = false;
@@ -439,14 +441,13 @@ void ClientPageView::InitializeComponent(void)
     // 
     // ClientPageView
     // 
-    this->Icon = gcnew Drawing::Icon("assets/my_app_icon.ico");
     this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
     this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-    this->ClientSize = System::Drawing::Size(655, 500);
+    this->ClientSize = System::Drawing::Size(655, 499);
     this->Controls->Add(this->client_tabcontrol);
     this->MaximizeBox = false;
-    this->MaximumSize = System::Drawing::Size(671, 539);
-    this->MinimumSize = System::Drawing::Size(671, 539);
+    this->MaximumSize = System::Drawing::Size(671, 538);
+    this->MinimumSize = System::Drawing::Size(671, 538);
     this->Name = L"ClientPageView";
     this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
     this->Text = L"Страница Клиента";

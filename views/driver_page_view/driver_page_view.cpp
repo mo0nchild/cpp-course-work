@@ -4,7 +4,6 @@ using namespace Views;
 
 void DriverPageView::InitializeComponent(void)
 {
-    System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(DriverPageView::typeid));
     this->driver_tabcontrol = (gcnew System::Windows::Forms::TabControl());
     this->driver_page_order = (gcnew System::Windows::Forms::TabPage());
     this->driver_label_currentstatus = (gcnew System::Windows::Forms::Label());
@@ -208,6 +207,7 @@ void DriverPageView::InitializeComponent(void)
         this->order_client_guid,
             this->order_car_class, this->order_car_type, this->order_address, this->order_date
     });
+    this->driver_listview_orders->GridLines = true;
     this->driver_listview_orders->HeaderStyle = System::Windows::Forms::ColumnHeaderStyle::Nonclickable;
     this->driver_listview_orders->HideSelection = false;
     this->driver_listview_orders->Location = System::Drawing::Point(25, 40);
@@ -309,6 +309,7 @@ void DriverPageView::InitializeComponent(void)
         this->garage_car_class,
             this->garage_car_type, this->garage_car_color, this->garage_car_speed, this->garage_car_count
     });
+    this->driver_listview_garage->GridLines = true;
     this->driver_listview_garage->HeaderStyle = System::Windows::Forms::ColumnHeaderStyle::Nonclickable;
     this->driver_listview_garage->HideSelection = false;
     this->driver_listview_garage->Location = System::Drawing::Point(22, 41);
@@ -516,6 +517,7 @@ void DriverPageView::InitializeComponent(void)
         this->account_field,
             this->account_data
     });
+    this->driver_listview_account->GridLines = true;
     this->driver_listview_account->HideSelection = false;
     this->driver_listview_account->Location = System::Drawing::Point(23, 35);
     this->driver_listview_account->MultiSelect = false;
@@ -541,7 +543,6 @@ void DriverPageView::InitializeComponent(void)
     this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
     this->ClientSize = System::Drawing::Size(655, 500);
     this->Controls->Add(this->driver_tabcontrol);
-    this->Icon = gcnew Drawing::Icon("assets/my_app_icon.ico");
     this->MaximizeBox = false;
     this->MaximumSize = System::Drawing::Size(671, 539);
     this->MinimumSize = System::Drawing::Size(671, 539);
