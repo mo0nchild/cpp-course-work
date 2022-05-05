@@ -15,6 +15,7 @@ void BankSettingsOperationView::InitializeComponent(void)
     // combobox_operation_type
     // 
     this->combobox_operation_type->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
+    this->combobox_operation_type->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
     this->combobox_operation_type->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
     this->combobox_operation_type->FormattingEnabled = true;
     this->combobox_operation_type->Items->AddRange(gcnew cli::array< System::Object^  >(2) { L"Снять деньги", L"Положить деньги" });
@@ -25,30 +26,35 @@ void BankSettingsOperationView::InitializeComponent(void)
     // 
     // numeric_money_value
     // 
+    this->numeric_money_value->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
     this->numeric_money_value->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-    this->numeric_money_value->Location = System::Drawing::Point(27, 87);
+    this->numeric_money_value->Location = System::Drawing::Point(25, 89);
     this->numeric_money_value->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 10000, 0, 0, 0 });
     this->numeric_money_value->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 0 });
     this->numeric_money_value->Name = L"numeric_money_value";
     this->numeric_money_value->Size = System::Drawing::Size(232, 26);
     this->numeric_money_value->TabIndex = 1;
+    this->numeric_money_value->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
     this->numeric_money_value->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 0 });
     // 
     // button_operation
     // 
+    this->button_operation->BackColor = System::Drawing::Color::White;
+    this->button_operation->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
     this->button_operation->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
     this->button_operation->Location = System::Drawing::Point(25, 134);
     this->button_operation->Name = L"button_operation";
     this->button_operation->Size = System::Drawing::Size(232, 38);
     this->button_operation->TabIndex = 2;
     this->button_operation->Text = L"Совершить операцию";
-    this->button_operation->UseVisualStyleBackColor = true;
+    this->button_operation->UseVisualStyleBackColor = false;
     this->button_operation->Click += gcnew System::EventHandler(this, &BankSettingsOperationView::button_operation_Click);
     // 
     // label_operation_type
     // 
     this->label_operation_type->AutoSize = true;
     this->label_operation_type->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
+    this->label_operation_type->ForeColor = System::Drawing::SystemColors::ControlText;
     this->label_operation_type->Location = System::Drawing::Point(22, 9);
     this->label_operation_type->Name = L"label_operation_type";
     this->label_operation_type->Size = System::Drawing::Size(101, 17);
@@ -59,7 +65,8 @@ void BankSettingsOperationView::InitializeComponent(void)
     // 
     this->label_money_value->AutoSize = true;
     this->label_money_value->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
-    this->label_money_value->Location = System::Drawing::Point(24, 67);
+    this->label_money_value->ForeColor = System::Drawing::SystemColors::ControlText;
+    this->label_money_value->Location = System::Drawing::Point(22, 69);
     this->label_money_value->Name = L"label_money_value";
     this->label_money_value->Size = System::Drawing::Size(120, 17);
     this->label_money_value->TabIndex = 4;
@@ -69,6 +76,7 @@ void BankSettingsOperationView::InitializeComponent(void)
     // 
     this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
     this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+    this->BackColor = System::Drawing::SystemColors::Control;
     this->ClientSize = System::Drawing::Size(284, 193);
     this->Controls->Add(this->label_money_value);
     this->Controls->Add(this->label_operation_type);

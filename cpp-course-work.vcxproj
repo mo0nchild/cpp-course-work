@@ -252,7 +252,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Image Include="assets\background.png" />
+    <Image Include="assets\background2.png" />
     <Image Include="assets\my_app_icon.ico" />
+    <Image Include="assets\my_app_logo.png" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="cpp-course-work.rc" />

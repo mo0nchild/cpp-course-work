@@ -211,6 +211,15 @@
     <Image Include="assets\my_app_icon.ico">
       <Filter>Файлы ресурсов</Filter>
     </Image>
+    <Image Include="assets\background2.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="assets\background.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="assets\my_app_logo.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="cpp-course-work.rc">

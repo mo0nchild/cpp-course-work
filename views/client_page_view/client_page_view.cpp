@@ -63,7 +63,8 @@ void ClientPageView::InitializeComponent(void)
     // 
     // client_page_order
     // 
-    this->client_page_order->BackColor = System::Drawing::Color::Transparent;
+    this->client_page_order->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(127)),
+        static_cast<System::Int32>(static_cast<System::Byte>(112)), static_cast<System::Int32>(static_cast<System::Byte>(216)));
     this->client_page_order->Controls->Add(this->client_button_price);
     this->client_page_order->Controls->Add(this->client_button_money);
     this->client_page_order->Controls->Add(this->client_button_cancel);
@@ -88,41 +89,48 @@ void ClientPageView::InitializeComponent(void)
     // 
     // client_button_price
     // 
-    this->client_button_price->Location = System::Drawing::Point(435, 166);
+    this->client_button_price->BackColor = System::Drawing::Color::White;
+    this->client_button_price->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
+    this->client_button_price->Location = System::Drawing::Point(435, 168);
     this->client_button_price->Name = L"client_button_price";
     this->client_button_price->Size = System::Drawing::Size(54, 29);
     this->client_button_price->TabIndex = 19;
     this->client_button_price->Text = L"Цены";
-    this->client_button_price->UseVisualStyleBackColor = true;
+    this->client_button_price->UseVisualStyleBackColor = false;
     this->client_button_price->Click += gcnew System::EventHandler(this, &ClientPageView::client_button_price_Click);
     // 
     // client_button_money
     // 
+    this->client_button_money->BackColor = System::Drawing::Color::White;
+    this->client_button_money->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
     this->client_button_money->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-    this->client_button_money->Location = System::Drawing::Point(495, 166);
+    this->client_button_money->Location = System::Drawing::Point(495, 168);
     this->client_button_money->Name = L"client_button_money";
     this->client_button_money->Size = System::Drawing::Size(29, 29);
     this->client_button_money->TabIndex = 18;
     this->client_button_money->Text = L"$";
-    this->client_button_money->UseVisualStyleBackColor = true;
+    this->client_button_money->UseVisualStyleBackColor = false;
     this->client_button_money->Click += gcnew System::EventHandler(this, &ClientPageView::client_button_money_Click);
     // 
     // client_button_cancel
     // 
+    this->client_button_cancel->BackColor = System::Drawing::Color::White;
     this->client_button_cancel->Enabled = false;
+    this->client_button_cancel->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
     this->client_button_cancel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
     this->client_button_cancel->Location = System::Drawing::Point(335, 131);
     this->client_button_cancel->Name = L"client_button_cancel";
     this->client_button_cancel->Size = System::Drawing::Size(283, 29);
     this->client_button_cancel->TabIndex = 17;
     this->client_button_cancel->Text = L"Отменить заказ";
-    this->client_button_cancel->UseVisualStyleBackColor = true;
+    this->client_button_cancel->UseVisualStyleBackColor = false;
     this->client_button_cancel->Click += gcnew System::EventHandler(this, &ClientPageView::client_button_cancel_Click);
     // 
     // client_label_waiting
     // 
     this->client_label_waiting->AutoSize = true;
-    this->client_label_waiting->Location = System::Drawing::Point(28, 391);
+    this->client_label_waiting->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
+    this->client_label_waiting->Location = System::Drawing::Point(28, 394);
     this->client_label_waiting->Name = L"client_label_waiting";
     this->client_label_waiting->Size = System::Drawing::Size(128, 17);
     this->client_label_waiting->TabIndex = 16;
@@ -131,6 +139,7 @@ void ClientPageView::InitializeComponent(void)
     // client_label_carclass
     // 
     this->client_label_carclass->AutoSize = true;
+    this->client_label_carclass->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
     this->client_label_carclass->Location = System::Drawing::Point(28, 62);
     this->client_label_carclass->Name = L"client_label_carclass";
     this->client_label_carclass->Size = System::Drawing::Size(105, 17);
@@ -140,6 +149,7 @@ void ClientPageView::InitializeComponent(void)
     // client_combobox_carclass
     // 
     this->client_combobox_carclass->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
+    this->client_combobox_carclass->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
     this->client_combobox_carclass->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
     this->client_combobox_carclass->FormattingEnabled = true;
     this->client_combobox_carclass->Items->AddRange(gcnew cli::array< System::Object^  >(2) { L"Легковая машина", L"Грузовая машина" });
@@ -151,6 +161,7 @@ void ClientPageView::InitializeComponent(void)
     // client_label_cartype
     // 
     this->client_label_cartype->AutoSize = true;
+    this->client_label_cartype->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
     this->client_label_cartype->Location = System::Drawing::Point(332, 62);
     this->client_label_cartype->Name = L"client_label_cartype";
     this->client_label_cartype->Size = System::Drawing::Size(93, 17);
@@ -160,6 +171,7 @@ void ClientPageView::InitializeComponent(void)
     // client_label_address
     // 
     this->client_label_address->AutoSize = true;
+    this->client_label_address->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
     this->client_label_address->Location = System::Drawing::Point(28, 12);
     this->client_label_address->Name = L"client_label_address";
     this->client_label_address->Size = System::Drawing::Size(97, 17);
@@ -168,6 +180,7 @@ void ClientPageView::InitializeComponent(void)
     // 
     // client_textbox_address
     // 
+    this->client_textbox_address->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
     this->client_textbox_address->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
     this->client_textbox_address->Location = System::Drawing::Point(28, 31);
     this->client_textbox_address->MaxLength = 40;
@@ -177,29 +190,34 @@ void ClientPageView::InitializeComponent(void)
     // 
     // client_button_order
     // 
+    this->client_button_order->BackColor = System::Drawing::Color::White;
+    this->client_button_order->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
     this->client_button_order->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
     this->client_button_order->Location = System::Drawing::Point(28, 131);
     this->client_button_order->Name = L"client_button_order";
     this->client_button_order->Size = System::Drawing::Size(283, 29);
     this->client_button_order->TabIndex = 6;
     this->client_button_order->Text = L"Заказать машину";
-    this->client_button_order->UseVisualStyleBackColor = true;
+    this->client_button_order->UseVisualStyleBackColor = false;
     this->client_button_order->Click += gcnew System::EventHandler(this, &ClientPageView::client_button_order_Click);
     // 
     // client_button_refresh
     // 
-    this->client_button_refresh->Location = System::Drawing::Point(530, 166);
+    this->client_button_refresh->BackColor = System::Drawing::Color::White;
+    this->client_button_refresh->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
+    this->client_button_refresh->Location = System::Drawing::Point(530, 168);
     this->client_button_refresh->Name = L"client_button_refresh";
     this->client_button_refresh->Size = System::Drawing::Size(88, 29);
     this->client_button_refresh->TabIndex = 4;
     this->client_button_refresh->Text = L"Обновить";
-    this->client_button_refresh->UseVisualStyleBackColor = true;
+    this->client_button_refresh->UseVisualStyleBackColor = false;
     this->client_button_refresh->Click += gcnew System::EventHandler(this, &ClientPageView::client_button_refresh_Click);
     // 
     // client_label_carlist
     // 
     this->client_label_carlist->AutoSize = true;
-    this->client_label_carlist->Location = System::Drawing::Point(25, 172);
+    this->client_label_carlist->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
+    this->client_label_carlist->Location = System::Drawing::Point(24, 181);
     this->client_label_carlist->Name = L"client_label_carlist";
     this->client_label_carlist->Size = System::Drawing::Size(176, 17);
     this->client_label_carlist->TabIndex = 3;
@@ -208,6 +226,7 @@ void ClientPageView::InitializeComponent(void)
     // client_combobox_cartype
     // 
     this->client_combobox_cartype->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
+    this->client_combobox_cartype->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
     this->client_combobox_cartype->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
     this->client_combobox_cartype->FormattingEnabled = true;
     this->client_combobox_cartype->Items->AddRange(gcnew cli::array< System::Object^  >(3) {
@@ -221,9 +240,12 @@ void ClientPageView::InitializeComponent(void)
     // 
     // client_progressbar_waiting
     // 
-    this->client_progressbar_waiting->Location = System::Drawing::Point(28, 416);
+    this->client_progressbar_waiting->ForeColor = System::Drawing::Color::Aquamarine;
+    this->client_progressbar_waiting->Location = System::Drawing::Point(28, 419);
     this->client_progressbar_waiting->Name = L"client_progressbar_waiting";
     this->client_progressbar_waiting->Size = System::Drawing::Size(590, 23);
+    this->client_progressbar_waiting->Step = 1;
+    this->client_progressbar_waiting->Style = System::Windows::Forms::ProgressBarStyle::Continuous;
     this->client_progressbar_waiting->TabIndex = 1;
     // 
     // client_listview_car
@@ -236,7 +258,7 @@ void ClientPageView::InitializeComponent(void)
     this->client_listview_car->GridLines = true;
     this->client_listview_car->HeaderStyle = System::Windows::Forms::ColumnHeaderStyle::Nonclickable;
     this->client_listview_car->HideSelection = false;
-    this->client_listview_car->Location = System::Drawing::Point(28, 201);
+    this->client_listview_car->Location = System::Drawing::Point(27, 204);
     this->client_listview_car->MaximumSize = System::Drawing::Size(590, 183);
     this->client_listview_car->MinimumSize = System::Drawing::Size(590, 183);
     this->client_listview_car->MultiSelect = false;
@@ -268,6 +290,8 @@ void ClientPageView::InitializeComponent(void)
     // 
     // client_page_account
     // 
+    this->client_page_account->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(127)),
+        static_cast<System::Int32>(static_cast<System::Byte>(112)), static_cast<System::Int32>(static_cast<System::Byte>(216)));
     this->client_page_account->Controls->Add(this->client_checkbox_bankcard);
     this->client_page_account->Controls->Add(this->client_checkbox_age);
     this->client_page_account->Controls->Add(this->client_checkbox_gender);
@@ -287,14 +311,15 @@ void ClientPageView::InitializeComponent(void)
     this->client_page_account->Size = System::Drawing::Size(647, 466);
     this->client_page_account->TabIndex = 1;
     this->client_page_account->Text = L"Аккаунт";
-    this->client_page_account->UseVisualStyleBackColor = true;
     // 
     // client_checkbox_bankcard
     // 
     this->client_checkbox_bankcard->AutoSize = true;
+    this->client_checkbox_bankcard->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
+    this->client_checkbox_bankcard->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
     this->client_checkbox_bankcard->Location = System::Drawing::Point(23, 280);
     this->client_checkbox_bankcard->Name = L"client_checkbox_bankcard";
-    this->client_checkbox_bankcard->Size = System::Drawing::Size(194, 21);
+    this->client_checkbox_bankcard->Size = System::Drawing::Size(192, 21);
     this->client_checkbox_bankcard->TabIndex = 18;
     this->client_checkbox_bankcard->Text = L"Номер банковской карты";
     this->client_checkbox_bankcard->UseVisualStyleBackColor = true;
@@ -302,9 +327,11 @@ void ClientPageView::InitializeComponent(void)
     // client_checkbox_age
     // 
     this->client_checkbox_age->AutoSize = true;
+    this->client_checkbox_age->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
+    this->client_checkbox_age->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
     this->client_checkbox_age->Location = System::Drawing::Point(505, 221);
     this->client_checkbox_age->Name = L"client_checkbox_age";
-    this->client_checkbox_age->Size = System::Drawing::Size(81, 21);
+    this->client_checkbox_age->Size = System::Drawing::Size(79, 21);
     this->client_checkbox_age->TabIndex = 17;
     this->client_checkbox_age->Text = L"Возраст";
     this->client_checkbox_age->UseVisualStyleBackColor = true;
@@ -312,9 +339,11 @@ void ClientPageView::InitializeComponent(void)
     // client_checkbox_gender
     // 
     this->client_checkbox_gender->AutoSize = true;
+    this->client_checkbox_gender->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
+    this->client_checkbox_gender->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
     this->client_checkbox_gender->Location = System::Drawing::Point(297, 221);
     this->client_checkbox_gender->Name = L"client_checkbox_gender";
-    this->client_checkbox_gender->Size = System::Drawing::Size(53, 21);
+    this->client_checkbox_gender->Size = System::Drawing::Size(51, 21);
     this->client_checkbox_gender->TabIndex = 16;
     this->client_checkbox_gender->Text = L"Пол";
     this->client_checkbox_gender->UseVisualStyleBackColor = true;
@@ -322,28 +351,33 @@ void ClientPageView::InitializeComponent(void)
     // client_checkbox_username
     // 
     this->client_checkbox_username->AutoSize = true;
+    this->client_checkbox_username->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
+    this->client_checkbox_username->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
     this->client_checkbox_username->Location = System::Drawing::Point(25, 221);
     this->client_checkbox_username->Name = L"client_checkbox_username";
-    this->client_checkbox_username->Size = System::Drawing::Size(54, 21);
+    this->client_checkbox_username->Size = System::Drawing::Size(52, 21);
     this->client_checkbox_username->TabIndex = 15;
     this->client_checkbox_username->Text = L"Имя";
     this->client_checkbox_username->UseVisualStyleBackColor = true;
     // 
     // client_button_bank
     // 
+    this->client_button_bank->BackColor = System::Drawing::Color::White;
+    this->client_button_bank->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
     this->client_button_bank->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
     this->client_button_bank->Location = System::Drawing::Point(230, 353);
     this->client_button_bank->Name = L"client_button_bank";
     this->client_button_bank->Size = System::Drawing::Size(190, 31);
     this->client_button_bank->TabIndex = 14;
     this->client_button_bank->Text = L"Менеджер банка";
-    this->client_button_bank->UseVisualStyleBackColor = true;
+    this->client_button_bank->UseVisualStyleBackColor = false;
     this->client_button_bank->Click += gcnew System::EventHandler(this, &ClientPageView::client_button_bank_Click);
     // 
     // client_label_account
     // 
     this->client_label_account->AutoSize = true;
     this->client_label_account->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
+    this->client_label_account->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
     this->client_label_account->Location = System::Drawing::Point(20, 15);
     this->client_label_account->Name = L"client_label_account";
     this->client_label_account->Size = System::Drawing::Size(177, 17);
@@ -359,10 +393,12 @@ void ClientPageView::InitializeComponent(void)
     this->client_numeric_age->Name = L"client_numeric_age";
     this->client_numeric_age->Size = System::Drawing::Size(120, 27);
     this->client_numeric_age->TabIndex = 8;
+    this->client_numeric_age->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
     this->client_numeric_age->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 0 });
     // 
     // client_textbox_bankcard
     // 
+    this->client_textbox_bankcard->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
     this->client_textbox_bankcard->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 13));
     this->client_textbox_bankcard->Location = System::Drawing::Point(23, 302);
     this->client_textbox_bankcard->MaxLength = 36;
@@ -373,6 +409,7 @@ void ClientPageView::InitializeComponent(void)
     // client_combobox_gender
     // 
     this->client_combobox_gender->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
+    this->client_combobox_gender->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
     this->client_combobox_gender->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
     this->client_combobox_gender->FormattingEnabled = true;
     this->client_combobox_gender->Items->AddRange(gcnew cli::array< System::Object^  >(2) { L"Мужчина", L"Женщина" });
@@ -383,6 +420,7 @@ void ClientPageView::InitializeComponent(void)
     // 
     // client_textbox_username
     // 
+    this->client_textbox_username->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
     this->client_textbox_username->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 13));
     this->client_textbox_username->Location = System::Drawing::Point(23, 247);
     this->client_textbox_username->MaxLength = 40;
@@ -392,24 +430,28 @@ void ClientPageView::InitializeComponent(void)
     // 
     // client_button_update
     // 
+    this->client_button_update->BackColor = System::Drawing::Color::White;
+    this->client_button_update->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
     this->client_button_update->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
     this->client_button_update->Location = System::Drawing::Point(23, 353);
     this->client_button_update->Name = L"client_button_update";
     this->client_button_update->Size = System::Drawing::Size(192, 31);
     this->client_button_update->TabIndex = 4;
     this->client_button_update->Text = L"Обновить данные";
-    this->client_button_update->UseVisualStyleBackColor = true;
+    this->client_button_update->UseVisualStyleBackColor = false;
     this->client_button_update->Click += gcnew System::EventHandler(this, &ClientPageView::client_button_update_Click);
     // 
     // client_button_logout
     // 
+    this->client_button_logout->BackColor = System::Drawing::Color::White;
+    this->client_button_logout->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
     this->client_button_logout->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
     this->client_button_logout->Location = System::Drawing::Point(435, 353);
     this->client_button_logout->Name = L"client_button_logout";
     this->client_button_logout->Size = System::Drawing::Size(190, 31);
     this->client_button_logout->TabIndex = 2;
     this->client_button_logout->Text = L"Выйти из аккаунта";
-    this->client_button_logout->UseVisualStyleBackColor = true;
+    this->client_button_logout->UseVisualStyleBackColor = false;
     this->client_button_logout->Click += gcnew System::EventHandler(this, &ClientPageView::client_button_logout_Click);
     // 
     // client_listview_account

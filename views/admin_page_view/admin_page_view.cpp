@@ -75,6 +75,9 @@ void AdminPageView::InitializeComponent(void)
     // 
     // admin_page_garage
     // 
+    this->admin_page_garage->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(127)),
+        static_cast<System::Int32>(static_cast<System::Byte>(112)), static_cast<System::Int32>(static_cast<System::Byte>(216)));
+    this->admin_page_garage->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
     this->admin_page_garage->Controls->Add(this->admin_label_carspeed);
     this->admin_page_garage->Controls->Add(this->admin_numeric_carspeed);
     this->admin_page_garage->Controls->Add(this->admin_label_carcount);
@@ -96,11 +99,11 @@ void AdminPageView::InitializeComponent(void)
     this->admin_page_garage->Size = System::Drawing::Size(647, 467);
     this->admin_page_garage->TabIndex = 0;
     this->admin_page_garage->Text = L"Доступ к гаражу";
-    this->admin_page_garage->UseVisualStyleBackColor = true;
     // 
     // admin_label_carspeed
     // 
     this->admin_label_carspeed->AutoSize = true;
+    this->admin_label_carspeed->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
     this->admin_label_carspeed->Location = System::Drawing::Point(493, 337);
     this->admin_label_carspeed->Name = L"admin_label_carspeed";
     this->admin_label_carspeed->Size = System::Drawing::Size(73, 17);
@@ -109,6 +112,7 @@ void AdminPageView::InitializeComponent(void)
     // 
     // admin_numeric_carspeed
     // 
+    this->admin_numeric_carspeed->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
     this->admin_numeric_carspeed->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 13));
     this->admin_numeric_carspeed->Location = System::Drawing::Point(496, 357);
     this->admin_numeric_carspeed->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 200, 0, 0, 0 });
@@ -116,11 +120,13 @@ void AdminPageView::InitializeComponent(void)
     this->admin_numeric_carspeed->Name = L"admin_numeric_carspeed";
     this->admin_numeric_carspeed->Size = System::Drawing::Size(127, 27);
     this->admin_numeric_carspeed->TabIndex = 26;
+    this->admin_numeric_carspeed->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
     this->admin_numeric_carspeed->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 0 });
     // 
     // admin_label_carcount
     // 
     this->admin_label_carcount->AutoSize = true;
+    this->admin_label_carcount->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
     this->admin_label_carcount->Location = System::Drawing::Point(338, 337);
     this->admin_label_carcount->Name = L"admin_label_carcount";
     this->admin_label_carcount->Size = System::Drawing::Size(86, 17);
@@ -130,6 +136,7 @@ void AdminPageView::InitializeComponent(void)
     // admin_label_carclass
     // 
     this->admin_label_carclass->AutoSize = true;
+    this->admin_label_carclass->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
     this->admin_label_carclass->Location = System::Drawing::Point(25, 337);
     this->admin_label_carclass->Name = L"admin_label_carclass";
     this->admin_label_carclass->Size = System::Drawing::Size(105, 17);
@@ -139,6 +146,7 @@ void AdminPageView::InitializeComponent(void)
     // admin_label_carcolor
     // 
     this->admin_label_carcolor->AutoSize = true;
+    this->admin_label_carcolor->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
     this->admin_label_carcolor->Location = System::Drawing::Point(338, 285);
     this->admin_label_carcolor->Name = L"admin_label_carcolor";
     this->admin_label_carcolor->Size = System::Drawing::Size(99, 17);
@@ -148,6 +156,7 @@ void AdminPageView::InitializeComponent(void)
     // admin_label_cartype
     // 
     this->admin_label_cartype->AutoSize = true;
+    this->admin_label_cartype->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
     this->admin_label_cartype->Location = System::Drawing::Point(25, 286);
     this->admin_label_cartype->Name = L"admin_label_cartype";
     this->admin_label_cartype->Size = System::Drawing::Size(91, 17);
@@ -157,6 +166,7 @@ void AdminPageView::InitializeComponent(void)
     // admin_label_carlist
     // 
     this->admin_label_carlist->AutoSize = true;
+    this->admin_label_carlist->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
     this->admin_label_carlist->Location = System::Drawing::Point(25, 9);
     this->admin_label_carlist->Name = L"admin_label_carlist";
     this->admin_label_carlist->Size = System::Drawing::Size(176, 17);
@@ -165,6 +175,7 @@ void AdminPageView::InitializeComponent(void)
     // 
     // admin_numeric_carcount
     // 
+    this->admin_numeric_carcount->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
     this->admin_numeric_carcount->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 13));
     this->admin_numeric_carcount->Location = System::Drawing::Point(341, 358);
     this->admin_numeric_carcount->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 10, 0, 0, 0 });
@@ -172,22 +183,26 @@ void AdminPageView::InitializeComponent(void)
     this->admin_numeric_carcount->Name = L"admin_numeric_carcount";
     this->admin_numeric_carcount->Size = System::Drawing::Size(127, 27);
     this->admin_numeric_carcount->TabIndex = 20;
+    this->admin_numeric_carcount->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
     this->admin_numeric_carcount->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 0 });
     // 
     // admin_button_upd
     // 
+    this->admin_button_upd->BackColor = System::Drawing::Color::White;
+    this->admin_button_upd->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
     this->admin_button_upd->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
     this->admin_button_upd->Location = System::Drawing::Point(439, 409);
     this->admin_button_upd->Name = L"admin_button_upd";
     this->admin_button_upd->Size = System::Drawing::Size(184, 33);
     this->admin_button_upd->TabIndex = 19;
     this->admin_button_upd->Text = L"Обновить";
-    this->admin_button_upd->UseVisualStyleBackColor = true;
+    this->admin_button_upd->UseVisualStyleBackColor = false;
     this->admin_button_upd->Click += gcnew System::EventHandler(this, &AdminPageView::admin_button_upd_Click);
     // 
     // admin_combobox_carclass
     // 
     this->admin_combobox_carclass->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
+    this->admin_combobox_carclass->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
     this->admin_combobox_carclass->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
     this->admin_combobox_carclass->FormattingEnabled = true;
     this->admin_combobox_carclass->Items->AddRange(gcnew cli::array< System::Object^  >(2) { L"Легковая машина", L"Грузовая машина" });
@@ -199,6 +214,7 @@ void AdminPageView::InitializeComponent(void)
     // admin_combobox_carcolor
     // 
     this->admin_combobox_carcolor->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
+    this->admin_combobox_carcolor->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
     this->admin_combobox_carcolor->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
     this->admin_combobox_carcolor->FormattingEnabled = true;
     this->admin_combobox_carcolor->Items->AddRange(gcnew cli::array< System::Object^  >(4) {
@@ -213,6 +229,7 @@ void AdminPageView::InitializeComponent(void)
     // admin_combobox_cartype
     // 
     this->admin_combobox_cartype->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
+    this->admin_combobox_cartype->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
     this->admin_combobox_cartype->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
     this->admin_combobox_cartype->FormattingEnabled = true;
     this->admin_combobox_cartype->Items->AddRange(gcnew cli::array< System::Object^  >(3) {
@@ -226,28 +243,33 @@ void AdminPageView::InitializeComponent(void)
     // 
     // admin_button_cardelete
     // 
+    this->admin_button_cardelete->BackColor = System::Drawing::Color::White;
+    this->admin_button_cardelete->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
     this->admin_button_cardelete->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
     this->admin_button_cardelete->Location = System::Drawing::Point(234, 409);
     this->admin_button_cardelete->Name = L"admin_button_cardelete";
     this->admin_button_cardelete->Size = System::Drawing::Size(184, 33);
     this->admin_button_cardelete->TabIndex = 15;
     this->admin_button_cardelete->Text = L"Удалить";
-    this->admin_button_cardelete->UseVisualStyleBackColor = true;
+    this->admin_button_cardelete->UseVisualStyleBackColor = false;
     this->admin_button_cardelete->Click += gcnew System::EventHandler(this, &AdminPageView::admin_button_cardelete_Click);
     // 
     // admin_button_caradd
     // 
+    this->admin_button_caradd->BackColor = System::Drawing::Color::White;
+    this->admin_button_caradd->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
     this->admin_button_caradd->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
     this->admin_button_caradd->Location = System::Drawing::Point(25, 409);
     this->admin_button_caradd->Name = L"admin_button_caradd";
     this->admin_button_caradd->Size = System::Drawing::Size(184, 33);
     this->admin_button_caradd->TabIndex = 14;
     this->admin_button_caradd->Text = L"Добавить";
-    this->admin_button_caradd->UseVisualStyleBackColor = true;
+    this->admin_button_caradd->UseVisualStyleBackColor = false;
     this->admin_button_caradd->Click += gcnew System::EventHandler(this, &AdminPageView::admin_button_caradd_Click);
     // 
     // admin_listview_carlist
     // 
+    this->admin_listview_carlist->BackColor = System::Drawing::Color::White;
     this->admin_listview_carlist->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
     this->admin_listview_carlist->Columns->AddRange(gcnew cli::array< System::Windows::Forms::ColumnHeader^  >(6) {
         this->garage_car_groupguid,
@@ -302,27 +324,32 @@ void AdminPageView::InitializeComponent(void)
     // 
     // admin_page_clients
     // 
+    this->admin_page_clients->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(127)),
+        static_cast<System::Int32>(static_cast<System::Byte>(112)), static_cast<System::Int32>(static_cast<System::Byte>(216)));
     this->admin_page_clients->Controls->Add(this->admin_button_accountinfo);
     this->admin_page_clients->Controls->Add(this->admin_label_accounts);
     this->admin_page_clients->Controls->Add(this->admin_button_refresh);
     this->admin_page_clients->Controls->Add(this->admin_button_delete);
     this->admin_page_clients->Controls->Add(this->admin_listview_accounts);
+    this->admin_page_clients->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
     this->admin_page_clients->Location = System::Drawing::Point(4, 29);
     this->admin_page_clients->Name = L"admin_page_clients";
     this->admin_page_clients->Size = System::Drawing::Size(647, 467);
     this->admin_page_clients->TabIndex = 2;
     this->admin_page_clients->Text = L"Доступ к аккаунтам";
-    this->admin_page_clients->UseVisualStyleBackColor = true;
     // 
     // admin_button_accountinfo
     // 
+    this->admin_button_accountinfo->BackColor = System::Drawing::Color::White;
+    this->admin_button_accountinfo->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
     this->admin_button_accountinfo->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+    this->admin_button_accountinfo->ForeColor = System::Drawing::SystemColors::ControlText;
     this->admin_button_accountinfo->Location = System::Drawing::Point(27, 360);
     this->admin_button_accountinfo->Name = L"admin_button_accountinfo";
     this->admin_button_accountinfo->Size = System::Drawing::Size(598, 33);
     this->admin_button_accountinfo->TabIndex = 23;
     this->admin_button_accountinfo->Text = L"Открыть подробную информацию";
-    this->admin_button_accountinfo->UseVisualStyleBackColor = true;
+    this->admin_button_accountinfo->UseVisualStyleBackColor = false;
     this->admin_button_accountinfo->Click += gcnew System::EventHandler(this, &AdminPageView::admin_button_accountinfo_Click);
     // 
     // admin_label_accounts
@@ -336,24 +363,30 @@ void AdminPageView::InitializeComponent(void)
     // 
     // admin_button_refresh
     // 
+    this->admin_button_refresh->BackColor = System::Drawing::Color::White;
+    this->admin_button_refresh->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
     this->admin_button_refresh->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+    this->admin_button_refresh->ForeColor = System::Drawing::SystemColors::ControlText;
     this->admin_button_refresh->Location = System::Drawing::Point(27, 411);
     this->admin_button_refresh->Name = L"admin_button_refresh";
     this->admin_button_refresh->Size = System::Drawing::Size(286, 33);
     this->admin_button_refresh->TabIndex = 17;
     this->admin_button_refresh->Text = L"Обновить список";
-    this->admin_button_refresh->UseVisualStyleBackColor = true;
+    this->admin_button_refresh->UseVisualStyleBackColor = false;
     this->admin_button_refresh->Click += gcnew System::EventHandler(this, &AdminPageView::admin_button_refresh_Click);
     // 
     // admin_button_delete
     // 
+    this->admin_button_delete->BackColor = System::Drawing::Color::White;
+    this->admin_button_delete->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
     this->admin_button_delete->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+    this->admin_button_delete->ForeColor = System::Drawing::SystemColors::ControlText;
     this->admin_button_delete->Location = System::Drawing::Point(339, 411);
     this->admin_button_delete->Name = L"admin_button_delete";
     this->admin_button_delete->Size = System::Drawing::Size(286, 33);
     this->admin_button_delete->TabIndex = 16;
     this->admin_button_delete->Text = L"Удалить аккаунт";
-    this->admin_button_delete->UseVisualStyleBackColor = true;
+    this->admin_button_delete->UseVisualStyleBackColor = false;
     this->admin_button_delete->Click += gcnew System::EventHandler(this, &AdminPageView::admin_button_delete_Click);
     // 
     // admin_listview_accounts
@@ -363,6 +396,7 @@ void AdminPageView::InitializeComponent(void)
         this->account_guid,
             this->account_type, this->account_state
     });
+    this->admin_listview_accounts->ForeColor = System::Drawing::SystemColors::Window;
     this->admin_listview_accounts->GridLines = true;
     this->admin_listview_accounts->HeaderStyle = System::Windows::Forms::ColumnHeaderStyle::Nonclickable;
     this->admin_listview_accounts->HideSelection = false;
@@ -391,6 +425,8 @@ void AdminPageView::InitializeComponent(void)
     // 
     // admin_page_account
     // 
+    this->admin_page_account->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(127)),
+        static_cast<System::Int32>(static_cast<System::Byte>(112)), static_cast<System::Int32>(static_cast<System::Byte>(216)));
     this->admin_page_account->Controls->Add(this->admin_checkbox_age);
     this->admin_page_account->Controls->Add(this->admin_checkbox_gender);
     this->admin_page_account->Controls->Add(this->admin_checkbox_username);
@@ -407,14 +443,15 @@ void AdminPageView::InitializeComponent(void)
     this->admin_page_account->Size = System::Drawing::Size(647, 467);
     this->admin_page_account->TabIndex = 1;
     this->admin_page_account->Text = L"Аккаунт";
-    this->admin_page_account->UseVisualStyleBackColor = true;
     // 
     // admin_checkbox_age
     // 
     this->admin_checkbox_age->AutoSize = true;
+    this->admin_checkbox_age->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
+    this->admin_checkbox_age->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
     this->admin_checkbox_age->Location = System::Drawing::Point(505, 221);
     this->admin_checkbox_age->Name = L"admin_checkbox_age";
-    this->admin_checkbox_age->Size = System::Drawing::Size(81, 21);
+    this->admin_checkbox_age->Size = System::Drawing::Size(79, 21);
     this->admin_checkbox_age->TabIndex = 17;
     this->admin_checkbox_age->Text = L"Возраст";
     this->admin_checkbox_age->UseVisualStyleBackColor = true;
@@ -422,9 +459,11 @@ void AdminPageView::InitializeComponent(void)
     // admin_checkbox_gender
     // 
     this->admin_checkbox_gender->AutoSize = true;
+    this->admin_checkbox_gender->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
+    this->admin_checkbox_gender->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
     this->admin_checkbox_gender->Location = System::Drawing::Point(297, 221);
     this->admin_checkbox_gender->Name = L"admin_checkbox_gender";
-    this->admin_checkbox_gender->Size = System::Drawing::Size(53, 21);
+    this->admin_checkbox_gender->Size = System::Drawing::Size(51, 21);
     this->admin_checkbox_gender->TabIndex = 16;
     this->admin_checkbox_gender->Text = L"Пол";
     this->admin_checkbox_gender->UseVisualStyleBackColor = true;
@@ -432,9 +471,11 @@ void AdminPageView::InitializeComponent(void)
     // admin_checkbox_username
     // 
     this->admin_checkbox_username->AutoSize = true;
+    this->admin_checkbox_username->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
+    this->admin_checkbox_username->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
     this->admin_checkbox_username->Location = System::Drawing::Point(25, 221);
     this->admin_checkbox_username->Name = L"admin_checkbox_username";
-    this->admin_checkbox_username->Size = System::Drawing::Size(54, 21);
+    this->admin_checkbox_username->Size = System::Drawing::Size(52, 21);
     this->admin_checkbox_username->TabIndex = 15;
     this->admin_checkbox_username->Text = L"Имя";
     this->admin_checkbox_username->UseVisualStyleBackColor = true;
@@ -443,6 +484,7 @@ void AdminPageView::InitializeComponent(void)
     // 
     this->admin_label_account->AutoSize = true;
     this->admin_label_account->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
+    this->admin_label_account->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
     this->admin_label_account->Location = System::Drawing::Point(20, 15);
     this->admin_label_account->Name = L"admin_label_account";
     this->admin_label_account->Size = System::Drawing::Size(177, 17);
@@ -451,17 +493,20 @@ void AdminPageView::InitializeComponent(void)
     // 
     // admin_numeric_age
     // 
+    this->admin_numeric_age->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
     this->admin_numeric_age->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 13));
     this->admin_numeric_age->Location = System::Drawing::Point(505, 248);
     this->admin_numeric_age->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 0 });
     this->admin_numeric_age->Name = L"admin_numeric_age";
     this->admin_numeric_age->Size = System::Drawing::Size(120, 27);
     this->admin_numeric_age->TabIndex = 8;
+    this->admin_numeric_age->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
     this->admin_numeric_age->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 0 });
     // 
     // admin_combobox_gender
     // 
     this->admin_combobox_gender->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
+    this->admin_combobox_gender->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
     this->admin_combobox_gender->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
     this->admin_combobox_gender->FormattingEnabled = true;
     this->admin_combobox_gender->Items->AddRange(gcnew cli::array< System::Object^  >(2) { L"Мужчина", L"Женщина" });
@@ -472,6 +517,7 @@ void AdminPageView::InitializeComponent(void)
     // 
     // admin_textbox_username
     // 
+    this->admin_textbox_username->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
     this->admin_textbox_username->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 13));
     this->admin_textbox_username->Location = System::Drawing::Point(23, 247);
     this->admin_textbox_username->MaxLength = 40;
@@ -481,28 +527,33 @@ void AdminPageView::InitializeComponent(void)
     // 
     // admin_button_update
     // 
+    this->admin_button_update->BackColor = System::Drawing::Color::White;
+    this->admin_button_update->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
     this->admin_button_update->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
     this->admin_button_update->Location = System::Drawing::Point(23, 296);
     this->admin_button_update->Name = L"admin_button_update";
     this->admin_button_update->Size = System::Drawing::Size(290, 31);
     this->admin_button_update->TabIndex = 4;
     this->admin_button_update->Text = L"Обновить данные";
-    this->admin_button_update->UseVisualStyleBackColor = true;
+    this->admin_button_update->UseVisualStyleBackColor = false;
     this->admin_button_update->Click += gcnew System::EventHandler(this, &AdminPageView::admin_button_update_Click);
     // 
     // admin_button_logout
     // 
+    this->admin_button_logout->BackColor = System::Drawing::Color::White;
+    this->admin_button_logout->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
     this->admin_button_logout->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
     this->admin_button_logout->Location = System::Drawing::Point(335, 296);
     this->admin_button_logout->Name = L"admin_button_logout";
     this->admin_button_logout->Size = System::Drawing::Size(290, 31);
     this->admin_button_logout->TabIndex = 2;
     this->admin_button_logout->Text = L"Выйти из аккаунта";
-    this->admin_button_logout->UseVisualStyleBackColor = true;
+    this->admin_button_logout->UseVisualStyleBackColor = false;
     this->admin_button_logout->Click += gcnew System::EventHandler(this, &AdminPageView::admin_button_logout_Click);
     // 
     // admin_listview_account
     // 
+    this->admin_listview_account->BackColor = System::Drawing::Color::White;
     this->admin_listview_account->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
     this->admin_listview_account->Columns->AddRange(gcnew cli::array< System::Windows::Forms::ColumnHeader^  >(2) {
         this->account_field,

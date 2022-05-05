@@ -25,6 +25,9 @@ namespace Views
 		BankSettingsView(Services::BankController^ bank_controller)
 		{
 			InitializeComponent();
+			this->BackgroundImage = System::Drawing::Image::FromFile("./assets/background.png");
+			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+
 			this->Icon = gcnew System::Drawing::Icon(L"./assets/my_app_icon.ico");
 			this->bank_controller = bank_controller;
 		}

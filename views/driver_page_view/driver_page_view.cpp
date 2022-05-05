@@ -75,6 +75,8 @@ void DriverPageView::InitializeComponent(void)
     // 
     // driver_page_order
     // 
+    this->driver_page_order->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(127)),
+        static_cast<System::Int32>(static_cast<System::Byte>(112)), static_cast<System::Int32>(static_cast<System::Byte>(216)));
     this->driver_page_order->Controls->Add(this->driver_label_currentstatus);
     this->driver_page_order->Controls->Add(this->driver_statuslist);
     this->driver_page_order->Controls->Add(this->driver_textbox_status);
@@ -92,12 +94,12 @@ void DriverPageView::InitializeComponent(void)
     this->driver_page_order->Size = System::Drawing::Size(647, 467);
     this->driver_page_order->TabIndex = 0;
     this->driver_page_order->Text = L"Поиск заказов";
-    this->driver_page_order->UseVisualStyleBackColor = true;
     // 
     // driver_label_currentstatus
     // 
     this->driver_label_currentstatus->AutoSize = true;
     this->driver_label_currentstatus->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
+    this->driver_label_currentstatus->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
     this->driver_label_currentstatus->Location = System::Drawing::Point(231, 301);
     this->driver_label_currentstatus->Name = L"driver_label_currentstatus";
     this->driver_label_currentstatus->Size = System::Drawing::Size(113, 17);
@@ -108,6 +110,7 @@ void DriverPageView::InitializeComponent(void)
     // 
     this->driver_statuslist->AutoSize = true;
     this->driver_statuslist->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
+    this->driver_statuslist->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
     this->driver_statuslist->Location = System::Drawing::Point(23, 301);
     this->driver_statuslist->Name = L"driver_statuslist";
     this->driver_statuslist->Size = System::Drawing::Size(128, 17);
@@ -117,6 +120,7 @@ void DriverPageView::InitializeComponent(void)
     // driver_textbox_status
     // 
     this->driver_textbox_status->BackColor = System::Drawing::SystemColors::HighlightText;
+    this->driver_textbox_status->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
     this->driver_textbox_status->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14));
     this->driver_textbox_status->Location = System::Drawing::Point(234, 320);
     this->driver_textbox_status->Name = L"driver_textbox_status";
@@ -126,18 +130,21 @@ void DriverPageView::InitializeComponent(void)
     // 
     // driver_button_status
     // 
+    this->driver_button_status->BackColor = System::Drawing::Color::White;
+    this->driver_button_status->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
     this->driver_button_status->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
     this->driver_button_status->Location = System::Drawing::Point(440, 320);
     this->driver_button_status->Name = L"driver_button_status";
     this->driver_button_status->Size = System::Drawing::Size(183, 31);
     this->driver_button_status->TabIndex = 21;
     this->driver_button_status->Text = L"Изменить статус";
-    this->driver_button_status->UseVisualStyleBackColor = true;
+    this->driver_button_status->UseVisualStyleBackColor = false;
     this->driver_button_status->Click += gcnew System::EventHandler(this, &DriverPageView::driver_button_status_Click);
     // 
     // driver_combobox_status
     // 
     this->driver_combobox_status->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
+    this->driver_combobox_status->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
     this->driver_combobox_status->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
     this->driver_combobox_status->FormattingEnabled = true;
     this->driver_combobox_status->Items->AddRange(gcnew cli::array< System::Object^  >(3) { L"Готов", L"Занят", L"В ожидании" });
@@ -148,30 +155,35 @@ void DriverPageView::InitializeComponent(void)
     // 
     // driver_button_bankmoney
     // 
+    this->driver_button_bankmoney->BackColor = System::Drawing::Color::White;
+    this->driver_button_bankmoney->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
     this->driver_button_bankmoney->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
     this->driver_button_bankmoney->Location = System::Drawing::Point(591, 415);
     this->driver_button_bankmoney->Name = L"driver_button_bankmoney";
     this->driver_button_bankmoney->Size = System::Drawing::Size(32, 29);
     this->driver_button_bankmoney->TabIndex = 19;
     this->driver_button_bankmoney->Text = L"$";
-    this->driver_button_bankmoney->UseVisualStyleBackColor = true;
+    this->driver_button_bankmoney->UseVisualStyleBackColor = false;
     this->driver_button_bankmoney->Click += gcnew System::EventHandler(this, &DriverPageView::driver_button_bankmoney_Click);
     // 
     // driver_button_complexinfo
     // 
+    this->driver_button_complexinfo->BackColor = System::Drawing::Color::White;
+    this->driver_button_complexinfo->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
     this->driver_button_complexinfo->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
     this->driver_button_complexinfo->Location = System::Drawing::Point(25, 415);
     this->driver_button_complexinfo->Name = L"driver_button_complexinfo";
     this->driver_button_complexinfo->Size = System::Drawing::Size(546, 31);
     this->driver_button_complexinfo->TabIndex = 11;
     this->driver_button_complexinfo->Text = L"Показать информацию о комплексе";
-    this->driver_button_complexinfo->UseVisualStyleBackColor = true;
+    this->driver_button_complexinfo->UseVisualStyleBackColor = false;
     this->driver_button_complexinfo->Click += gcnew System::EventHandler(this, &DriverPageView::driver_button_complexinfo_Click);
     // 
     // driver_orders_list
     // 
     this->driver_orders_list->AutoSize = true;
     this->driver_orders_list->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
+    this->driver_orders_list->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
     this->driver_orders_list->Location = System::Drawing::Point(23, 15);
     this->driver_orders_list->Name = L"driver_orders_list";
     this->driver_orders_list->Size = System::Drawing::Size(111, 17);
@@ -180,24 +192,28 @@ void DriverPageView::InitializeComponent(void)
     // 
     // driver_button_update_orders
     // 
+    this->driver_button_update_orders->BackColor = System::Drawing::Color::White;
+    this->driver_button_update_orders->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
     this->driver_button_update_orders->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
     this->driver_button_update_orders->Location = System::Drawing::Point(332, 367);
     this->driver_button_update_orders->Name = L"driver_button_update_orders";
     this->driver_button_update_orders->Size = System::Drawing::Size(291, 31);
     this->driver_button_update_orders->TabIndex = 6;
     this->driver_button_update_orders->Text = L"Обновить список";
-    this->driver_button_update_orders->UseVisualStyleBackColor = true;
+    this->driver_button_update_orders->UseVisualStyleBackColor = false;
     this->driver_button_update_orders->Click += gcnew System::EventHandler(this, &DriverPageView::driver_button_update_orders_Click);
     // 
     // driver_button_accept_order
     // 
+    this->driver_button_accept_order->BackColor = System::Drawing::Color::White;
+    this->driver_button_accept_order->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
     this->driver_button_accept_order->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
     this->driver_button_accept_order->Location = System::Drawing::Point(25, 367);
     this->driver_button_accept_order->Name = L"driver_button_accept_order";
     this->driver_button_accept_order->Size = System::Drawing::Size(291, 31);
     this->driver_button_accept_order->TabIndex = 5;
     this->driver_button_accept_order->Text = L"Принять заказ";
-    this->driver_button_accept_order->UseVisualStyleBackColor = true;
+    this->driver_button_accept_order->UseVisualStyleBackColor = false;
     this->driver_button_accept_order->Click += gcnew System::EventHandler(this, &DriverPageView::driver_button_accept_order_Click);
     // 
     // driver_listview_orders
@@ -247,6 +263,8 @@ void DriverPageView::InitializeComponent(void)
     // 
     // driver_page_garage
     // 
+    this->driver_page_garage->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(127)),
+        static_cast<System::Int32>(static_cast<System::Byte>(112)), static_cast<System::Int32>(static_cast<System::Byte>(216)));
     this->driver_page_garage->Controls->Add(this->driver_button_update_garage);
     this->driver_page_garage->Controls->Add(this->driver_label_garage);
     this->driver_page_garage->Controls->Add(this->driver_button_return);
@@ -257,23 +275,25 @@ void DriverPageView::InitializeComponent(void)
     this->driver_page_garage->Size = System::Drawing::Size(647, 467);
     this->driver_page_garage->TabIndex = 2;
     this->driver_page_garage->Text = L"Просмотр машин";
-    this->driver_page_garage->UseVisualStyleBackColor = true;
     // 
     // driver_button_update_garage
     // 
+    this->driver_button_update_garage->BackColor = System::Drawing::Color::White;
+    this->driver_button_update_garage->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
     this->driver_button_update_garage->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
     this->driver_button_update_garage->Location = System::Drawing::Point(22, 324);
     this->driver_button_update_garage->Name = L"driver_button_update_garage";
     this->driver_button_update_garage->Size = System::Drawing::Size(598, 31);
     this->driver_button_update_garage->TabIndex = 16;
     this->driver_button_update_garage->Text = L"Обновить список доступных машин";
-    this->driver_button_update_garage->UseVisualStyleBackColor = true;
+    this->driver_button_update_garage->UseVisualStyleBackColor = false;
     this->driver_button_update_garage->Click += gcnew System::EventHandler(this, &DriverPageView::driver_button_update_garage_Click);
     // 
     // driver_label_garage
     // 
     this->driver_label_garage->AutoSize = true;
     this->driver_label_garage->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
+    this->driver_label_garage->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
     this->driver_label_garage->Location = System::Drawing::Point(20, 16);
     this->driver_label_garage->Name = L"driver_label_garage";
     this->driver_label_garage->Size = System::Drawing::Size(176, 17);
@@ -282,24 +302,28 @@ void DriverPageView::InitializeComponent(void)
     // 
     // driver_button_return
     // 
+    this->driver_button_return->BackColor = System::Drawing::Color::White;
+    this->driver_button_return->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
     this->driver_button_return->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
     this->driver_button_return->Location = System::Drawing::Point(329, 374);
     this->driver_button_return->Name = L"driver_button_return";
     this->driver_button_return->Size = System::Drawing::Size(291, 31);
     this->driver_button_return->TabIndex = 14;
     this->driver_button_return->Text = L"Вернуть машину в гараж";
-    this->driver_button_return->UseVisualStyleBackColor = true;
+    this->driver_button_return->UseVisualStyleBackColor = false;
     this->driver_button_return->Click += gcnew System::EventHandler(this, &DriverPageView::driver_button_return_Click);
     // 
     // driver_button_rent
     // 
+    this->driver_button_rent->BackColor = System::Drawing::Color::White;
+    this->driver_button_rent->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
     this->driver_button_rent->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
     this->driver_button_rent->Location = System::Drawing::Point(22, 374);
     this->driver_button_rent->Name = L"driver_button_rent";
     this->driver_button_rent->Size = System::Drawing::Size(291, 31);
     this->driver_button_rent->TabIndex = 13;
     this->driver_button_rent->Text = L"Использовать машину";
-    this->driver_button_rent->UseVisualStyleBackColor = true;
+    this->driver_button_rent->UseVisualStyleBackColor = false;
     this->driver_button_rent->Click += gcnew System::EventHandler(this, &DriverPageView::driver_button_rent_Click);
     // 
     // driver_listview_garage
@@ -347,6 +371,8 @@ void DriverPageView::InitializeComponent(void)
     // 
     // driver_page_account
     // 
+    this->driver_page_account->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(127)),
+        static_cast<System::Int32>(static_cast<System::Byte>(112)), static_cast<System::Int32>(static_cast<System::Byte>(216)));
     this->driver_page_account->Controls->Add(this->driver_checkbox_licence);
     this->driver_page_account->Controls->Add(this->driver_checkbox_bankcard);
     this->driver_page_account->Controls->Add(this->driver_checkbox_age);
@@ -368,14 +394,15 @@ void DriverPageView::InitializeComponent(void)
     this->driver_page_account->Size = System::Drawing::Size(647, 467);
     this->driver_page_account->TabIndex = 1;
     this->driver_page_account->Text = L"Аккаунт";
-    this->driver_page_account->UseVisualStyleBackColor = true;
     // 
     // driver_checkbox_licence
     // 
     this->driver_checkbox_licence->AutoSize = true;
+    this->driver_checkbox_licence->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
+    this->driver_checkbox_licence->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
     this->driver_checkbox_licence->Location = System::Drawing::Point(25, 335);
     this->driver_checkbox_licence->Name = L"driver_checkbox_licence";
-    this->driver_checkbox_licence->Size = System::Drawing::Size(232, 21);
+    this->driver_checkbox_licence->Size = System::Drawing::Size(230, 21);
     this->driver_checkbox_licence->TabIndex = 23;
     this->driver_checkbox_licence->Text = L"Номер водительской лицензии";
     this->driver_checkbox_licence->UseVisualStyleBackColor = true;
@@ -383,9 +410,11 @@ void DriverPageView::InitializeComponent(void)
     // driver_checkbox_bankcard
     // 
     this->driver_checkbox_bankcard->AutoSize = true;
+    this->driver_checkbox_bankcard->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
+    this->driver_checkbox_bankcard->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
     this->driver_checkbox_bankcard->Location = System::Drawing::Point(23, 279);
     this->driver_checkbox_bankcard->Name = L"driver_checkbox_bankcard";
-    this->driver_checkbox_bankcard->Size = System::Drawing::Size(194, 21);
+    this->driver_checkbox_bankcard->Size = System::Drawing::Size(192, 21);
     this->driver_checkbox_bankcard->TabIndex = 22;
     this->driver_checkbox_bankcard->Text = L"Номер банковской карты";
     this->driver_checkbox_bankcard->UseVisualStyleBackColor = true;
@@ -393,9 +422,11 @@ void DriverPageView::InitializeComponent(void)
     // driver_checkbox_age
     // 
     this->driver_checkbox_age->AutoSize = true;
+    this->driver_checkbox_age->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
+    this->driver_checkbox_age->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
     this->driver_checkbox_age->Location = System::Drawing::Point(505, 220);
     this->driver_checkbox_age->Name = L"driver_checkbox_age";
-    this->driver_checkbox_age->Size = System::Drawing::Size(81, 21);
+    this->driver_checkbox_age->Size = System::Drawing::Size(79, 21);
     this->driver_checkbox_age->TabIndex = 21;
     this->driver_checkbox_age->Text = L"Возраст";
     this->driver_checkbox_age->UseVisualStyleBackColor = true;
@@ -403,9 +434,11 @@ void DriverPageView::InitializeComponent(void)
     // driver_checkbox_gender
     // 
     this->driver_checkbox_gender->AutoSize = true;
+    this->driver_checkbox_gender->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
+    this->driver_checkbox_gender->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
     this->driver_checkbox_gender->Location = System::Drawing::Point(297, 220);
     this->driver_checkbox_gender->Name = L"driver_checkbox_gender";
-    this->driver_checkbox_gender->Size = System::Drawing::Size(53, 21);
+    this->driver_checkbox_gender->Size = System::Drawing::Size(51, 21);
     this->driver_checkbox_gender->TabIndex = 20;
     this->driver_checkbox_gender->Text = L"Пол";
     this->driver_checkbox_gender->UseVisualStyleBackColor = true;
@@ -413,15 +446,18 @@ void DriverPageView::InitializeComponent(void)
     // driver_checkbox_username
     // 
     this->driver_checkbox_username->AutoSize = true;
+    this->driver_checkbox_username->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
+    this->driver_checkbox_username->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
     this->driver_checkbox_username->Location = System::Drawing::Point(25, 220);
     this->driver_checkbox_username->Name = L"driver_checkbox_username";
-    this->driver_checkbox_username->Size = System::Drawing::Size(54, 21);
+    this->driver_checkbox_username->Size = System::Drawing::Size(52, 21);
     this->driver_checkbox_username->TabIndex = 19;
     this->driver_checkbox_username->Text = L"Имя";
     this->driver_checkbox_username->UseVisualStyleBackColor = true;
     // 
     // driver_textbox_licence
     // 
+    this->driver_textbox_licence->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
     this->driver_textbox_licence->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 13));
     this->driver_textbox_licence->Location = System::Drawing::Point(23, 357);
     this->driver_textbox_licence->MaxLength = 36;
@@ -431,20 +467,24 @@ void DriverPageView::InitializeComponent(void)
     // 
     // driver_button_bank
     // 
+    this->driver_button_bank->BackColor = System::Drawing::Color::White;
+    this->driver_button_bank->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
     this->driver_button_bank->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
     this->driver_button_bank->Location = System::Drawing::Point(230, 406);
     this->driver_button_bank->Name = L"driver_button_bank";
     this->driver_button_bank->Size = System::Drawing::Size(190, 31);
     this->driver_button_bank->TabIndex = 14;
     this->driver_button_bank->Text = L"Менеджер банка";
-    this->driver_button_bank->UseVisualStyleBackColor = true;
+    this->driver_button_bank->UseVisualStyleBackColor = false;
     this->driver_button_bank->Click += gcnew System::EventHandler(this, &DriverPageView::driver_button_bank_Click);
     // 
     // driver_label_account
     // 
     this->driver_label_account->AutoSize = true;
+    this->driver_label_account->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
     this->driver_label_account->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
-    this->driver_label_account->Location = System::Drawing::Point(20, 15);
+    this->driver_label_account->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
+    this->driver_label_account->Location = System::Drawing::Point(20, 12);
     this->driver_label_account->Name = L"driver_label_account";
     this->driver_label_account->Size = System::Drawing::Size(177, 17);
     this->driver_label_account->TabIndex = 9;
@@ -452,16 +492,19 @@ void DriverPageView::InitializeComponent(void)
     // 
     // driver_numeric_age
     // 
+    this->driver_numeric_age->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
     this->driver_numeric_age->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 13));
     this->driver_numeric_age->Location = System::Drawing::Point(505, 248);
     this->driver_numeric_age->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 0 });
     this->driver_numeric_age->Name = L"driver_numeric_age";
     this->driver_numeric_age->Size = System::Drawing::Size(120, 27);
     this->driver_numeric_age->TabIndex = 8;
+    this->driver_numeric_age->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
     this->driver_numeric_age->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 0 });
     // 
     // driver_textbox_bankcard
     // 
+    this->driver_textbox_bankcard->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
     this->driver_textbox_bankcard->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 13));
     this->driver_textbox_bankcard->Location = System::Drawing::Point(23, 302);
     this->driver_textbox_bankcard->MaxLength = 36;
@@ -472,6 +515,7 @@ void DriverPageView::InitializeComponent(void)
     // driver_combobox_gender
     // 
     this->driver_combobox_gender->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
+    this->driver_combobox_gender->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
     this->driver_combobox_gender->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
     this->driver_combobox_gender->FormattingEnabled = true;
     this->driver_combobox_gender->Items->AddRange(gcnew cli::array< System::Object^  >(2) { L"Мужчина", L"Женщина" });
@@ -482,6 +526,7 @@ void DriverPageView::InitializeComponent(void)
     // 
     // driver_textbox_username
     // 
+    this->driver_textbox_username->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
     this->driver_textbox_username->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 13));
     this->driver_textbox_username->Location = System::Drawing::Point(23, 247);
     this->driver_textbox_username->MaxLength = 40;
@@ -491,24 +536,28 @@ void DriverPageView::InitializeComponent(void)
     // 
     // driver_button_update
     // 
+    this->driver_button_update->BackColor = System::Drawing::Color::White;
+    this->driver_button_update->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
     this->driver_button_update->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
     this->driver_button_update->Location = System::Drawing::Point(23, 406);
     this->driver_button_update->Name = L"driver_button_update";
     this->driver_button_update->Size = System::Drawing::Size(192, 31);
     this->driver_button_update->TabIndex = 4;
     this->driver_button_update->Text = L"Обновить данные";
-    this->driver_button_update->UseVisualStyleBackColor = true;
+    this->driver_button_update->UseVisualStyleBackColor = false;
     this->driver_button_update->Click += gcnew System::EventHandler(this, &DriverPageView::driver_button_update_Click);
     // 
     // driver_button_logout
     // 
+    this->driver_button_logout->BackColor = System::Drawing::Color::White;
+    this->driver_button_logout->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
     this->driver_button_logout->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
     this->driver_button_logout->Location = System::Drawing::Point(435, 406);
     this->driver_button_logout->Name = L"driver_button_logout";
     this->driver_button_logout->Size = System::Drawing::Size(190, 31);
     this->driver_button_logout->TabIndex = 2;
     this->driver_button_logout->Text = L"Выйти из аккаунта";
-    this->driver_button_logout->UseVisualStyleBackColor = true;
+    this->driver_button_logout->UseVisualStyleBackColor = false;
     this->driver_button_logout->Click += gcnew System::EventHandler(this, &DriverPageView::driver_button_logout_Click);
     // 
     // driver_listview_account

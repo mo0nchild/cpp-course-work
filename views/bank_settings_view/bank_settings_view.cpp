@@ -16,31 +16,37 @@ void BankSettingsView::InitializeComponent(void)
     // 
     // button_create_bank
     // 
+    this->button_create_bank->BackColor = System::Drawing::Color::White;
+    this->button_create_bank->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
     this->button_create_bank->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
     this->button_create_bank->Location = System::Drawing::Point(21, 307);
     this->button_create_bank->Name = L"button_create_bank";
     this->button_create_bank->Size = System::Drawing::Size(116, 54);
     this->button_create_bank->TabIndex = 1;
     this->button_create_bank->Text = L"Создать аккаунт";
-    this->button_create_bank->UseVisualStyleBackColor = true;
+    this->button_create_bank->UseVisualStyleBackColor = false;
     this->button_create_bank->Click += gcnew System::EventHandler(this, &BankSettingsView::button_create_bank_Click);
     // 
     // button_reload
     // 
+    this->button_reload->BackColor = System::Drawing::Color::White;
+    this->button_reload->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
     this->button_reload->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
     this->button_reload->Location = System::Drawing::Point(290, 307);
     this->button_reload->Name = L"button_reload";
     this->button_reload->Size = System::Drawing::Size(116, 54);
     this->button_reload->TabIndex = 2;
     this->button_reload->Text = L"Обновить данные";
-    this->button_reload->UseVisualStyleBackColor = true;
+    this->button_reload->UseVisualStyleBackColor = false;
     this->button_reload->Click += gcnew System::EventHandler(this, &BankSettingsView::button_reload_Click);
     // 
     // label_bank
     // 
     this->label_bank->AutoSize = true;
+    this->label_bank->BackColor = System::Drawing::Color::Transparent;
     this->label_bank->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-    this->label_bank->Location = System::Drawing::Point(17, 20);
+    this->label_bank->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
+    this->label_bank->Location = System::Drawing::Point(19, 17);
     this->label_bank->Name = L"label_bank";
     this->label_bank->Size = System::Drawing::Size(228, 20);
     this->label_bank->TabIndex = 3;
@@ -48,11 +54,13 @@ void BankSettingsView::InitializeComponent(void)
     // 
     // listview_bank
     // 
+    this->listview_bank->BackColor = System::Drawing::Color::White;
+    this->listview_bank->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
     this->listview_bank->Columns->AddRange(gcnew cli::array< System::Windows::Forms::ColumnHeader^  >(2) {
         this->column_guid,
             this->column_money
     });
-    this->listview_bank->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+    this->listview_bank->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
     this->listview_bank->ForeColor = System::Drawing::Color::Black;
     this->listview_bank->GridLines = true;
     this->listview_bank->HeaderStyle = System::Windows::Forms::ColumnHeaderStyle::Nonclickable;
@@ -79,30 +87,36 @@ void BankSettingsView::InitializeComponent(void)
     // 
     // button_operation
     // 
+    this->button_operation->BackColor = System::Drawing::Color::White;
+    this->button_operation->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
     this->button_operation->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
     this->button_operation->Location = System::Drawing::Point(155, 307);
     this->button_operation->Name = L"button_operation";
     this->button_operation->Size = System::Drawing::Size(116, 54);
     this->button_operation->TabIndex = 5;
     this->button_operation->Text = L"Совершить операцию";
-    this->button_operation->UseVisualStyleBackColor = true;
+    this->button_operation->UseVisualStyleBackColor = false;
     this->button_operation->Click += gcnew System::EventHandler(this, &BankSettingsView::button_operation_Click);
     // 
     // button_copy
     // 
+    this->button_copy->BackColor = System::Drawing::Color::White;
+    this->button_copy->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
     this->button_copy->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
     this->button_copy->Location = System::Drawing::Point(425, 307);
     this->button_copy->Name = L"button_copy";
     this->button_copy->Size = System::Drawing::Size(116, 54);
     this->button_copy->TabIndex = 6;
     this->button_copy->Text = L"Копировать счёт";
-    this->button_copy->UseVisualStyleBackColor = true;
+    this->button_copy->UseVisualStyleBackColor = false;
     this->button_copy->Click += gcnew System::EventHandler(this, &BankSettingsView::button_copy_Click);
     // 
     // BankSettingsView
     // 
     this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
     this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+    this->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(98)), static_cast<System::Int32>(static_cast<System::Byte>(189)),
+        static_cast<System::Int32>(static_cast<System::Byte>(98)));
     this->ClientSize = System::Drawing::Size(564, 388);
     this->Controls->Add(this->button_copy);
     this->Controls->Add(this->button_operation);

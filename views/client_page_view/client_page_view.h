@@ -40,6 +40,13 @@ namespace Views
 		{
 			InitializeComponent();
 			this->Icon = gcnew System::Drawing::Icon(L"./assets/my_app_icon.ico");
+
+			this->client_page_account->BackgroundImage = System::Drawing::Image::FromFile("./assets/background.png");
+			this->client_page_account->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+
+			this->client_page_order->BackgroundImage = System::Drawing::Image::FromFile("./assets/background.png");
+			this->client_page_order->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+
 			this->service_manager = service_manager;
 			this->start_page = start_page;
 

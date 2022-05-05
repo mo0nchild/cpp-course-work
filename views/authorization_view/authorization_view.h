@@ -26,8 +26,14 @@ namespace Views
 		Manager::ServiceManager^ service_manager = nullptr;
 
 		Services::BankController^ bank_controller = nullptr;
-	private: System::Windows::Forms::Label^ label1;
-		   Services::AccountManager^ account_manager = nullptr;
+	private: System::Windows::Forms::Label^ page1_label_mainlogo;
+	private: System::Windows::Forms::Label^ page1_label_suplogo1;
+
+	private: System::Windows::Forms::PictureBox^ page1_picturebox_imagelogo;
+	private: System::Windows::Forms::Label^ page1_label_suplogo2;
+	private: System::Windows::Forms::Label^ page1_label_suplogo3;
+
+		Services::AccountManager^ account_manager = nullptr;
 	public:
 		AuthorizationView(System::Void) { InitializeComponent(); }
 
@@ -35,8 +41,18 @@ namespace Views
 		{
 			InitializeComponent();
 			this->Icon = gcnew System::Drawing::Icon(L"./assets/my_app_icon.ico");
-			this->service_manager = service_manager;
+			this->SetStyle(ControlStyles::AllPaintingInWmPaint | ControlStyles::UserPaint | ControlStyles::DoubleBuffer, true);
+			
+			this->page1_picturebox_imagelogo->Image = System::Drawing::Image::FromFile("./assets/my_app_logo.png");
+			this->page1_picturebox_imagelogo->SizeMode = PictureBoxSizeMode::Zoom;
 
+			this->page_authorization->BackgroundImage = System::Drawing::Image::FromFile("./assets/background2.png");
+			this->page_authorization->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Tile;
+
+			this->page_registration->BackgroundImage = System::Drawing::Image::FromFile("./assets/background2.png");
+			this->page_registration->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Tile;
+
+			this->service_manager = service_manager;
 			Manager::IServiceProvider^ bank_controller_provider = this->service_manager->get_service<Services::BankController^>();
 			Manager::IServiceProvider^ account_manager_provider = this->service_manager->get_service<Services::AccountManager^>();
 
@@ -114,5 +130,7 @@ namespace Views
 		private: System::Void page2_button_banksettings_Click(System::Object^ sender, System::EventArgs^ e);
 
 		private: System::Void form_closed(System::Object^ sender, FormClosedEventArgs^ e);
-	};
+	private: System::Void page1_label_suplogo1_Click(System::Object^ sender, System::EventArgs^ e) {
+	}
+};
 }
