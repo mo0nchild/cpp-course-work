@@ -396,7 +396,7 @@ void AdminPageView::InitializeComponent(void)
         this->account_guid,
             this->account_type, this->account_state
     });
-    this->admin_listview_accounts->ForeColor = System::Drawing::SystemColors::Window;
+    this->admin_listview_accounts->ForeColor = System::Drawing::SystemColors::WindowText;
     this->admin_listview_accounts->GridLines = true;
     this->admin_listview_accounts->HeaderStyle = System::Windows::Forms::ColumnHeaderStyle::Nonclickable;
     this->admin_listview_accounts->HideSelection = false;
