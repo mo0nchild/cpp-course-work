@@ -57,7 +57,7 @@ namespace Manager
 					{ Console::WriteLine("[$] - [" + item->FullName + "]"); }
 				}
 				else if (command_arg_list[0] == "manager_exit") { Console::Clear(); break; }
-				else Console::WriteLine("[$] - [Комманда была не распознана]");
+				else Console::WriteLine("[$] - [Команда была не распознана]");
 			}
 		}
 	public:
