@@ -1,0 +1,87 @@
+
+table account_authentication {
+  id int [pk]
+  account_guid varchar(36)
+  account_login varchar(50)
+  account_password varchar(50)
+  account_type varchar(50)
+  account_state varchar(50)
+}
+
+table account_admins {
+  id int [pk]
+  account_guid varchar(36)
+  username varchar(50)
+  age varhcar(50)
+  gender varchar(50)
+  permissions varchar(50)
+}
+
+table account_clients {
+  id int [pk]
+  account_guid varchar(36)
+  username varchar(50)
+  age varchar(50)
+  gender varchar(50)
+  bank_card varchar(36)
+}
+
+table drive_complex {
+  id int [pk]
+  driver_guid varchar(36) 
+  car_type varchar(50) 
+  car_class varchar(50) 
+  driver_status varchar(50)
+}
+
+table car_garage {
+  id int [pk]
+  group_guid varchar(36) 
+  car_type varchar(50) 
+  car_class varchar(50) 
+  car_speed varchar(50) 
+  car_color varchar(50) 
+  car_count varchar(50)
+}
+
+table bank_accounts {
+  id int [pk]
+  account_guid varchar(36)
+  account_money varchar(50)
+  account_narker varchar(50)
+}
+
+table order_collection {
+  id int [pk]
+  client_guid varchar(36) 
+  driver_guid varchar(36) 
+  car_type varchar(50) 
+  car_class varchar(50) 
+  address varchar(50) 
+  date_time varchar(50) 
+  order_status varchar(50)
+}
+
+table account_drivers {
+  id int [pk]
+  account_guid varchar(36)
+  username varchar(50)
+  age varchar(50)
+  gender varchar(50)
+  driver_licence varchar(36)
+  bank_card varchar(36)
+}
+ref: account_drivers.bank_card < bank_accounts.account_guid
+ref: account_clients.bank_card < bank_accounts.account_guid
+
+ref: account_drivers.account_guid > order_collection.driver_guid
+ref: account_clients.account_guid > order_collection.client_guid
+
+ref: account_drivers.account_guid - drive_complex.driver_guid
+
+ref: car_garage.car_type - drive_complex.car_type
+ref: car_garage.car_class - drive_complex.car_class
+
+ref: account_authentication.account_guid - account_drivers.account_guid
+ref: account_authentication.account_guid - account_clients.account_guid
+ref: account_authentication.account_guid - account_admins.account_guid
