@@ -24,16 +24,21 @@ namespace Views
 	public ref class AuthorizationView : public System::Windows::Forms::Form
 	{
 		Manager::ServiceManager^ service_manager = nullptr;
-
+		Services::AccountManager^ account_manager = nullptr;
 		Services::BankController^ bank_controller = nullptr;
+
 	private: System::Windows::Forms::Label^ page1_label_mainlogo;
 	private: System::Windows::Forms::Label^ page1_label_suplogo1;
 
 	private: System::Windows::Forms::PictureBox^ page1_picturebox_imagelogo;
 	private: System::Windows::Forms::Label^ page1_label_suplogo2;
 	private: System::Windows::Forms::Label^ page1_label_suplogo3;
+	private: System::Windows::Forms::Button^ page2_button_show;
+	private: System::Windows::Forms::Label^ page1_label_easter_egg;
 
-		Services::AccountManager^ account_manager = nullptr;
+
+	private: System::Windows::Forms::Button^ page1_button_show;
+
 	public:
 		AuthorizationView(System::Void) { InitializeComponent(); }
 
@@ -43,6 +48,14 @@ namespace Views
 			this->Icon = gcnew System::Drawing::Icon(L"./assets/my_app_icon.ico");
 			this->SetStyle(ControlStyles::AllPaintingInWmPaint | ControlStyles::UserPaint | ControlStyles::DoubleBuffer, true);
 			
+			this->page1_button_show->BackgroundImage = System::Drawing::Image::FromFile("./assets/show_button_icon.jpg");
+			this->page1_button_show->ImageAlign = System::Drawing::ContentAlignment::MiddleCenter;
+			this->page1_button_show->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
+
+			this->page2_button_show->BackgroundImage = System::Drawing::Image::FromFile("./assets/show_button_icon.jpg");
+			this->page2_button_show->ImageAlign = System::Drawing::ContentAlignment::MiddleCenter;
+			this->page2_button_show->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
+
 			this->page1_picturebox_imagelogo->Image = System::Drawing::Image::FromFile("./assets/my_app_logo.png");
 			this->page1_picturebox_imagelogo->SizeMode = PictureBoxSizeMode::Zoom;
 
@@ -129,8 +142,11 @@ namespace Views
 
 		private: System::Void page2_button_banksettings_Click(System::Object^ sender, System::EventArgs^ e);
 
+		private: System::Void page1_button_show_Click(System::Object^ sender, System::EventArgs^ e);
+
+		private: System::Void page2_button_show_Click(System::Object^ sender, System::EventArgs^ e);
+
 		private: System::Void form_closed(System::Object^ sender, FormClosedEventArgs^ e);
-	private: System::Void page1_label_suplogo1_Click(System::Object^ sender, System::EventArgs^ e) {
-	}
-};
+
+	};
 }

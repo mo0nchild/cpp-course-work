@@ -25,6 +25,16 @@ System::Void AuthorizationView::page1_button_authorize_Click(System::Object^ sen
 	this->Hide();	view_preparation->Show();
 }
 
+System::Void AuthorizationView::page1_button_show_Click(System::Object^ sender, System::EventArgs^ e)
+{ 
+	this->page1_textbox_password->UseSystemPasswordChar = !(this->page1_textbox_password->UseSystemPasswordChar); 
+}
+
+System::Void AuthorizationView::page2_button_show_Click(System::Object^ sender, System::EventArgs^ e)
+{
+	this->page2_textbox_password->UseSystemPasswordChar = !(this->page2_textbox_password->UseSystemPasswordChar);
+}
+
 System::Void AuthorizationView::clear_all_textboxes(System::Void)
 {
 	for (int i = 0; i < this->page_list->Controls->Count; i++)

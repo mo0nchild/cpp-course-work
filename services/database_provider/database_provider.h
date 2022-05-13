@@ -1,7 +1,6 @@
 #pragma once
 #include "../../manager/manager.h"
 #include "database_provider_attribute.h"
-//#define DATABASE_CONNECTION_STRING "server=localhost;user=root;database=test;password=prolodgy778"
 
 namespace Services 
 {

@@ -220,6 +220,9 @@
     <Image Include="assets\my_app_logo.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
+    <Image Include="assets\show_button_icon.jpg">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="cpp-course-work.rc">
