@@ -47,6 +47,10 @@ namespace Views
 			this->client_page_order->BackgroundImage = System::Drawing::Image::FromFile("./assets/background.png");
 			this->client_page_order->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 
+			this->client_combobox_carclass->SelectedIndex = 0;
+			this->client_combobox_cartype->SelectedIndex = 0;
+			this->client_combobox_gender->SelectedIndex = 0;
+
 			this->service_manager = service_manager;
 			this->start_page = start_page;
 

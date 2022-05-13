@@ -25,6 +25,7 @@ namespace Views
 		{
 			InitializeComponent();
 			this->Icon = gcnew System::Drawing::Icon(L"./assets/my_app_icon.ico");
+			this->combobox_operation_type->SelectedIndex = 0;
 			this->bank_controller = bank_controller;
 		}
 

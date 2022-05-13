@@ -58,6 +58,9 @@ namespace Views
 			this->driver_page_garage->BackgroundImage = System::Drawing::Image::FromFile("./assets/background.png");
 			this->driver_page_garage->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 
+			this->driver_combobox_gender->SelectedIndex = 0;
+			this->driver_combobox_status->SelectedIndex = 0;
+
 			this->service_manager = service_manager;
 			this->start_page = start_page;
 

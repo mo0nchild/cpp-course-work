@@ -50,6 +50,11 @@ namespace Views
 			this->service_manager = service_manager;
 			this->start_page = start_page;
 
+			this->admin_combobox_carclass->SelectedIndex = 0;
+			this->admin_combobox_carcolor->SelectedIndex = 0;
+			this->admin_combobox_gender->SelectedIndex = 0;
+			this->admin_combobox_cartype->SelectedIndex = 0;
+
 			Manager::IServiceProvider^ provider_account_manager = this->service_manager->get_service<AccountManager^>();
 			Manager::IServiceProvider^ provider_depot_manager = this->service_manager->get_service<DepotManager^>();
 			Manager::IServiceProvider^ provider_order_controller = this->service_manager->get_service<OrderController^>();

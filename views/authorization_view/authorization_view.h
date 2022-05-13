@@ -66,6 +66,8 @@ namespace Views
 			this->page_registration->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Tile;
 
 			this->service_manager = service_manager;
+			this->page2_combobox_gender->SelectedIndex = 0;
+
 			Manager::IServiceProvider^ bank_controller_provider = this->service_manager->get_service<Services::BankController^>();
 			Manager::IServiceProvider^ account_manager_provider = this->service_manager->get_service<Services::AccountManager^>();
 
